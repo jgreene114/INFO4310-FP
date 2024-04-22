@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="en">
+<!--xmlns="http://www.w3.org/1999/html" xmlns="http://www.w3.org/1999/html">-->
+<head>
+    <meta charset="UTF-8">
+    <title>INFO4310 - Final Project by Emir, Joe</title>
+    <link rel="stylesheet" href="./assets/main.css"/>
+    <link rel="stylesheet" href="./assets/packages/leaflet/leaflet.css"/>
+    <link rel="stylesheet" href="./assets/packages/cssanimation/cssanimation.css">
+    <script src="./assets/packages/turf/turf.min.js"></script>
+    <script src="./assets/packages/leaflet/leaflet.js"></script>
+    <script src="https://d3js.org/d3.v7.min.js"></script>
+
+
+</head>
+
+<body>
+
+
+<div id="page-container">
+    <div id="map-container">
+        <div id="map"></div>
+    </div>
+    <div id="info-container">
+        <div class="info-parent left">
+            <div class="info-child">
+                <div class="info-content">Hurricane content 1: Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor
+                    incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation
+                    ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in
+                    voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non
+                    proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</div>
+            </div>
+        </div>
+        <div class="info-parent right">
+            <div class="info-child">
+                <div class="info-content">Hurricane content 2: Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor
+                    incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation
+                    ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in
+                    voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non
+                    proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</div>
+            </div>
+        </div>
+        <div class="info-parent left">
+            <div class="info-child">
+                <div class="info-content">Hurricane content 3: Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor
+                    incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation
+                    ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in
+                    voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non
+                    proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</div>
+            </div>
+        </div>
+        <div class="info-parent right">
+            <div class="info-child">
+                <div class="info-content">Hurricane content 4: Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor
+                    incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation
+                    ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in
+                    voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non
+                    proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</div>
+            </div>
+        </div>
+        <div class="info-parent left">
+            <div class="info-child">
+                <div class="info-content">Hurricane content 5: Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor
+                    incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation
+                    ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in
+                    voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non
+                    proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</div>
+            </div>
+        </div>
+        <div class="info-parent right">
+            <div class="info-child">
+                <div class="info-content">Hurricane content 6: Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor
+                    incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation
+                    ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in
+                    voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non
+                    proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</div>
+            </div>
+        </div>
+        <div class="info-parent left">
+            <div class="info-child">
+                <div class="info-content">Hurricane content 7: Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor
+                    incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation
+                    ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in
+                    voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non
+                    proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</div>
+            </div>
+        </div>
+        <div class="info-parent right">
+            <div class="info-child">
+                <div class="info-content">Hurricane content 8: Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor
+                    incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation
+                    ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in
+                    voluptate velit esse cillum dolore eu fugiat nulla  ad minim veniam, quis nostrud exercitation
+                    ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in
+                    voluptate velit esse cillum dolore eu fugiat nulla  ad minim veniam, quis nostrud exercitation
+                    ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in
+                    voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non
+                    proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</div>
+            </div>
+        </div>
+        <div class="info-parent left">
+            <div class="info-child">
+                <div class="info-content">Hurricane content 9: Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor
+                    incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation
+                    ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in
+                    voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non
+                    proident, sunt in culpa qui officia deserunt mollit anim id est laborum.Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor
+                    incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation
+                    ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in
+                    voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non
+                    proident, sunt in culpa qui officia deserunt mollit anim id est laborum.Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor
+                    incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation
+                    ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in
+                    voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non
+                    proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</div>
+            </div>
+        </div>
+        <div class="info-parent right">
+            <div class="info-child">
+                <div class="info-content">Hurricane content 10: Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor
+                    incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation
+                    ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in
+                    voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non
+                    proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</div>
+            </div>
+        </div>
+        <div class="info-parent left">
+            <div class="info-child">
+                <div class="info-content">Hurricane content 11: Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor
+                    incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation
+                    ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in
+                    voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non
+                    proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</div>
+            </div>
+        </div>
+        <div class="info-parent right">
+            <div class="info-child">
+                <div class="info-content">Hurricane content 12: Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor
+                    incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation
+                    ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in
+                    voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non
+                    proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</div>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+
+<!--<script type="text/javascript" src="./assets/packages/scrolly/scrolly.js"></script>-->
+<!--<script>-->
+<!--    scrolly({-->
+<!--        scrollyOffsetBottom: 100,-->
+<!--        scrollyOffsetTop: 100,-->
+<!--    });-->
+<!--</script>-->
+</body>
+
+<script src="./assets/packages/gsap-public/minified/gsap.min.js"></script>
+<script src="./assets/packages/gsap-public/minified/ScrollTrigger.min.js"></script>
+<script src="./src/main.js"></script>
+<script src="./src/hurricaneWalkthrough.js"></script>
+<script src="src/gsap-transitions.js"></script>
+</html>
