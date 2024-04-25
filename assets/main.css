@@ -27,6 +27,11 @@ body {
 #map {
     height: 100%;
     width: calc(100vw / 3);
+    position: relative;
+}
+
+.leaflet-overlay-pane svg {
+    transform: none !important;
 }
 
 

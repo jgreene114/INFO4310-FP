@@ -46,6 +46,8 @@ class HurricaneTrack {
     infoViews;
     infoIdxs;
     currentLayer = null;
+    currentPath;
+    pathGenerator;
 
     constructor(data, mapID, walkthroughID) {
         this.data = data.features.sort((a, b) => a.properties.ISO_TIME - b.properties.ISO_TIME);
@@ -56,17 +58,18 @@ class HurricaneTrack {
         this.sshsScale = d3.scaleLinear()
             .domain(d3.extent(this.segments, d => d.properties.windSpeed))
             .range([5, 100]);
+        this.mapID = mapID
+        this.createMap()
 
-        this.createMap(mapID)
     }
 
-    createMap (mapID) {
-        this.map = L.map(mapID, {
-            zoomControl: false,
-            dragging: false,
-            scrollWheelZoom: false,
-            doubleClickZoom: false,
-            touchZoom: false
+    createMap () {
+        this.map = L.map(this.mapID, {
+            // zoomControl: false,
+            // dragging: false,
+            // scrollWheelZoom: false,
+            // doubleClickZoom: false,
+            // touchZoom: false
         })
 
         // found on https://leaflet-extras.github.io/leaflet-providers/preview/index.html
@@ -76,9 +79,71 @@ class HurricaneTrack {
         }).addTo(this.map);
         this.map.attributionControl.setPosition('bottomright');
         this.initialMapView();
-        this.svgLayer = L.svg({clickable: true}).addTo(this.map);
-        this.svg = d3.select("#" + mapID).select("svg");
-        this.g = this.svg.append("g");
+        if (!this.svgLayer) {
+            this.svgLayer = L.svg({clickable: true}).addTo(this.map);
+            console.log('svgLayer', this.svgLayer)
+            this.svg = d3.select(this.svgLayer._container)
+                // .style('transform', 'none ');
+            this.g = this.svg.append("g").attr("class", "hurricane-path-g");
+        }
+        this.currentPath = this.g.append("path")
+            .attr("class", "track-path")
+            .style("fill", "none")
+            .style("stroke", "red")
+            .style("stroke-width", "3");
+
+        this.pathGenerator = d3.geoPath().projection(this.createProjection());
+
+
+
+        const updateSvg = () => {
+            const bounds = this.map.getBounds();
+            const topLeft = this.map.latLngToLayerPoint(bounds.getNorthWest());
+            const bottomRight = this.map.latLngToLayerPoint(bounds.getSouthEast());
+
+            this.svg
+                .attr("width", bottomRight.x - topLeft.x)
+                .attr("height", bottomRight.y - topLeft.y)
+                .style("left", topLeft.x + "px")
+                .style("top", topLeft.y + "px")
+                .style("border", "2px solid black")
+                // .style("transform", `translate3d(${-topLeft.x}px, ${-topLeft.y}px, 0px)`)
+
+
+
+            this.g.attr("transform", `translate(${-topLeft.x},${-topLeft.y})`);
+
+            this.g.selectAll("path").attr("d", this.pathGenerator(this.g.attr('g')));
+
+
+            console.log("Path data:", this.g.selectAll("path").attr("d"));
+            console.log("Top left:", topLeft);
+            console.log("Bottom right:", bottomRight);
+            console.log("SVG dimensions:", bottomRight.x - topLeft.x, bottomRight.y - topLeft.y);
+            console.log("Check if g is selected:", this.svg.node());
+            console.log("Check transform attribute:", this.g.attr("transform")); // Check if the transform attribute is set
+            console.log("Translation values:", -topLeft.x, -topLeft.y);
+
+
+        }
+
+        updateSvg.bind(this)();
+
+        this.map.on("viewreset", updateSvg.bind(this));
+        this.map.on("zoomend", updateSvg.bind(this));
+        this.map.on("moveend", updateSvg.bind(this));
+
+
+    }
+
+    createProjection() {
+        const map = this.map;
+        return d3.geoTransform({
+            point: function (x, y) {
+                const point = map.latLngToLayerPoint(new L.LatLng(y, x));
+                this.stream.point(point.x, point.y);
+            }
+        });
     }
 
     moveMap(lat, lon, zoom) {
@@ -91,31 +156,6 @@ class HurricaneTrack {
         this.map.setView([this.currentPoint.geometry.coordinates[1], this.currentPoint.geometry.coordinates[0]], 7)
     }
 
-    // returns true when index is valid and operation succeeds, else returns false
-    // setPoint(i) {
-    //
-    //     if (i > this.length) {
-    //         console.error("Trying to set data point with invalid index:", i);
-    //         return false;
-    //     }
-    //     let newPoint = this.data[i];
-    //     if (newPoint.LAT == null || newPoint.LON == null) {
-    //         console.error("Trying to set invalid data point:", newPoint);
-    //         return false;
-    //     }
-    //
-    //     this.prevPoint = this.currentPoint;
-    //     this.currentPoint =newPoint
-    //
-    //     document.dispatchEvent(
-    //         new CustomEvent(this.walkthroughID + '#PointChanged', {
-    //             index: i,
-    //             data: this.data[newPointIdx]
-    //         });
-    //     );
-    //     return true;
-    // }
-
     next(i) {
         if (i == null) {
             i = (this.index) ? this.index : 1;
@@ -124,8 +164,8 @@ class HurricaneTrack {
             this.index += i;
             this.prevPoint = this.currentPoint;
             this.currentPoint = this.data[this.index];
-            console.log(this.index)
-            console.log(this.currentPoint)
+            // console.log(this.index)
+            // console.log(this.currentPoint)
 
             if (this.currentPoint.LAT == null || this.currentPoint.LON == null) {
                 console.error("Invalid data point:", point);
@@ -144,8 +184,8 @@ class HurricaneTrack {
             this.prevPoint = this.currentPoint;
             this.index = i;
             this.currentPoint = this.data[this.index];
-            console.log(this.index)
-            console.log(this.currentPoint)
+            // console.log(this.index)
+            // console.log(this.currentPoint)
 
             if (this.currentPoint.LAT == null || this.currentPoint.LON == null) {
                 console.error("Invalid data point:", point);
@@ -191,8 +231,7 @@ class HurricaneTrack {
         })
         existingUnion.geoJson = updatedUnion;
 
-        // existingUnion.layer.addTo(map);
-
+        // console.log("unionSegment geojson", updatedUnion)
         return existingUnion;
     }
 
@@ -219,29 +258,102 @@ class HurricaneTrack {
             );
         }
 
-        console.log("infoViews set:", this.infoViews)
+        // console.log("infoViews set:", this.infoViews)
     }
 
     setTrackView(idx) {
         // let infoIdx = this.idx[this.infoIdxs];
         // let infoIdx = this.infoIdxs.indexOf(idx)
+        const thisView = this.infoViews[idx];
+        let newGeoJson = thisView.geoJson;
+        let newPath = this.pathGenerator(newGeoJson)
+        // let newPath = this.pathFromGeoJson(newGeoJson, this.map)
+        const oldPath = this.currentPath.attr("d") || ""
 
-        if (this.currentLayer) {this.map.removeLayer(this.currentLayer) }
+        if (oldPath) {
+            const interpolator = flubber.interpolate(oldPath, newPath, {
+                maxSegmentLength: 10
+            });
 
-        let existingUnion = this.infoViews[idx];
-        let layer = existingUnion.layer;
+            this.currentPath.transition()
+                .duration(500)
+                .attrTween("d", () => t => interpolator(t))
+        } else {
+            // console.log("new path", newPath)
+            this.currentPath.attr("d", newPath)
+            // this.g.selectAll("path").attr("d", this.pathGenerator(this.newPath))
+        }
+        // this.g.selectAll("path").attr("d", this.pathGenerator(this.g.attr('g')));
 
-        layer.addTo(this.map)
-        this.currentLayer = layer
+        this.map.flyToBounds(thisView.layer.getBounds(), {duration: .4, animate: true})
+
+
+        // console.log("infoview", this.infoViews[idx])
+        // console.log("infoview geoj", this.infoViews[idx].geoJson)
+        //
+        // console.log("newGeoJson", newGeoJson)
+        // console.log("oldpath", oldPath)
+        // console.log("newpath", newPath)
+
+
+
+        // if (this.currentPath.attr("d")) {
+        //     console.log("attr d yes!")
+        //
+        // } else {
+        //     console.log("attr d no")
+        // }
+
+
+        // let existingUnion, layer;
+        // if (this.currentLayer) {
+        //     // this.map.removeLayer(this.currentLayer)
+        //     // let interpolator = flubber.interpolate(this.
+        //     existingUnion = this.infoViews[idx];
+        //     layer = existingUnion.layer;
+        //
+        //     layer.addTo(this.map)
+        //     this.currentLayer = layer
+        //
+        //     console.log("d3 selecting map",d3.select(this.mapID))
+        //     console.log("map id", this.mapID)
+        //
+        //     console.log('current layer', this.currentLayer)
+        // } else {
+        //     existingUnion = this.infoViews[idx];
+        //     layer = existingUnion.layer;
+        //
+        //
+        //
+        //     layer.addTo(this.map)
+        //     this.currentLayer = layer
+        // }
+
+        // updatePath(newSegment)
+
+
+
 
         // existingUnion = addAndUnionSegment(existingUnion, segments[i], walkthrough.map, sshsScale)
         // let bounds = existingUnion.layer.getBounds()
-        this.map.flyToBounds(layer.getBounds(), {duration: .4, animate: true})
+
+
     }
 
+    // pathFromGeoJson(geoJson, map) {
+    //     // const geoGenerator = d3.geoPath().projection(d3.geoTransform({
+    //     //     point: function (x, y) {
+    //     //         const point = map.latLngToLayerPoint(new L.LatLng(y, x));
+    //     //         this.stream.point(point.x, point.y);
+    //     //     }
+    //     // }));
+    //
+    //     // return geoGenerator(geoJson);
+    //     return this.pathGenerator(geoJson);
+    // }
 
     findChangesInColumn(column) {
-        console.log(this.data)
+        // console.log("find changes", this.data)
         const changesIdxs = [];
         let previousPoint = this.data[0].properties[column];
         for (let i = 1; i < this.length; i++) {

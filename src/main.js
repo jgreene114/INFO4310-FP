@@ -125,31 +125,22 @@ const pageLoad = async function () {
     // console.log(idxs)
     walkthrough.setTrackViews(idxs)
 
-    // adding the info divs
-
-    // d3.select(".info-child.left").style("border", "10px solid pink")
-
-
     gsap.registerPlugin(ScrollTrigger)
 
     const infoSections = d3.selectAll(".info-child")
-    console.log("infoSections", infoSections)
+    // console.log("infoSections", infoSections)
     infoSections.each(function (d, i) {
-        console.log("I:",i)
         let trigger = {
             trigger: this,
-            markers: true,
+            markers: false,
             // start: "-100% center",
             // end: "100% center",
             start: "-50% 80%",
             end: "0% 80%",
             onEnter: (self) => {
-                console.log(i)
-                console.log("d:", d)
                 walkthrough.setTrackView(i)
             },
             onEnterBack: (self) => {
-                console.log(i)
                 walkthrough.setTrackView(i)
             },
             scrub: 1,
