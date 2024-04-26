@@ -1,0 +1,1 @@
+const color = "#020E3B"

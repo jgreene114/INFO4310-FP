@@ -102,7 +102,7 @@ const pageLoad = async function () {
 
     const sshsScale = d3.scaleLinear()
         .domain(d3.extent(segments, d => d.properties.windSpeed))
-        .range([5,100])
+        .range([5, 100])
 
     // let seconds = 0
     // for (let i = 0; i < segments.length; i++) {
@@ -127,43 +127,76 @@ const pageLoad = async function () {
 
     gsap.registerPlugin(ScrollTrigger)
 
-    const infoSections = d3.selectAll(".info-child")
-    // console.log("infoSections", infoSections)
-    infoSections.each(function (d, i) {
-        let trigger = {
-            trigger: this,
-            markers: false,
-            // start: "-100% center",
-            // end: "100% center",
-            start: "-50% 80%",
-            end: "0% 80%",
-            onEnter: (self) => {
-                walkthrough.setTrackView(i)
-            },
-            onEnterBack: (self) => {
-                walkthrough.setTrackView(i)
-            },
-            scrub: 1,
-            snap: {snapTo: "labels"}, //.5,
-        }
+    const infoParents = d3.selectAll(".info-parent.hurricane-track").nodes()
+    const infoChildren = d3.selectAll(".info-child.hurricane-track").nodes()
+    const infoContainer = d3.select("#info-container").node()
+    console.log(infoContainer)
 
-
-
-
-        gsap.timeline({
-            scrollTrigger: trigger,
-            toggleActions: "restart reverse restart reverse",
-        })
-            .fromTo(this,
-                {y: "100vh"},
-                {y: "50vh"},
-            )
-            .addLabel("middle")
-            .to(this, {
-                y: "00vh",
-                // scrollTrigger: trigger,
+    infoParents.forEach(function (parent, i) {
+        if (infoChildren[i]) {
+            let target = infoChildren[i]
+            gsap.timeline({
+                scrollTrigger: {
+                    trigger: target,
+                    scroller: infoContainer,
+                    markers: true,
+                    // start: "-100% center",
+                    // end: "100% center",
+                    start: "top center+=350",
+                    end: "bottom center-=350",
+                    onEnter: (self) => {
+                        walkthrough.setTrackView(i)
+                    },
+                    onEnterBack: (self) => {
+                        walkthrough.setTrackView(i)
+                    },
+                    scrub: 3,
+                    // snap: 1 / (infoChildren.length - 1),
+                },
+                toggleActions: "restart reverse restart reverse",
             })
+                .fromTo(target,
+                    // {y: "100%"},
+                    {yPercent: 100},
+                    {yPercent: 80, duration: 3, ease: "power1.inOut"},
+                    {yPercent: 0, duration: 3, ease: "power1.inOut"}
+                )
+                // .addLabel("middle")
+                // .to(target, {
+                //     // y: "00%", duration: 1, ease: "power1.inOut"
+                //     yPercent: 0, duration: 1, ease: "power1.inOut"
+                // });
+        } else {
+            console.error("NO INFO CHILD", i)
+        }
     })
+
+    const titleMap = L.map("title-page-map", {
+        zoomControl: false,
+        dragging: false,
+        scrollWheelZoom: false,
+        doubleClickZoom: false,
+        touchZoom: false
+    }).setView([15, 10], 2);
+
+    // found on https://leaflet-extras.github.io/leaflet-providers/preview/index.html
+    L.tileLayer('https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png', {
+        // attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
+        subdomains: 'abcd',
+    }).addTo(titleMap);
+
+    var mdrPolygonCoords = [
+        [10, -20],
+        [10, -60],
+        [20, -60],
+        [20, -20]
+    ];
+
+    var mdrPolygon = L.polygon(mdrPolygonCoords, {
+        color: '#219ebcff',
+        fillColor: '#9ad0eaff',
+        fillOpacity: 0.5
+    }).addTo(titleMap);
 
 }
 

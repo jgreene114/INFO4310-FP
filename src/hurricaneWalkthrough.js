@@ -79,71 +79,76 @@ class HurricaneTrack {
         }).addTo(this.map);
         this.map.attributionControl.setPosition('bottomright');
         this.initialMapView();
+
         if (!this.svgLayer) {
             this.svgLayer = L.svg({clickable: true}).addTo(this.map);
             console.log('svgLayer', this.svgLayer)
             this.svg = d3.select(this.svgLayer._container)
-                // .style('transform', 'none ');
-            this.g = this.svg.append("g").attr("class", "hurricane-path-g");
-        }
-        this.currentPath = this.g.append("path")
-            .attr("class", "track-path")
-            .style("fill", "none")
-            .style("stroke", "red")
-            .style("stroke-width", "3");
-
-        this.pathGenerator = d3.geoPath().projection(this.createProjection());
-
-
-
-        const updateSvg = () => {
-            const bounds = this.map.getBounds();
-            const topLeft = this.map.latLngToLayerPoint(bounds.getNorthWest());
-            const bottomRight = this.map.latLngToLayerPoint(bounds.getSouthEast());
-
-            this.svg
-                .attr("width", bottomRight.x - topLeft.x)
-                .attr("height", bottomRight.y - topLeft.y)
-                .style("left", topLeft.x + "px")
-                .style("top", topLeft.y + "px")
-                .style("border", "2px solid black")
-                // .style("transform", `translate3d(${-topLeft.x}px, ${-topLeft.y}px, 0px)`)
-
-
-
-            this.g.attr("transform", `translate(${-topLeft.x},${-topLeft.y})`);
-
-            this.g.selectAll("path").attr("d", this.pathGenerator(this.g.attr('g')));
-
-
-            console.log("Path data:", this.g.selectAll("path").attr("d"));
-            console.log("Top left:", topLeft);
-            console.log("Bottom right:", bottomRight);
-            console.log("SVG dimensions:", bottomRight.x - topLeft.x, bottomRight.y - topLeft.y);
-            console.log("Check if g is selected:", this.svg.node());
-            console.log("Check transform attribute:", this.g.attr("transform")); // Check if the transform attribute is set
-            console.log("Translation values:", -topLeft.x, -topLeft.y);
-
-
+            // .style('transform', 'none ');
+            this.g = this.svg.append("g").attr("class", "hurricane-path-g leaflet-zoom-hide");
+            this.currentPath = this.g.append("path")
+                .attr("class", "track-path")
+                .style("fill", "none")
+                .style("stroke", "red")
+                .style("stroke-width", "3");
         }
 
-        updateSvg.bind(this)();
+        this.pathGenerator = this.pathGeneratorFunc();
 
-        this.map.on("viewreset", updateSvg.bind(this));
-        this.map.on("zoomend", updateSvg.bind(this));
-        this.map.on("moveend", updateSvg.bind(this));
+
+        // const throttledUpdate = _.throttle(this.updateSvg, 100);
+        this.map.on("viewreset", this.updateSvg.bind(this));
+        this.map.on("zoomend", this.updateSvg.bind(this));
+        this.map.on("moveend", this.updateSvg.bind(this));
+        this.map.on("move", this.updateSvg.bind(this));
+    }
+    updateSvg() {
+        // this.pathGenerator = d3.geoPath().projection(this.createProjection(this.map));
+        const bounds = this.map.getBounds();
+        const topLeft = this.map.latLngToLayerPoint(bounds.getNorthWest());
+        const bottomRight = this.map.latLngToLayerPoint(bounds.getSouthEast());
+
+        this.svg
+            .attr("width", bottomRight.x - topLeft.x)
+            .attr("height", bottomRight.y - topLeft.y)
+            .style("left", topLeft.x + "px")
+            .style("top", topLeft.y + "px")
+            // .style("border", "12px solid black")
+            // .style("transform", `translate3d(${-topLeft.x}px, ${-topLeft.y}px, 0px)`)
+
+        this.g.attr("transform", `translate(${-topLeft.x},${-topLeft.y})`);
+        // this.g.select("path").attr("d", this.pathGeneratorFunc()(this.g.select("path").attr("d")))
+        console.log("Path:", this.g.select("path").attr("d"))
+        // console.log("THIS IS G", this.g.node())
+
+        // this.g.selectAll("path").attr("d", this.pathGenerator);
+        console.log("Top Left:", topLeft);
+        console.log("Bottom Right:", bottomRight);
+
+
+        // console.log("Path data:", this.g.selectAll("path").attr("d"));
+        // console.log("Path data:", this.g.select("path").node());
+        // console.log("Top left:", topLeft);
+        // console.log("Bottom right:", bottomRight);
+        // console.log("SVG dimensions:", bottomRight.x - topLeft.x, bottomRight.y - topLeft.y);
+        // console.log("Check if g is selected:", this.svg.node());
+        // console.log("Check transform attribute:", this.g.attr("transform"));
+        // console.log("Translation values:", -topLeft.x, -topLeft.y);
 
 
     }
 
-    createProjection() {
-        const map = this.map;
+    createProjection(map) {
         return d3.geoTransform({
             point: function (x, y) {
                 const point = map.latLngToLayerPoint(new L.LatLng(y, x));
                 this.stream.point(point.x, point.y);
             }
         });
+    }
+
+    pathGeneratorFunc() {
+        return d3.geoPath().projection(this.createProjection(this.map));
     }
 
     moveMap(lat, lon, zoom) {
@@ -287,7 +292,7 @@ class HurricaneTrack {
 
         this.map.flyToBounds(thisView.layer.getBounds(), {duration: .4, animate: true})
 
-
+        this.updateSvg()
         // console.log("infoview", this.infoViews[idx])
         // console.log("infoview geoj", this.infoViews[idx].geoJson)
         //
