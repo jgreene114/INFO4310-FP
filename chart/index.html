@@ -1,0 +1,311 @@
+<html>
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="stylesheet" type="text/css" href="css/normalize.css">
+  <link rel="stylesheet" type="text/css" href="css/skeleton.css">
+  <script src="https://d3js.org/d3.v7.min.js"></script>
+
+  <style>
+    .gridlines .domain {
+      display: none;
+    }
+
+    .gridlines line {
+      stroke: #aaa;
+    }
+  </style>
+</head>
+
+<body>
+  <svg id="lineplot" height="550" width="800" style="margin-top:50px"></svg>
+  <svg id="barchart" height="500" width="850" style="margin-top:50px"></svg>
+
+  <script>
+    // LINE PLOT
+    const svgLine = d3.select("svg#lineplot");
+    const widthLine = svgLine.attr("width");
+    const heightLine = svgLine.attr("height");
+    const marginLine = { top: 50, right: 10, bottom: 50, left: 60 };
+    const chartWidthLine = widthLine - marginLine.left - marginLine.right;
+    const chartHeightLine = heightLine - marginLine.top - marginLine.bottom;
+
+    let annotationsLine = svgLine.append("g").attr("id", "annotations");
+    let chartAreaLine = svgLine.append("g").attr("id", "points")
+      .attr("transform", `translate(${marginLine.left},${marginLine.top})`);
+
+    // BAR CHART
+    const svgBar = d3.select("svg#barchart");
+    const widthBar = svgBar.attr("width");
+    const heightBar = svgBar.attr("height");
+    const marginBar = { top: 10, right: 60, bottom: 50, left: 50 };
+    const chartWidthBar = widthBar - marginBar.left - marginBar.right;
+    const chartHeightBar = heightBar - marginBar.top - marginBar.bottom;
+
+    let annotationsBar = svgBar.append("g").attr("id", "annotations");
+    let chartAreaBar = svgBar.append("g").attr("id", "points")
+      .attr("transform", `translate(${marginBar.left},${marginBar.top})`);
+
+    const requestData = async function () {
+
+      // LINE CHART
+      const sst = await d3.csv("sst.csv");
+      console.log(sst)
+
+      // Y axis
+      const tempExtent = d3.extent(sst, d => d['Temperature']);
+      const tempScale = d3.scaleLinear().domain(tempExtent).range([chartHeightLine, 0]);
+      let leftAxisLine = d3.axisLeft(tempScale)
+      let leftGridlinesLine = d3.axisLeft(tempScale)
+        .tickSize(-chartWidthLine - 10)
+        .tickFormat("")
+      annotationsLine.append("g")
+        .attr("class", "y axis")
+        .attr("transform", `translate(${marginLine.left - 10},${marginLine.top})`)
+        .call(leftAxisLine)
+      annotationsLine.append("g")
+        .attr("class", "y gridlines")
+        .attr("transform", `translate(${marginLine.left - 10},${marginLine.top})`)
+        .call(leftGridlinesLine)
+        .attr("stroke-dasharray", "5,5");
+
+      // X Axis
+      const monthNames = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
+      const monthScale = d3.scaleLinear()
+        .domain([1, 12])
+        .range([0, chartWidthLine]);
+      let bottomAxisLine = d3.axisBottom(monthScale).tickFormat(d => monthNames[d - 1]);
+      let bottomGridlinesLine = d3.axisBottom(monthScale)
+        .tickSize(-chartHeightLine - 10)
+        .tickFormat("")
+      annotationsLine.append("g")
+        .attr("class", "x axis")
+        .attr("transform", `translate(${marginLine.left},${chartHeightLine + marginLine.top + 10})`)
+        .call(bottomAxisLine);
+      annotationsLine.append("g")
+        .attr("class", "x gridlines")
+        .attr("transform", `translate(${marginLine.left},${chartHeightLine + marginLine.top + 10})`)
+        .call(bottomGridlinesLine)
+        .attr("stroke-dasharray", "5,5");
+
+      // Title
+      svgLine.append("text")
+        .attr("x", widthLine / 2)
+        .attr("y", marginLine.top - 20)
+        .attr("text-anchor", "middle")
+        .style("font-size", "20px")
+        .style("font-family", "Arial")
+        .text("Niño Regions Sea Surface Temperatures (1982-2024)");
+
+      // Y Axis Label
+      svgLine.append("text")
+        .attr("transform", "rotate(-90)")
+        .attr("y", 0)
+        .attr("x", -(heightLine / 2))
+        .attr("dy", "1em")
+        .style("text-anchor", "middle")
+        .style("font-size", "16px")
+        .style("font-family", "Arial")
+        .text("Sea Surface Temperature (°F)");
+
+      var lineGen = d3.line()
+        .x(d => monthScale(d['Month']))
+        .y(d => tempScale(d['Temperature']))
+        .curve(d3.curveMonotoneX);
+
+      const dataByYear = d3.group(sst, d => d['Year']);
+
+      chartAreaLine.selectAll(".line")
+        .data(dataByYear)
+        .enter().append("path")
+        .attr("class", "line")
+        .attr("d", d => lineGen(d[1]))
+        .attr("fill", "none")
+        .attr("stroke", d => d[0] === "2024" ? "#8B0000" : "#d9d9d9")
+        .attr("stroke-width", 2);
+
+      const filteredData = Array.from(dataByYear).filter(([year,]) => year !== "2024");
+      let monthlyAverages = [];
+      for (let month = 1; month <= 12; month++) {
+        let totalTemp = 0;
+        let count = 0;
+        filteredData.forEach(([, values]) => {
+          values.forEach(d => {
+            if (d['Month'] == month) {
+              totalTemp += parseFloat(d['Temperature']);
+              count++;
+            }
+          });
+        });
+        monthlyAverages.push({ Month: month, Temperature: totalTemp / count });
+      }
+
+      chartAreaLine.append("path")
+        .datum(monthlyAverages)
+        .attr("class", "average-line")
+        .attr("d", lineGen)
+        .attr("fill", "none")
+        .attr("stroke", "red")
+        .attr("stroke-width", 2);
+
+      // BAR CHART
+      const oni = await d3.csv("oni_data.csv");
+      console.log(oni)
+
+      // Y Axis
+      const celsiusScale = d3.scaleLinear().domain([-3, 3]).range([chartHeightBar, 0]);
+      const celsiusTicks = celsiusScale.ticks();
+      const fahrenheitScale = d3.scaleLinear().domain([-5.4, 5.4]).range(celsiusScale.range());
+      const fahrenheitTicks = celsiusTicks.map(d => (d * 1.8));
+      const leftAxisBar = d3.axisLeft(celsiusScale)
+        .tickValues(celsiusTicks)
+        .tickFormat(d => `${d}°C`);
+      const rightAxisBar = d3.axisRight(fahrenheitScale)
+        .tickValues(fahrenheitTicks)
+        .tickFormat(d => `${d.toFixed(1)}°F`);
+      annotationsBar.append("g")
+        .attr("class", "y axis")
+        .attr("transform", `translate(${marginBar.left - 10},${marginBar.top})`)
+        .call(leftAxisBar);
+      annotationsBar.append("g")
+        .attr("class", "y axis fahrenheit")
+        .attr("transform", `translate(${marginBar.left + chartWidthBar + 10},${marginBar.top})`)
+        .call(rightAxisBar);
+      let leftGridlinesBar = d3.axisLeft(celsiusScale)
+        .tickSize(-chartWidthBar - 20)
+        .tickFormat("")
+      annotationsBar.append("g")
+        .attr("class", "y gridlines")
+        .attr("transform", `translate(${marginBar.left - 10},${marginBar.top})`)
+        .call(leftGridlinesBar);
+
+      // X Axis  
+      oni.forEach(d => {
+        d.combined = `${d.SEAS} ${d.YR}`;
+      });
+
+      const selectedTicks = [
+        "DJF 1950", "AMJ 1958", "ASO 1966", "DJF 1975",
+        "AMJ 1983", "ASO 1991", "DJF 2000", "AMJ 2008",
+        "ASO 2016", "JFM 2024"
+      ];
+
+      const timeScale = d3.scaleBand()
+        .domain(oni.map(d => d.combined))
+        .range([0, chartWidthBar])
+        .padding(0.1);
+
+      const bottomAxisBar = d3.axisBottom(timeScale)
+        .tickValues(selectedTicks);
+
+      const tickFilter = (d, i) => i % Math.floor(oni.length / 10) === 0
+
+      annotationsBar.append("g")
+        .attr("class", "x axis")
+        .attr("transform", `translate(${marginBar.left},${chartHeightBar + marginBar.top + 10})`)
+        .call(bottomAxisBar)
+        .selectAll("text")
+        .style("text-anchor", "middle")  // Center the anchor to the middle of the text
+        .attr("dx", "0em")
+        .attr("dy", "1em");
+
+      // Bars
+      chartAreaBar.selectAll("mybar")
+        .data(oni)
+        .enter()
+        .append("rect")
+        .attr("x", d => timeScale(d.combined))
+        .attr("y", d => Math.min(celsiusScale(d.ANOM), celsiusScale(0))) // Start from the higher value (lower on the screen)
+        .attr("width", timeScale.bandwidth())
+        .attr("height", d => Math.abs(celsiusScale(d.ANOM) - celsiusScale(0))) // Height is the absolute difference
+        .attr("fill", d => d.ANOM > 0 ? "red" : "blue");
+
+      // Highlights
+      let positiveIntervals = [];
+      let negativeIntervals = [];
+      let currentInterval = { start: null, end: null };
+
+      oni.forEach((d, i) => {
+        if (d.ANOM > 0) {
+          if (currentInterval.start === null) {
+            currentInterval.start = i;
+          }
+          currentInterval.end = i;
+        } else if (d.ANOM < 0 && currentInterval.start !== null) {
+          positiveIntervals.push({ ...currentInterval });
+          currentInterval = { start: null, end: null };
+        }
+        if (d.ANOM < 0) {
+          if (currentInterval.start === null) {
+            currentInterval.start = i;
+          }
+          currentInterval.end = i;
+        } else if (d.ANOM > 0 && currentInterval.start !== null) {
+          negativeIntervals.push({ ...currentInterval });
+          currentInterval = { start: null, end: null };
+        }
+      });
+      if (currentInterval.start !== null) {
+        if (oni[currentInterval.start].ANOM > 0) {
+          positiveIntervals.push({ ...currentInterval });
+        } else {
+          negativeIntervals.push({ ...currentInterval });
+        }
+      }
+
+      function drawIntervals(intervals, color) {
+        intervals.forEach(interval => {
+          chartAreaBar.append("rect")
+            .attr("x", timeScale(oni[interval.start].combined))
+            .attr("y", 0)
+            .attr("width", timeScale(oni[interval.end].combined) - timeScale(oni[interval.start].combined) + timeScale.bandwidth())
+            .attr("height", chartHeightBar)
+            .attr("fill", color)
+            .attr("opacity", 0.2);
+        });
+      }
+
+      drawIntervals(positiveIntervals, "blue");
+      drawIntervals(negativeIntervals, "red");
+
+      // Interactivity
+      // Append a vertical line to the chart
+      const verticalLine = chartAreaBar.append('line')
+        .attr('x1', 0)
+        .attr('x2', 0)
+        .attr('y1', 0)
+        .attr('y2', chartHeightBar)
+        .attr('stroke', 'black') // Change the color as needed
+        .attr('stroke-width', '1px')
+        .style('visibility', 'hidden'); // Initially hidden
+
+      // Function to update the line position
+      function updateLinePosition(event) {
+        // Calculate the mouse position relative to the chart
+        const mouseX = d3.pointer(event, chartAreaBar.node())[0];
+        verticalLine
+          .attr('x1', mouseX)
+          .attr('x2', mouseX)
+          .style('visibility', 'visible');
+      }
+
+      // Mouse move event to update the line position
+      chartAreaBar.on('mousemove', updateLinePosition);
+
+      // Optional: Hide the line when the mouse leaves the chart area
+      chartAreaBar.on('mouseleave', () => verticalLine.style('visibility', 'hidden'));
+
+
+
+
+    }
+    requestData();
+
+
+  </script>
+
+  </div>
+
+</body>
+
+</html>
