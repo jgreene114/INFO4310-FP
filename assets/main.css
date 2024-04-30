@@ -1,7 +1,7 @@
 :root {
-    --primary-color: #04182c;
-    --secondary-color-light: #ffb703ff;
-    --secondary-color-dark: #fb8500ff;
+    /*--primary-color: #04182c;*/
+    /*--secondary-color-light: #ffb703ff;*/
+    /*--secondary-color-dark: #fb8500ff;*/
 
     --light-blue: #9ad0eaff;
     --med-blue: #219ebcff;
@@ -13,6 +13,14 @@
 body {
     margin: 0px;
 }
+
+@font-face {
+    font-family: 'Courier Prime';
+    src: url('./fonts/Courier_Prime,Inter/Courier_Prime/CourierPrime-Regular.ttf') format('truetype');
+    font-weight: normal;
+    font-style: normal;
+}
+
 
 #page-container {
     position: relative;
@@ -43,14 +51,57 @@ body {
 }
 
 .leaflet-overlay-pane svg {
-    transform: none !important;
+    /*transform: none !important;*/
 }
 
+.track-path {
+    fill: var(--tan);
+    stroke: var(--dark-blue);
+    fill-opacity: .5;
+    stroke-width: 5;
+}
+
+.track-line-path {
+    stroke-width: 5;
+}
+
+#map-info-header {
+    position: absolute;
+    width: calc(100vw / 3);
+    max-width: calc(100vw / 3);
+    overflow-x: clip;
+    z-index: 1000;
+    height: 100px;
+    background-color: rgba(238, 238, 238, 0.26);
+    backdrop-filter: blur(5px);
+
+    display: flex;
+    flex-direction: row;
+
+
+    .map-header-info-parent {
+        padding: 10px;
+        /*border: 1px solid black;*/
+        flex-grow: 1;
+
+
+        font-size: 30px;
+        color: var(--dark-blue);
+        text-size-adjust: auto;
+        font-family: "Courier Prime";
+        align-content: center;
+    }
+
+    .map-header-info-parent:not(:last-child) {
+        border-inline-end: 1px solid black;
+    }
+}
 
 
 #info-container {
     z-index: 2;
     display: flex;
+    /*display: none;*/
     flex-direction: column;
     height: 100vh;
     overflow-y: scroll;
@@ -58,6 +109,8 @@ body {
     /*margin-block: 50vh;*/
     /*overflow-y: auto;*/
     /*row-gap: calc(100vh / 2);*/
+
+    font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
 }
 
 .info-parent {

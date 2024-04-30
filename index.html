@@ -8,12 +8,25 @@
     <link rel="stylesheet" href="./assets/packages/leaflet/leaflet.css"/>
     <link rel="stylesheet" href="./assets/packages/cssanimation/cssanimation.css">
     <script src="./assets/packages/turf/turf.min.js"></script>
-    <script src="./assets/packages/leaflet/leaflet.js"></script>
+    <script src="./assets/packages/leaflet/leaflet-src.js"></script>
+    <script src="./assets/packages/flubber-master/build/flubber.js"></script>
     <script src="https://d3js.org/d3.v7.min.js"></script>
 
-<!--    todo: remove/download and use local version-->
-    <script src="https://unpkg.com/flubber@0.3.0"></script>
+<!--    <script src="./assets/packages/Leaflet.TrackPlayer-master/dist/leaflet-trackplayer.js"></script>-->
 
+<!--    <script type="application/octet-stream" src="./assets/packages/Leaflet.TrackPlayer-master/dist/leaflet-trackplayer.umd.cjs"></script>-->
+
+<!--    <script src="./assets/packages/Leaflet.TrackPlayer-master/dist/leaflet-trackplayer.umd.cjs"></script>-->
+<!--    <script src="./assets/packages/Leaflet.Polyline.SnakeAnim-master/L.Polyline.SnakeAnim.js"></script>-->
+
+
+<!--    todo: remove/download and use local version-->
+
+<!--    <link rel="preconnect" href="https://fonts.googleapis.com">-->
+<!--    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>-->
+<!--    <link href="https://fonts.googleapis.com/css2?family=Courier+Prime:ital,wght@0,400;0,700;1,400;1,700&family=Inter:slnt,wght@-10..0,900&display=swap" rel="stylesheet">-->
+<!--    <script src="https://unpkg.com/flubber@0.3.0"></script>-->
+<!--    <script src="https://unpkg.com/leaflet-polylinesnakeanim/dist/L.Polyline.SnakeAnim.min.js"></script>-->
 
 </head>
 
@@ -22,7 +35,22 @@
 
 <div id="page-container">
     <div id="map-container">
+        <div id="map-info-header">
+            <div class="map-header-info-parent" id="date">
+<!--                <div class="map-header-info-title"></div>-->
+                <div class="map-header-info-value"></div>
+            </div>
+            <div class="map-header-info-parent" id="storm-clf">
+<!--                <div class="map-header-info-title"></div>-->
+                <div class="map-header-info-value">H1</div> <!-- todo: add hover for full word -->
+            </div>
+            <div class="map-header-info-parent" id="wind-speed">
+<!--                <div class="map-header-info-title">Wind speed</div>-->
+                <div class="map-header-info-value">125MPH</div>
+            </div>
+        </div>
         <div id="map"></div>
+        <div id="hiddenMapContainer" style="width: 0; height: 0; visibility: hidden;"></div>
     </div>
     <div id="info-container">
         <div class="info-parent full-page title-page">

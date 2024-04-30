@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>String Transition with D3.js</title>
+  <script src="https://d3js.org/d3.v7.min.js"></script>
+</head>
+<body>
+<div id="stringContainer">04/24/2024</div>
+<button onclick="animateTransitionD3('04/25/2024', '#stringContainer', '/')">Change Text</button>
+</body>
+</html>
+
+<script>
+    function animateTransitionD3(newStr, selector, separator) {
+        const container = d3.select(selector);
+        const oldStr = container.text();
+        const symbols = '!@#$%^&*()_+-=[]{}|;:",.<>?/0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz';
+
+        const oldParts = oldStr.split(separator);
+        const newParts = newStr.split(separator);
+        const maxLength = Math.max(oldParts.length, newParts.length);
+
+        let currentParts = [...oldParts];
+
+        const update = () => {
+            currentParts = currentParts.map((part, index) => {
+                if (index >= newParts.length) return '';
+                if (newParts[index] === part) return part;
+
+                const oldChars = part.split('');
+                const newChars = newParts[index].split('');
+                const result = oldChars.map((char, charIndex) => {
+                    if (charIndex >= newChars.length) return '';
+                    return newChars[charIndex] === char ? char : symbols[Math.floor(Math.random() * symbols.length)];
+                }).join('');
+
+                return result;
+            });
+
+            container.text(currentParts.join(separator));
+        };
+
+        let scrambler = d3.interval(update, 50);
+
+        setTimeout(() => {
+            scrambler.stop();
+            container.text(newParts.join(separator));
+        }, 1000);
+    }
+
+</script>

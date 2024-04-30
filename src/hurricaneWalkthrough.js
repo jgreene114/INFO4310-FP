@@ -26,7 +26,6 @@ function processGeojson(geojsonData) {
 }
 
 
-
 class HurricaneTrack {
     walkthroughID;
     data;
@@ -36,22 +35,17 @@ class HurricaneTrack {
     changes = null;
     map;
     mapID;
-    currentZoom;
     index;
-    svgLayer;
-    svg;
     segments;
     g;
     sshsScale;
     infoViews;
     infoIdxs;
-    currentLayer = null;
-    currentPath;
-    pathGenerator;
 
     constructor(data, mapID, walkthroughID) {
         this.data = data.features.sort((a, b) => a.properties.ISO_TIME - b.properties.ISO_TIME);
         this.length = this.data.length;
+
         this.index = 0;
         this.walkthroughID = walkthroughID;
         this.segments = processGeojson(data)
@@ -63,13 +57,13 @@ class HurricaneTrack {
 
     }
 
-    createMap () {
+    createMap() {
         this.map = L.map(this.mapID, {
-            // zoomControl: false,
-            // dragging: false,
-            // scrollWheelZoom: false,
-            // doubleClickZoom: false,
-            // touchZoom: false
+            zoomControl: false,
+            dragging: false,
+            scrollWheelZoom: false,
+            doubleClickZoom: false,
+            touchZoom: false
         })
 
         // found on https://leaflet-extras.github.io/leaflet-providers/preview/index.html
@@ -80,80 +74,11 @@ class HurricaneTrack {
         this.map.attributionControl.setPosition('bottomright');
         this.initialMapView();
 
-        if (!this.svgLayer) {
-            this.svgLayer = L.svg({clickable: true}).addTo(this.map);
-            console.log('svgLayer', this.svgLayer)
-            this.svg = d3.select(this.svgLayer._container)
-            // .style('transform', 'none ');
-            this.g = this.svg.append("g").attr("class", "hurricane-path-g leaflet-zoom-hide");
-            this.currentPath = this.g.append("path")
-                .attr("class", "track-path")
-                .style("fill", "none")
-                .style("stroke", "red")
-                .style("stroke-width", "3");
-        }
-
-        this.pathGenerator = this.pathGeneratorFunc();
-
-
-        // const throttledUpdate = _.throttle(this.updateSvg, 100);
-        this.map.on("viewreset", this.updateSvg.bind(this));
-        this.map.on("zoomend", this.updateSvg.bind(this));
-        this.map.on("moveend", this.updateSvg.bind(this));
-        this.map.on("move", this.updateSvg.bind(this));
-    }
-    updateSvg() {
-        // this.pathGenerator = d3.geoPath().projection(this.createProjection(this.map));
-        const bounds = this.map.getBounds();
-        const topLeft = this.map.latLngToLayerPoint(bounds.getNorthWest());
-        const bottomRight = this.map.latLngToLayerPoint(bounds.getSouthEast());
-
-        this.svg
-            .attr("width", bottomRight.x - topLeft.x)
-            .attr("height", bottomRight.y - topLeft.y)
-            .style("left", topLeft.x + "px")
-            .style("top", topLeft.y + "px")
-            // .style("border", "12px solid black")
-            // .style("transform", `translate3d(${-topLeft.x}px, ${-topLeft.y}px, 0px)`)
-
-        this.g.attr("transform", `translate(${-topLeft.x},${-topLeft.y})`);
-        // this.g.select("path").attr("d", this.pathGeneratorFunc()(this.g.select("path").attr("d")))
-        console.log("Path:", this.g.select("path").attr("d"))
-        // console.log("THIS IS G", this.g.node())
-
-        // this.g.selectAll("path").attr("d", this.pathGenerator);
-        console.log("Top Left:", topLeft);
-        console.log("Bottom Right:", bottomRight);
-
-
-        // console.log("Path data:", this.g.selectAll("path").attr("d"));
-        // console.log("Path data:", this.g.select("path").node());
-        // console.log("Top left:", topLeft);
-        // console.log("Bottom right:", bottomRight);
-        // console.log("SVG dimensions:", bottomRight.x - topLeft.x, bottomRight.y - topLeft.y);
-        // console.log("Check if g is selected:", this.svg.node());
-        // console.log("Check transform attribute:", this.g.attr("transform"));
-        // console.log("Translation values:", -topLeft.x, -topLeft.y);
-
-
-    }
-
-    createProjection(map) {
-        return d3.geoTransform({
-            point: function (x, y) {
-                const point = map.latLngToLayerPoint(new L.LatLng(y, x));
-                this.stream.point(point.x, point.y);
-            }
-        });
-    }
-
-    pathGeneratorFunc() {
-        return d3.geoPath().projection(this.createProjection(this.map));
     }
 
     moveMap(lat, lon, zoom) {
         // let distance = map.distance([lat, lon], map.getCenter())
-        this.map.panTo([lat, lon], zoom, { duration: .5, animate: true})
+        this.map.panTo([lat, lon], zoom, {duration: .5, animate: true})
     }
 
     initialMapView() {
@@ -184,24 +109,50 @@ class HurricaneTrack {
         }
     }
 
-    goToIdx(i) {
-        if (i < this.length) {
-            this.prevPoint = this.currentPoint;
-            this.index = i;
-            this.currentPoint = this.data[this.index];
-            // console.log(this.index)
-            // console.log(this.currentPoint)
+    // goToIdx(i) {
+    //     if (i < this.length) {
+    //         this.prevPoint = this.currentPoint;
+    //         this.index = i;
+    //         this.currentPoint = this.data[this.index];
+    //         // console.log(this.index)
+    //         // console.log(this.currentPoint)
+    //
+    //         if (this.currentPoint.LAT == null || this.currentPoint.LON == null) {
+    //             console.error("Invalid data point:", point);
+    //             return;
+    //         }
+    //
+    //         this.moveMap(this.currentPoint.LAT, this.currentPoint.LON, 7)
+    //
+    //     } else {
+    //         console.error("Invalid index: " + i)
+    //     }
+    // }
 
-            if (this.currentPoint.LAT == null || this.currentPoint.LON == null) {
-                console.error("Invalid data point:", point);
-                return;
-            }
+    createRoute() {
+        // let routeFeatures = [];
+        let latLngs = [];
 
-            this.moveMap(this.currentPoint.LAT, this.currentPoint.LON, 7)
+        // let previousCoords = null;
+        this.data.forEach(feature => {
+            let coords = feature.geometry.coordinates;
+            let latLng = new L.LatLng(coords[1], coords[0]);
+            // let marker = L.marker(latLng);
+            // routeFeatures.push(marker);
+            latLngs.push(latLng);
 
-        } else {
-            console.error("Invalid index: " + i)
-        }
+            // console.log(feature)
+
+            // if (previousCoords) {
+            //     let line = L.polyline([previousCoords, latLng], {smoothFactor: 1.0});
+            //     routeFeatures.push(line);
+            // }
+            // previousCoords = latLng;
+        });
+
+        // return L.featureGroup(routeFeatures).addTo(this.map);;
+
+        return latLngs;
     }
 
     unionSegment(existingUnion, newSegment, widthScale) {
@@ -211,6 +162,7 @@ class HurricaneTrack {
                 layer: null
             };
         }
+
 
         let updatedUnion;
 
@@ -223,10 +175,6 @@ class HurricaneTrack {
             updatedUnion = bufferedSegment;
         }
 
-        // if (existingUnion.layer) {
-        //     map.removeLayer(existingUnion.layer);
-        // }
-
         existingUnion.layer = L.geoJson(updatedUnion, {
             style: {
                 color: "red",
@@ -236,7 +184,6 @@ class HurricaneTrack {
         })
         existingUnion.geoJson = updatedUnion;
 
-        // console.log("unionSegment geojson", updatedUnion)
         return existingUnion;
     }
 
@@ -266,96 +213,9 @@ class HurricaneTrack {
         // console.log("infoViews set:", this.infoViews)
     }
 
-    setTrackView(idx) {
-        // let infoIdx = this.idx[this.infoIdxs];
-        // let infoIdx = this.infoIdxs.indexOf(idx)
-        const thisView = this.infoViews[idx];
-        let newGeoJson = thisView.geoJson;
-        let newPath = this.pathGenerator(newGeoJson)
-        // let newPath = this.pathFromGeoJson(newGeoJson, this.map)
-        const oldPath = this.currentPath.attr("d") || ""
-
-        if (oldPath) {
-            const interpolator = flubber.interpolate(oldPath, newPath, {
-                maxSegmentLength: 10
-            });
-
-            this.currentPath.transition()
-                .duration(500)
-                .attrTween("d", () => t => interpolator(t))
-        } else {
-            // console.log("new path", newPath)
-            this.currentPath.attr("d", newPath)
-            // this.g.selectAll("path").attr("d", this.pathGenerator(this.newPath))
-        }
-        // this.g.selectAll("path").attr("d", this.pathGenerator(this.g.attr('g')));
-
-        this.map.flyToBounds(thisView.layer.getBounds(), {duration: .4, animate: true})
-
-        this.updateSvg()
-        // console.log("infoview", this.infoViews[idx])
-        // console.log("infoview geoj", this.infoViews[idx].geoJson)
-        //
-        // console.log("newGeoJson", newGeoJson)
-        // console.log("oldpath", oldPath)
-        // console.log("newpath", newPath)
-
-
-
-        // if (this.currentPath.attr("d")) {
-        //     console.log("attr d yes!")
-        //
-        // } else {
-        //     console.log("attr d no")
-        // }
-
-
-        // let existingUnion, layer;
-        // if (this.currentLayer) {
-        //     // this.map.removeLayer(this.currentLayer)
-        //     // let interpolator = flubber.interpolate(this.
-        //     existingUnion = this.infoViews[idx];
-        //     layer = existingUnion.layer;
-        //
-        //     layer.addTo(this.map)
-        //     this.currentLayer = layer
-        //
-        //     console.log("d3 selecting map",d3.select(this.mapID))
-        //     console.log("map id", this.mapID)
-        //
-        //     console.log('current layer', this.currentLayer)
-        // } else {
-        //     existingUnion = this.infoViews[idx];
-        //     layer = existingUnion.layer;
-        //
-        //
-        //
-        //     layer.addTo(this.map)
-        //     this.currentLayer = layer
-        // }
-
-        // updatePath(newSegment)
-
-
-
-
-        // existingUnion = addAndUnionSegment(existingUnion, segments[i], walkthrough.map, sshsScale)
-        // let bounds = existingUnion.layer.getBounds()
-
-
+    getTrackView(i) {
+        return this.infoViews[i];
     }
-
-    // pathFromGeoJson(geoJson, map) {
-    //     // const geoGenerator = d3.geoPath().projection(d3.geoTransform({
-    //     //     point: function (x, y) {
-    //     //         const point = map.latLngToLayerPoint(new L.LatLng(y, x));
-    //     //         this.stream.point(point.x, point.y);
-    //     //     }
-    //     // }));
-    //
-    //     // return geoGenerator(geoJson);
-    //     return this.pathGenerator(geoJson);
-    // }
 
     findChangesInColumn(column) {
         // console.log("find changes", this.data)
