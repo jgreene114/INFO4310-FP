@@ -14,12 +14,18 @@
     .gridlines line {
       stroke: #aaa;
     }
+
+    .x.axis.no-axis-line path {
+      display: none;
+
+    }
   </style>
 </head>
 
 <body>
   <svg id="lineplot" height="550" width="800" style="margin-top:50px"></svg>
   <svg id="barchart" height="500" width="850" style="margin-top:50px"></svg>
+  <svg id="bubblechart" height="1000" width="800" style="margin-top:50px"></svg>
 
   <script>
     // LINE PLOT
@@ -45,6 +51,18 @@
     let annotationsBar = svgBar.append("g").attr("id", "annotations");
     let chartAreaBar = svgBar.append("g").attr("id", "points")
       .attr("transform", `translate(${marginBar.left},${marginBar.top})`);
+
+    // BUBBLE CHART
+    const svgBubble = d3.select("svg#bubblechart");
+    const widthBubble = svgBubble.attr("width");
+    const heightBubble = svgBubble.attr("height");
+    const marginBubble = { top: 20, right: 10, bottom: 50, left: 50 };
+    const chartWidthBubble = widthBubble - marginBubble.left - marginBubble.right;
+    const chartHeightBubble = heightBubble - marginBubble.top - marginBubble.bottom;
+
+    let annotationsBubble = svgBubble.append("g").attr("id", "annotations");
+    let chartAreaBubble = svgBubble.append("g").attr("id", "points")
+      .attr("transform", `translate(${marginBubble.left},${marginBubble.top})`);
 
     const requestData = async function () {
 
@@ -269,19 +287,16 @@
       drawIntervals(negativeIntervals, "red");
 
       // Interactivity
-      // Append a vertical line to the chart
       const verticalLine = chartAreaBar.append('line')
         .attr('x1', 0)
         .attr('x2', 0)
         .attr('y1', 0)
         .attr('y2', chartHeightBar)
-        .attr('stroke', 'black') // Change the color as needed
+        .attr('stroke', 'black')
         .attr('stroke-width', '1px')
-        .style('visibility', 'hidden'); // Initially hidden
+        .style('visibility', 'hidden');
 
-      // Function to update the line position
       function updateLinePosition(event) {
-        // Calculate the mouse position relative to the chart
         const mouseX = d3.pointer(event, chartAreaBar.node())[0];
         verticalLine
           .attr('x1', mouseX)
@@ -289,12 +304,88 @@
           .style('visibility', 'visible');
       }
 
-      // Mouse move event to update the line position
       chartAreaBar.on('mousemove', updateLinePosition);
 
-      // Optional: Hide the line when the mouse leaves the chart area
       chartAreaBar.on('mouseleave', () => verticalLine.style('visibility', 'hidden'));
 
+      // BUBBLE CHART
+      const events = await d3.csv("events-us.csv");
+      console.log(events)
+
+      // Y Axis
+      const years = d3.range(1980, 2024);
+      const yearScale = d3.scaleLinear().domain([1980, 2024]).range([chartHeightBubble, 0]);
+      let leftGridlinesBubble = d3.axisLeft(yearScale)
+        .tickSize(-chartWidthBubble - 10)
+        .tickFormat(d3.format("d"))
+        .tickValues(years);
+
+      annotationsBubble.append("g")
+        .attr("class", "y gridlines")
+        .attr("transform", `translate(${marginBubble.left - 10},${marginBubble.top})`)
+        .call(leftGridlinesBubble)
+
+      // X Axis
+      const monthScaleBubble = d3.scaleLinear()
+        .domain([1, 12])
+        .range([20, chartWidthLine - 20])
+
+      let topAxisBubble = d3.axisTop(monthScaleBubble)
+        .tickFormat(d => monthNames[d - 1]);
+
+      annotationsBubble.append("g")
+        .attr("class", "x axis no-axis-line")
+        .attr("transform", `translate(${marginBubble.left},${marginBubble.top})`)
+        .call(topAxisBubble);
+
+      // Add Circles
+      const monthMapping = {
+        "January": "1", "February": "2", "March": "3", "April": "4", "May": "5",
+        "June": "6", "July": "7", "August": "8", "September": "9", "October": "10",
+        "November": "11", "December": "12"
+      };
+      const costExtent = d3.extent(events, d => d['Total CPI-Adjusted Cost (Billions of Dollars)']);
+      const costScale = d3.scaleSqrt()
+        .domain(costExtent)
+        .range([5, 20]);
+
+      const disScale = d3.scaleOrdinal(d3.schemeCategory10);
+
+      // Define the arc generator for half-circles
+      const halfCircleArc = d3.arc()
+        .innerRadius(0)
+        .startAngle(-Math.PI / 2)
+        .endAngle(Math.PI / 2);
+
+      // Add arcs instead of circles
+      chartAreaBubble.selectAll("path.point").data(events)
+        .join("path")
+        .attr("class", "point")
+        .attr("d", d => halfCircleArc.outerRadius(costScale(d['Total CPI-Adjusted Cost (Billions of Dollars)']))())
+        .attr("transform", d => `translate(${monthScaleBubble(monthMapping[d['Month']])}, ${yearScale(d['Year'])})`)
+        .attr("opacity", 0.8)
+        .style("fill", d => disScale(d['Disaster']))
+        .on("mouseover", function (event, d) {
+          d3.select(this)
+            .transition()
+            .duration(200)
+            .attr("opacity", 1)
+            .attr("stroke", "black")
+            .attr("stroke-width", 2);
+          chartAreaBubble.append("text")
+            .attr("x", event.x + 10)
+            .attr("y", event.y)
+            .attr("id", "tooltip")
+            .text(`${d['Total CPI-Adjusted Cost (Billions of Dollars)']} Billion`);
+        })
+        .on("mouseout", function () {
+          d3.select(this)
+            .transition()
+            .duration(200)
+            .attr("opacity", 0.8)
+            .attr("stroke", "none");
+          d3.selectAll("#tooltip").remove();
+        });
 
 
 
