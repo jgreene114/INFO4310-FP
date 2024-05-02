@@ -35,7 +35,7 @@ function animateTransition(newStr, container, separators) {
             const result = oldChars.map((char, charIndex) => {
                 if (charIndex >= newChars.length) return '';
                 if (newChars[charIndex] === char) {
-                    return char; // No change needed
+                    return char;
                 } else {
                     return `<span style="color: #a17738ff;">${symbols[Math.floor(Math.random() * symbols.length)]}</span>`;
                 }
@@ -44,7 +44,6 @@ function animateTransition(newStr, container, separators) {
             return result;
         });
 
-        // Update the HTML to show the scrambled characters
         container.html(currentParts.map((part, i) => part + (oldSeparators[i] || '')).join(''));
     };
 
@@ -54,6 +53,26 @@ function animateTransition(newStr, container, separators) {
         scrambler.stop();
         container.html(newParts.map((part, i) => part + (i < oldSeparators.length ? oldSeparators[i] : '')).join(''));
     }, 400);
+}
+
+function animateIncreaseDecrease(newStr, container) {
+    let oldTextContainer = container.select(".current-text")
+    let newTextContainer = container.select(".new-text")
+    console.log(container.node())
+
+    if (newTextContainer.node() != null) {
+        newTextContainer.remove()
+
+    }
+    newTextContainer = container.append('div')
+        .classed("new-text", true)
+        .html(newStr)
+    console.log(newTextContainer)
+
+    let oldStr = oldTextContainer.html()
+
+    console.log(oldTextContainer.node(), newTextContainer.node(), oldStr, newStr)
+
 }
 
 function formatISOStr(isoStr) {
@@ -67,7 +86,7 @@ function formatISOStr(isoStr) {
 
     let formattedDate = formatDate(date) + '<br>' + formatTime(date);
 
-    console.log("Formatted Date:", formattedDate);
+    // console.log("Formatted Date:", formattedDate);
     return formattedDate;
 
 }
@@ -107,31 +126,32 @@ const pageLoad = async function () {
 
 
     let idxs = walkthrough.findChangesInColumn('USA_SSHS')
+    if (!idxs.includes(walkthrough.data.length - 1)) { idxs.push(walkthrough.data.length - 1) }
 
-    function processGeojson(geojsonData, map) {
-        let segments = [];
-
-        for (let i = 0; i < geojsonData.features.length - 1; i++) {
-            const point1 = geojsonData.features[i];
-            const point2 = geojsonData.features[i + 1];
-
-            const segment = {
-                type: 'Feature',
-                geometry: {
-                    type: 'LineString',
-                    coordinates: [point1.geometry.coordinates, point2.geometry.coordinates]
-                },
-                properties: {
-                    windSpeed: (point1.properties.USA_WIND + point2.properties.USA_WIND) / 2,
-                    sshs: point1.properties.USA_SSHS,
-                    ISO_TIME: point1.properties.ISO_TIME
-                }
-            };
-
-            segments.push(segment);
-        }
-        return segments;
-    }
+    // function processGeojson(geojsonData, map) {
+    //     let segments = [];
+    //
+    //     for (let i = 0; i < geojsonData.features.length - 1; i++) {
+    //         const point1 = geojsonData.features[i];
+    //         const point2 = geojsonData.features[i + 1];
+    //
+    //         const segment = {
+    //             type: 'Feature',
+    //             geometry: {
+    //                 type: 'LineString',
+    //                 coordinates: [point1.geometry.coordinates, point2.geometry.coordinates]
+    //             },
+    //             properties: {
+    //                 windSpeed: (point1.properties.USA_WIND + point2.properties.USA_WIND) / 2,
+    //                 sshs: point1.properties.USA_SSHS,
+    //                 ISO_TIME: point1.properties.ISO_TIME
+    //             }
+    //         };
+    //
+    //         segments.push(segment);
+    //     }
+    //     return segments;
+    // }
 
     const latlngs = walkthrough.data.map(function (feature) {
         return [
@@ -154,9 +174,9 @@ const pageLoad = async function () {
     // const trackLine = d3.select(".track-line-path")
 
     const mapHeader = d3.select("#map-info-header")
-    const mapHeaderDate = mapHeader.select("#date")
-    const mapHeaderStormClf = mapHeader.select("#storm-clf")
-    const mapHeaderWindSpeed = mapHeader.select("#wind-speed")
+    const mapHeaderDate = mapHeader.select("#date .map-header-info-value")
+    const mapHeaderStormClf = mapHeader.select("#storm-clf .map-header-info-value")
+    const mapHeaderWindSpeed = mapHeader.select("#wind-speed .map-header-info-value")
 
 
     let trackPolygon = L.polygon(
@@ -166,6 +186,7 @@ const pageLoad = async function () {
             fillColor: '#fcd29fff',
             fillOpacity: 0.5,
             className: "track-path",
+            smoothFactor: 0,
         }
     )
 
@@ -182,6 +203,23 @@ const pageLoad = async function () {
     let prevWindSpeedLen = null
 
     let prevZoom = walkthrough.map.getZoom();
+
+    function changeHeader (i) {
+        let idx = walkthrough.infoIdxs[i]
+        let data = walkthrough.data[idx]
+
+        let date = data.properties.ISO_TIME
+        let windSpeed = data.properties.USA_WIND
+        let stormClf = data.properties.USA_SSHS
+
+        let windSpeedStr = "" + windSpeed //"" + (" ".repeat(3 - windSpeed.toString().length)) + windSpeed
+
+        // animateTransition(formatISOStr(date), mapHeaderDate, ["-", "/", "<br>"])
+        // animateTransition(windSpeedStr, mapHeaderWindSpeed, [])
+        // animateTransition(stormClf + "", mapHeaderStormClf, [" ", " "])
+
+        animateIncreaseDecrease(stormClf, mapHeaderStormClf)
+    }
 
     trackPolygon.addTo(walkthrough.map)
     infoParents.forEach(function (parent, i) {
@@ -215,31 +253,10 @@ const pageLoad = async function () {
                     start: "top bottom-=5", //-=100",
                     end: "bottom bottom-=5", //-=100",
                     onEnter: () => {
-                        let idx = walkthrough.infoIdxs[i]
-                        let data = walkthrough.data[idx]
-
-                        let date = data.properties.ISO_TIME
-                        let windSpeed = data.properties.USA_WIND
-                        let stormClf = data.properties.USA_SSHS
-
-                        let windSpeedStr = "" + (" ".repeat(3 - windSpeed.toString().length)) + windSpeed
-
-                        animateTransition(formatISOStr(date), mapHeaderDate, ["-", "/", "<br>"])
-                        animateTransition(windSpeedStr + " MPH", mapHeaderWindSpeed, [" ", " "])
-                        animateTransition(stormClf + "", mapHeaderStormClf, [" ", " "])
+                        changeHeader(i)
                     },
                     onEnterBack: () => {
-                        let idx = walkthrough.infoIdxs[i]
-                        let data = walkthrough.data[idx]
-
-                        let date = data.properties.ISO_TIME
-                        let windSpeed = data.properties.USA_WIND
-                        let stormClf = data.properties.USA_SSHS
-                        let windSpeedStr = "" + (" ".repeat(3 - windSpeed.toString().length)) + windSpeed
-
-                        animateTransition(formatISOStr(date), mapHeaderDate, ["-", "/", "<br>"])
-                        animateTransition(windSpeedStr + " MPH", mapHeaderWindSpeed, [" ", " "])
-                        animateTransition(stormClf + "", mapHeaderStormClf, [" ", " "])
+                        changeHeader(i)
                     },
                     onUpdate: (self) => {
                         let currentZoom = walkthrough.map.getZoom();
@@ -336,7 +353,8 @@ const pageLoad = async function () {
         dragging: false,
         scrollWheelZoom: false,
         doubleClickZoom: false,
-        touchZoom: false
+        touchZoom: false,
+        interactive: false
     }).setView([-52.5, 20], 2);
 
     // found on https://leaflet-extras.github.io/leaflet-providers/preview/index.html
@@ -355,7 +373,8 @@ const pageLoad = async function () {
     const mdrPolygon = L.polygon(mdrPolygonCoords, {
         color: "#023047ff",
         fillColor: '#fcd29fff',
-        fillOpacity: 0.5
+        fillOpacity: 0.5,
+        interactive: false,
     }).addTo(titleMap);
     // polyline.snakeIn();
 

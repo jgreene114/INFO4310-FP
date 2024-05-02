@@ -28,7 +28,7 @@ body {
     width: 100vw;
 }
 
-#map-container, #info-container {
+#map-container, #info-container, #interactives-container {
     position: absolute;
     top: 0;
     left: 0;
@@ -40,7 +40,8 @@ body {
     display: flex;
     justify-content: center;
     /*overflow-y: hidden;*/
-    z-index: 1;
+    z-index: 100;
+    pointer-events: none;
     position: fixed;
 }
 
@@ -48,6 +49,8 @@ body {
     height: 100%;
     width: calc(100vw / 3);
     position: relative;
+    z-index: 100;
+    pointer-events: none;
 }
 
 .leaflet-overlay-pane svg {
@@ -66,41 +69,95 @@ body {
 }
 
 #map-info-header {
+    pointer-events: auto;
     position: absolute;
     width: calc(100vw / 3);
     max-width: calc(100vw / 3);
     overflow-x: clip;
-    z-index: 1000;
-    height: 100px;
-    background-color: rgba(238, 238, 238, 0.26);
-    backdrop-filter: blur(5px);
+    z-index: 225;
+    height: 70px;
+    /*background-color: rgba(238, 238, 238, 0.26);*/
+    /*backdrop-filter: blur(5px);*/
 
     display: flex;
     flex-direction: row;
 
+    .center-align {
+        text-align: center;
+    }
+
 
     .map-header-info-parent {
-        padding: 10px;
-        /*border: 1px solid black;*/
+        margin: 5px;
+        margin-inline: 2.5px;
+        /*margin-top: 5px;*/
+        /*border: 1px inset rgba(238, 238, 238, 0.53);*/
         flex-grow: 1;
 
+        background-color: rgba(238, 238, 238, 0.26);
+        backdrop-filter: blur(5px);
+        border-radius: 15px;
+        padding: 10px;
 
-        font-size: 30px;
+        box-shadow: 2px 2px 7px rgba(0, 0, 0, 0.22), -2px -2px 7px rgba(0, 0, 0, 0.22);
+
+        /*font-size: 30px;*/
         color: var(--dark-blue);
         text-size-adjust: auto;
         font-family: "Courier Prime";
         align-content: center;
+
+        .map-header-info-unit {
+            font-size: 20px;
+        }
+
+        .map-header-info-value {
+            font-size: 30px;
+        }
+
+
     }
 
-    .map-header-info-parent:not(:last-child) {
-        border-inline-end: 1px solid black;
+    .map-header-info-parent:last-child {
+        margin-right: 5px;
+        /*border-inline-end: 1px solid black;*/
     }
+    .map-header-info-parent:first-child {
+        margin-left: 5px;
+        /*border-inline-end: 1px solid black;*/
+    }
+
+    #date {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+
+
+        .map-header-info-value {
+            width: fit-content;
+            height: fit-content;
+        }
+        /*background-color: pink;*/
+    }
+
+    .flip-text:hover {
+        /*transform: scale(4,4);*/
+        div {
+
+            color: pink !important;
+        }
+    }
+
+    /*.map-header-info-parent:hover {*/
+    /*    background-color: pink;*/
+    /*}*/
 }
 
 
 #info-container {
-    z-index: 2;
+    z-index: 200;
     display: flex;
+    pointer-events: none;
     /*display: none;*/
     flex-direction: column;
     height: 100vh;
@@ -111,15 +168,29 @@ body {
     /*row-gap: calc(100vh / 2);*/
 
     font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+    font-size: 12px;
+}
+
+#interactives-container {
+    pointer-events: none;
+    display: flex;
+    justify-content: center;
+    z-index: 201;
 }
 
 .info-parent {
+    pointer-events: auto;
+    z-index: 100;
     min-height: 100vh;
     scroll-snap-align: start;
     display: flex;
     align-items: flex-start;
     /*border: 1px solid grey;*/
     /*margin-block: 100px;*/
+}
+
+.info-parent.right {
+    justify-content: flex-end;
 }
 
 .info-parent:first-child {
@@ -130,11 +201,11 @@ body {
 }
 
 .info-parent.full-page {
-
+    z-index: 250;
 }
 
 .title-content {
-    z-index: 100;
+    z-index: 250;
 }
 
 .info-parent:not(.hurricane-track) {
@@ -170,9 +241,11 @@ body {
 
 .title-page {
     /*background-color: antiquewhite;*/
+    z-index: 250;
 }
 #title-page-map {
-    z-index: 0;
+    pointer-events: none;
+    z-index: 250;
     width: 100%;
     height: 100%;
     position: absolute;
@@ -180,9 +253,7 @@ body {
 }
 
 
-.info-parent.right {
-    justify-content: flex-end;
-}
+/*.info-parent*/
 
 .info-child {
     /*x: 100px;*/

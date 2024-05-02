@@ -63,7 +63,8 @@ class HurricaneTrack {
             dragging: false,
             scrollWheelZoom: false,
             doubleClickZoom: false,
-            touchZoom: false
+            touchZoom: false,
+            interactive: false,
         })
 
         // found on https://leaflet-extras.github.io/leaflet-providers/preview/index.html
@@ -180,7 +181,8 @@ class HurricaneTrack {
                 color: "red",
                 weight: 3,
                 opacity: 0.8
-            }
+            },
+            interactive: false,
         })
         existingUnion.geoJson = updatedUnion;
 
@@ -202,7 +204,11 @@ class HurricaneTrack {
         let existingUnion = null;
 
         for (let idx of idxs) {
-            existingUnion = this.getTrackPolygon(idx);
+            let _idx = idx;
+            if (_idx == 0) {
+                _idx = 1;
+            }
+            existingUnion = this.getTrackPolygon(_idx);
             existingUnion.index = idx;
 
             this.infoViews.push(
@@ -219,7 +225,7 @@ class HurricaneTrack {
 
     findChangesInColumn(column) {
         // console.log("find changes", this.data)
-        const changesIdxs = [];
+        const changesIdxs = [0];
         let previousPoint = this.data[0].properties[column];
         for (let i = 1; i < this.length; i++) {
             let currentPoint = this.data[i].properties[column];
