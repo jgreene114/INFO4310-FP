@@ -24,7 +24,7 @@
 
 <body>
   <svg id="lineplot" height="550" width="800" style="margin-top:50px"></svg>
-  <svg id="barchart" height="400" width="1100" style="margin-top:50px"></svg>
+  <svg id="barchart" height="450" width="1100" style="margin-top:50px"></svg>
   <svg id="bubblechart" height="1000" width="800" style="margin-top:50px"></svg>
   <div id="tooltipLine"
     style="position: absolute; opacity: 0; pointer-events: none; background-color: white; border: 1px solid black; padding: 10px;">
@@ -35,7 +35,7 @@
     const svgLine = d3.select("svg#lineplot");
     const widthLine = svgLine.attr("width");
     const heightLine = svgLine.attr("height");
-    const marginLine = { top: 50, right: 10, bottom: 50, left: 60 };
+    const marginLine = { top: 10, right: 10, bottom: 50, left: 60 };
     const chartWidthLine = widthLine - marginLine.left - marginLine.right;
     const chartHeightLine = heightLine - marginLine.top - marginLine.bottom;
 
@@ -47,7 +47,7 @@
     const svgBar = d3.select("svg#barchart");
     const widthBar = svgBar.attr("width");
     const heightBar = svgBar.attr("height");
-    const marginBar = { top: 10, right: 60, bottom: 50, left: 50 };
+    const marginBar = { top: 50, right: 60, bottom: 50, left: 50 };
     const chartWidthBar = widthBar - marginBar.left - marginBar.right;
     const chartHeightBar = heightBar - marginBar.top - marginBar.bottom;
 
@@ -148,19 +148,18 @@
         .attr("stroke-width", 2)
         .on("mouseover", function (event, d) {
           d3.select(this)
-            .raise() // Brings the line to the front
+            .raise()
             .transition()
             .duration(150)
             .attr("stroke-width", 4)
             .attr("stroke", "blue");
 
-          // Calculate the average temperature for the year from the data points
           const avgTemperature = d[1].reduce((acc, cur) => acc + parseFloat(cur.Temperature), 0) / d[1].length;
 
           tooltipLine.transition()
             .duration(200)
             .style("opacity", 0.9);
-          tooltipLine.html(`Year: ${d[0]}<br/>Average Temperature: ${avgTemperature.toFixed(2)}°F`) // Display average temperature
+          tooltipLine.html(`Year: ${d[0]}<br/>Average Temperature: ${avgTemperature.toFixed(2)}°F`)
             .style("left", (event.pageX + 15) + "px")
             .style("top", (event.pageY - 28) + "px");
         })
@@ -173,7 +172,6 @@
             .attr("stroke-width", 2)
             .attr("stroke", d => d[0] === "2024" ? "#8B0000" : (d[0] === "Average" ? "red" : "#d9d9d9"));
 
-          // Only lower the element if it's not the 2024 or Average line
           if (d[0] !== "2024" && d[0] !== "Average") {
             element.lower();
           }
@@ -209,7 +207,7 @@
 
       // Average Label
       const legendGroup = svgLine.append("g")
-        .attr("transform", `translate(${widthLine - marginLine.right - 575},${marginLine.top + 300})`);
+        .attr("transform", `translate(${widthLine - marginLine.right - 575},${marginLine.top + 375})`);
 
       legendGroup.append("rect")
         .attr("width", 24)
@@ -217,9 +215,8 @@
         .attr("fill", "red");
 
       legendGroup.append("text")
-        .attr("x", 30) // Adjust as needed to fit your visual design
-        .attr("y", 10) // Aligns text vertically to be centered with the rectangle
-        .style("font-size", "13px")
+        .attr("x", 30)
+        .attr("y", 10)
         .style("font-family", "Arial")
         .text("1982-2023 Average");
 
@@ -308,7 +305,7 @@
         .attr("transform", `translate(${marginBar.left},${chartHeightBar + marginBar.top + 10})`)
         .call(bottomAxisBar)
         .selectAll("text")
-        .style("text-anchor", "middle")  // Center the anchor to the middle of the text
+        .style("text-anchor", "middle")
         .attr("dx", "0em")
         .attr("dy", "1em");
 
@@ -318,9 +315,9 @@
         .enter()
         .append("rect")
         .attr("x", d => timeScale(d.combined))
-        .attr("y", d => Math.min(celsiusScale(d.ANOM), celsiusScale(0))) // Start from the higher value (lower on the screen)
+        .attr("y", d => Math.min(celsiusScale(d.ANOM), celsiusScale(0)))
         .attr("width", timeScale.bandwidth())
-        .attr("height", d => Math.abs(celsiusScale(d.ANOM) - celsiusScale(0))) // Height is the absolute difference
+        .attr("height", d => Math.abs(celsiusScale(d.ANOM) - celsiusScale(0)))
         .attr("fill", d => d.ANOM > 0 ? "red" : "blue");
 
       // Highlights
@@ -375,8 +372,8 @@
       // Tooltips
       const tooltipRect = chartAreaBar.append('rect')
         .attr('opacity', 0)
-        .attr('fill', 'blue')  // Default color
-        .attr('rx', 5)  // Rounded corners
+        .attr('fill', 'blue')
+        .attr('rx', 5)
         .attr('ry', 5);
 
       const tooltipBar = chartAreaBar.append('text')
@@ -414,22 +411,20 @@
         if (index >= 0 && index < oni.length) {
           const data = oni[index];
 
-          // Tooltip text content and position
           tooltipBar
             .text(`${data.SEAS} ${data.YR}: ${data.ANOM} °C (${(data.ANOM * 1.8).toFixed(1)} °F)`)
             .attr('x', mouseX)
-            .attr('y', 15)  // Fixed y position towards the top of the chart
-            .attr('opacity', 1);  // Make visible
+            .attr('y', 15)
+            .attr('opacity', 1);
 
-          // Tooltip background size and position
           const textWidth = tooltipBar.node().getBBox().width;
           tooltipRect
             .attr('x', mouseX - textWidth / 2 - 5)
-            .attr('y', 5)  // Slightly above the text
+            .attr('y', 5)
             .attr('width', textWidth + 10)
             .attr('height', 20)
-            .attr('fill', data.ANOM > 0 ? 'red' : data.ANOM < 0 ? 'blue' : 'gray')  // Color based on data
-            .attr('opacity', 1);  // Make visible
+            .attr('fill', data.ANOM > 0 ? 'red' : data.ANOM < 0 ? 'blue' : 'gray')
+            .attr('opacity', 1);
 
           tooltipRect.raise();
           tooltipBar.raise();
@@ -442,6 +437,24 @@
         tooltipBar.attr('opacity', 0);
         tooltipRect.attr('opacity', 0);
       });
+
+      // Title
+      svgBar.append("text")
+        .attr("x", (marginBar.left + chartWidthBar / 2))
+        .attr("y", marginBar.top / 2)
+        .attr("text-anchor", "middle")
+        .style("font-size", "20px")
+        .style("font-family", "Arial")
+        .style("font-weight", "bold")
+        .text("Oceanic Niño Index (ONI)");
+
+      svgBar.append("text")
+        .attr("x", (marginBar.left + chartWidthBar / 2))
+        .attr("y", marginBar.top / 2 + 20)
+        .attr("text-anchor", "middle")
+        .style("font-size", "15px")
+        .style("font-family", "Arial")
+        .text("3-Month Running Mean of Niño 3.4 SST Anomalies");
 
       // BUBBLE CHART
       const events = await d3.csv("events-us.csv", function (d) {
@@ -480,7 +493,7 @@
         .attr("transform", `translate(${marginBubble.left},${marginBubble.top})`)
         .call(topAxisBubble);
 
-      // Add Circles
+      // Add Circles (Arcs)
       const monthMapping = {
         "January": "1", "February": "2", "March": "3", "April": "4", "May": "5",
         "June": "6", "July": "7", "August": "8", "September": "9", "October": "10",
@@ -488,41 +501,15 @@
       };
       const costExtent = d3.extent(events, d => d['Total CPI-Adjusted Cost (Billions of Dollars)']);
 
-      // scaleSqrt()
-      // const costScale = d3.scaleSqrt()
-      //   .domain(costExtent)
-      //   .range([5, 10]);
-
-      // scalePow
-      // const costScale = d3.scalePow()
-      //   .domain(costExtent)
-      //   .range([5, 10]);
-
-      // scaleLog
-      // const costScale = d3.scaleLog()
-      //   .domain(costExtent)
-      //   .range([5, 20]);
-
-      // scaleSymLog
-      // const costScale = d3.scaleSymlog()
-      //   .domain(costExtent)
-      //   .range([5, 10]);
-
-
-
-      // const disScale = d3.scaleOrdinal(d3.schemeCategory10);
-
       const disScale = d3.scaleOrdinal()
         .domain(['Flooding', 'Tropical Cyclone', 'Drought', 'Freeze', 'Severe Storm', 'Winter Storm', 'Wildfire'])
         .range(['#1f77b4', '#08306b', '#ffdb58', '#d9d9d9', '#31a354', '#bdbdbd', '#ff6347']);
 
-      // Define the arc generator for half-circles
       const halfCircleArc = d3.arc()
         .innerRadius(0)
         .startAngle(-Math.PI / 2)
         .endAngle(Math.PI / 2);
 
-      // Add arcs instead of circles
       chartAreaBubble.selectAll("path.point").data(events)
         .join("path")
         .attr("class", "point")
@@ -541,16 +528,13 @@
             .attr("stroke", "black")
             .attr("stroke-width", 2);
 
-          // Creating a group for the tooltip to manage positioning more easily
           const tooltipGroup = chartAreaBubble.append("g")
             .attr("id", "tooltip")
             .attr("transform", `translate(${event.x - marginBubble.left}, ${event.y - marginBubble.top - 30})`);
 
-          // Preparing text content
           const eventName = d.Name;
           const eventCost = `$${parseFloat(d['Total CPI-Adjusted Cost (Billions of Dollars)']).toFixed(2)} billion`;
 
-          // Adding text elements to calculate size
           const nameText = tooltipGroup.append("text")
             .attr("y", - 5)
             .style("font-size", "12px")
@@ -565,12 +549,10 @@
             .text(eventCost)
             .attr("text-anchor", "middle");
 
-          // Calculating bounding box for text to size the rectangle
           const nameWidth = nameText.node().getBBox().width;
           const costWidth = costText.node().getBBox().width;
-          const maxWidth = Math.max(nameWidth, costWidth) + 20; // Add some padding
+          const maxWidth = Math.max(nameWidth, costWidth) + 20;
 
-          // Adding a rectangle behind the text
           tooltipGroup.insert("rect", "text")
             .attr("x", -(maxWidth / 2))
             .attr("y", -20)
@@ -580,7 +562,7 @@
             .attr("opacity", 0.85)
             .attr("stroke", "black")
             .attr("stroke-width", 1)
-            .attr("rx", 5) // Optional: for rounded corners
+            .attr("rx", 5)
             .attr("ry", 5);
 
         })
@@ -590,10 +572,8 @@
             .duration(200)
             .attr("opacity", 0.8)
             .attr("stroke", "none");
-          d3.selectAll("#tooltip").remove(); // Ensure tooltip is removed after mouseout
+          d3.selectAll("#tooltip").remove();
         });
-
-
 
     }
     requestData();
