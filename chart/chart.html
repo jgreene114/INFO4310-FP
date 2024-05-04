@@ -12,7 +12,7 @@
     }
 
     .gridlines line {
-      stroke: #aaa;
+      stroke: #bbb;
     }
 
     .x.axis.no-axis-line path {
@@ -24,7 +24,7 @@
 
 <body>
   <svg id="lineplot" height="550" width="800" style="margin-top:50px"></svg>
-  <svg id="barchart" height="500" width="850" style="margin-top:50px"></svg>
+  <svg id="barchart" height="400" width="1100" style="margin-top:50px"></svg>
   <svg id="bubblechart" height="1000" width="800" style="margin-top:50px"></svg>
 
   <script>
@@ -66,7 +66,7 @@
 
     const requestData = async function () {
 
-      // LINE CHART
+      // LINE PLOT
       const sst = await d3.csv("sst.csv");
       console.log(sst)
 
@@ -195,7 +195,19 @@
       annotationsBar.append("g")
         .attr("class", "y gridlines")
         .attr("transform", `translate(${marginBar.left - 10},${marginBar.top})`)
-        .call(leftGridlinesBar);
+        .call(leftGridlinesBar)
+        .selectAll(".tick")
+        .each(function (d) {
+          if (d === 0.5) {
+            d3.select(this).select("line")
+              .style("stroke", "red")
+              .style("stroke-width", "2px");
+          } else if (d === -0.5) {
+            d3.select(this).select("line")
+              .style("stroke", "blue")
+              .style("stroke-width", "2px");
+          }
+        });
 
       // X Axis  
       oni.forEach(d => {
@@ -244,29 +256,30 @@
       let currentInterval = { start: null, end: null };
 
       oni.forEach((d, i) => {
-        if (d.ANOM > 0) {
+        if (d.ANOM > 0.5) {
           if (currentInterval.start === null) {
             currentInterval.start = i;
           }
           currentInterval.end = i;
-        } else if (d.ANOM < 0 && currentInterval.start !== null) {
+        } else if (d.ANOM <= 0.5 && currentInterval.start !== null) {
           positiveIntervals.push({ ...currentInterval });
           currentInterval = { start: null, end: null };
         }
-        if (d.ANOM < 0) {
+        if (d.ANOM < -0.5) {
           if (currentInterval.start === null) {
             currentInterval.start = i;
           }
           currentInterval.end = i;
-        } else if (d.ANOM > 0 && currentInterval.start !== null) {
+        } else if (d.ANOM >= -0.5 && currentInterval.start !== null) {
           negativeIntervals.push({ ...currentInterval });
           currentInterval = { start: null, end: null };
         }
       });
+
       if (currentInterval.start !== null) {
-        if (oni[currentInterval.start].ANOM > 0) {
+        if (oni[currentInterval.start].ANOM > 0.5) {
           positiveIntervals.push({ ...currentInterval });
-        } else {
+        } else if (oni[currentInterval.start].ANOM < -0.5) {
           negativeIntervals.push({ ...currentInterval });
         }
       }
@@ -286,7 +299,19 @@
       drawIntervals(positiveIntervals, "blue");
       drawIntervals(negativeIntervals, "red");
 
+      // Tooltip 
+      const tooltipBar = chartAreaBar.append('text')
+        .attr('opacity', 0)
+        .attr('text-anchor', 'start')
+        .attr('alignment-baseline', 'middle');
+
       // Interactivity
+      chartAreaBar.append('rect')
+        .attr('width', chartWidthBar)
+        .attr('height', chartHeightBar)
+        .attr('fill', 'none')
+        .attr('pointer-events', 'all');
+
       const verticalLine = chartAreaBar.append('line')
         .attr('x1', 0)
         .attr('x2', 0)
@@ -296,27 +321,56 @@
         .attr('stroke-width', '1px')
         .style('visibility', 'hidden');
 
+
       function updateLinePosition(event) {
         const mouseX = d3.pointer(event, chartAreaBar.node())[0];
+        const adjustedMouseX = mouseX - marginBar.left + 50;
         verticalLine
           .attr('x1', mouseX)
           .attr('x2', mouseX)
           .style('visibility', 'visible');
+
+        // Calculate the index by using the adjusted mouse position
+        const index = Math.round(adjustedMouseX / timeScale.step());
+        if (index >= 0 && index < oni.length) {
+          const data = oni[index];
+
+          // Calculate the center of the bar
+          const barCenter = timeScale(data.combined) + timeScale.bandwidth() / 2 + marginBar.left;
+
+          // Update tooltip content and position
+          tooltipBar
+            .text(`${data.SEAS} ${data.YR}: ${data.ANOM} °C (${(data.ANOM * 1.8).toFixed(1)} °F)`)
+            .attr('x', mouseX + (mouseX < chartWidthBar / 2 ? 10 : -10))
+            .attr('y', 20)  // Fixed y position towards the top of the chart
+            .attr('text-anchor', 'middle')  // Anchor text in the middle of the tooltip
+            .attr('fill', data.ANOM > 0 ? 'red' : data.ANOM < 0 ? 'blue' : 'black')  // Adjust color
+            .attr('opacity', 1);  // Make visible
+        }
       }
 
       chartAreaBar.on('mousemove', updateLinePosition);
-
-      chartAreaBar.on('mouseleave', () => verticalLine.style('visibility', 'hidden'));
+      chartAreaBar.on('mouseleave', () => {
+        verticalLine.style('visibility', 'hidden');
+        tooltipBar.attr('opacity', 0);  // Hide tooltip when mouse leaves
+      });
 
       // BUBBLE CHART
-      const events = await d3.csv("events-us.csv");
+      const events = await d3.csv("events-us.csv", function (d) {
+        const parsedDate = new Date(d.Date);
+        d.parsedYear = parsedDate.getFullYear();
+        d.parsedMonth = parsedDate.getMonth() + 1;
+        d.parsedDay = parsedDate.getDate();
+        return d;
+      });
+
       console.log(events)
 
       // Y Axis
-      const years = d3.range(1980, 2024);
-      const yearScale = d3.scaleLinear().domain([1980, 2024]).range([chartHeightBubble, 0]);
+      const years = d3.range(1980, 2025);
+      const yearScale = d3.scaleLinear().domain([1980, 2025]).range([chartHeightBubble, 0]);
       let leftGridlinesBubble = d3.axisLeft(yearScale)
-        .tickSize(-chartWidthBubble - 10)
+        .tickSize(-chartWidthBubble - 20)
         .tickFormat(d3.format("d"))
         .tickValues(years);
 
@@ -328,7 +382,7 @@
       // X Axis
       const monthScaleBubble = d3.scaleLinear()
         .domain([1, 12])
-        .range([20, chartWidthLine - 20])
+        .range([20, chartWidthLine - 20]);
 
       let topAxisBubble = d3.axisTop(monthScaleBubble)
         .tickFormat(d => monthNames[d - 1]);
@@ -345,11 +399,34 @@
         "November": "11", "December": "12"
       };
       const costExtent = d3.extent(events, d => d['Total CPI-Adjusted Cost (Billions of Dollars)']);
-      const costScale = d3.scaleSqrt()
-        .domain(costExtent)
-        .range([5, 20]);
 
-      const disScale = d3.scaleOrdinal(d3.schemeCategory10);
+      // scaleSqrt()
+      // const costScale = d3.scaleSqrt()
+      //   .domain(costExtent)
+      //   .range([5, 10]);
+
+      // scalePow
+      const costScale = d3.scalePow()
+        .domain(costExtent)
+        .range([5, 10]);
+
+      // scaleLog
+      // const costScale = d3.scaleLog()
+      //   .domain(costExtent)
+      //   .range([5, 20]);
+
+      // scaleSymLog
+      // const costScale = d3.scaleSymlog()
+      //   .domain(costExtent)
+      //   .range([5, 10]);
+
+
+
+      // const disScale = d3.scaleOrdinal(d3.schemeCategory10);
+
+      const disScale = d3.scaleOrdinal()
+        .domain(['Flooding', 'Tropical Cyclone', 'Drought', 'Freeze', 'Severe Storm', 'Winter Storm', 'Wildfire'])
+        .range(['#1f77b4', '#08306b', '#ffdb58', '#d9d9d9', '#31a354', '#bdbdbd', '#ff6347']);
 
       // Define the arc generator for half-circles
       const halfCircleArc = d3.arc()
@@ -362,7 +439,10 @@
         .join("path")
         .attr("class", "point")
         .attr("d", d => halfCircleArc.outerRadius(costScale(d['Total CPI-Adjusted Cost (Billions of Dollars)']))())
-        .attr("transform", d => `translate(${monthScaleBubble(monthMapping[d['Month']])}, ${yearScale(d['Year'])})`)
+        .attr("transform", d => {
+          const monthPosition = monthScaleBubble(d.parsedMonth + (d.parsedDay / 30));
+          return `translate(${monthPosition}, ${yearScale(d.parsedYear)})`;
+        })
         .attr("opacity", 0.8)
         .style("fill", d => disScale(d['Disaster']))
         .on("mouseover", function (event, d) {
@@ -372,11 +452,49 @@
             .attr("opacity", 1)
             .attr("stroke", "black")
             .attr("stroke-width", 2);
-          chartAreaBubble.append("text")
-            .attr("x", event.x + 10)
-            .attr("y", event.y)
+
+          // Creating a group for the tooltip to manage positioning more easily
+          const tooltipGroup = chartAreaBubble.append("g")
             .attr("id", "tooltip")
-            .text(`${d['Total CPI-Adjusted Cost (Billions of Dollars)']} Billion`);
+            .attr("transform", `translate(${event.x - marginBubble.left}, ${event.y - marginBubble.top - 30})`);
+
+          // Preparing text content
+          const eventName = d.Name;
+          const eventCost = `$${parseFloat(d['Total CPI-Adjusted Cost (Billions of Dollars)']).toFixed(2)} billion`;
+
+          // Adding text elements to calculate size
+          const nameText = tooltipGroup.append("text")
+            .attr("y", - 5)
+            .style("font-size", "12px")
+            .style("font-weight", "bold")
+            .text(eventName)
+            .attr("text-anchor", "middle");
+
+          const costText = tooltipGroup.append("text")
+            .attr("y", 10)
+            .style("font-size", "12px")
+            .style("font-weight", "normal")
+            .text(eventCost)
+            .attr("text-anchor", "middle");
+
+          // Calculating bounding box for text to size the rectangle
+          const nameWidth = nameText.node().getBBox().width;
+          const costWidth = costText.node().getBBox().width;
+          const maxWidth = Math.max(nameWidth, costWidth) + 20; // Add some padding
+
+          // Adding a rectangle behind the text
+          tooltipGroup.insert("rect", "text")
+            .attr("x", -(maxWidth / 2))
+            .attr("y", -20)
+            .attr("width", maxWidth)
+            .attr("height", 40)
+            .attr("fill", "white")
+            .attr("opacity", 0.85)
+            .attr("stroke", "black")
+            .attr("stroke-width", 1)
+            .attr("rx", 5) // Optional: for rounded corners
+            .attr("ry", 5);
+
         })
         .on("mouseout", function () {
           d3.select(this)
@@ -384,7 +502,7 @@
             .duration(200)
             .attr("opacity", 0.8)
             .attr("stroke", "none");
-          d3.selectAll("#tooltip").remove();
+          d3.selectAll("#tooltip").remove(); // Ensure tooltip is removed after mouseout
         });
 
 
