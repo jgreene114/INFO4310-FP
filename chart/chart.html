@@ -26,6 +26,9 @@
   <svg id="lineplot" height="550" width="800" style="margin-top:50px"></svg>
   <svg id="barchart" height="400" width="1100" style="margin-top:50px"></svg>
   <svg id="bubblechart" height="1000" width="800" style="margin-top:50px"></svg>
+  <div id="tooltipLine"
+    style="position: absolute; opacity: 0; pointer-events: none; background-color: white; border: 1px solid black; padding: 10px;">
+  </div>
 
   <script>
     // LINE PLOT
@@ -133,6 +136,8 @@
 
       const dataByYear = d3.group(sst, d => d['Year']);
 
+      const tooltipLine = d3.select("#tooltipLine");
+
       chartAreaLine.selectAll(".line")
         .data(dataByYear)
         .enter().append("path")
@@ -140,7 +145,43 @@
         .attr("d", d => lineGen(d[1]))
         .attr("fill", "none")
         .attr("stroke", d => d[0] === "2024" ? "#8B0000" : "#d9d9d9")
-        .attr("stroke-width", 2);
+        .attr("stroke-width", 2)
+        .on("mouseover", function (event, d) {
+          d3.select(this)
+            .raise() // Brings the line to the front
+            .transition()
+            .duration(150)
+            .attr("stroke-width", 4)
+            .attr("stroke", "blue");
+
+          // Calculate the average temperature for the year from the data points
+          const avgTemperature = d[1].reduce((acc, cur) => acc + parseFloat(cur.Temperature), 0) / d[1].length;
+
+          tooltipLine.transition()
+            .duration(200)
+            .style("opacity", 0.9);
+          tooltipLine.html(`Year: ${d[0]}<br/>Average Temperature: ${avgTemperature.toFixed(2)}°F`) // Display average temperature
+            .style("left", (event.pageX + 15) + "px")
+            .style("top", (event.pageY - 28) + "px");
+        })
+        .on("mouseout", function (d) {
+          const element = d3.select(this);
+
+          element
+            .transition()
+            .duration(150)
+            .attr("stroke-width", 2)
+            .attr("stroke", d => d[0] === "2024" ? "#8B0000" : (d[0] === "Average" ? "red" : "#d9d9d9"));
+
+          // Only lower the element if it's not the 2024 or Average line
+          if (d[0] !== "2024" && d[0] !== "Average") {
+            element.lower();
+          }
+
+          tooltipLine.transition()
+            .duration(500)
+            .style("opacity", 0);
+        });
 
       const filteredData = Array.from(dataByYear).filter(([year,]) => year !== "2024");
       let monthlyAverages = [];
@@ -165,6 +206,38 @@
         .attr("fill", "none")
         .attr("stroke", "red")
         .attr("stroke-width", 2);
+
+      // Average Label
+      const legendGroup = svgLine.append("g")
+        .attr("transform", `translate(${widthLine - marginLine.right - 575},${marginLine.top + 300})`);
+
+      legendGroup.append("rect")
+        .attr("width", 24)
+        .attr("height", 12)
+        .attr("fill", "red");
+
+      legendGroup.append("text")
+        .attr("x", 30) // Adjust as needed to fit your visual design
+        .attr("y", 10) // Aligns text vertically to be centered with the rectangle
+        .style("font-size", "13px")
+        .style("font-family", "Arial")
+        .text("1982-2023 Average");
+
+      // 2024 Label
+      const dec2024Data = sst.find(d => d['Year'] === "2024" && d['Month'] === "3");
+
+      svgLine.append("circle")
+        .attr("cx", monthScale(dec2024Data['Month']) + marginLine.left)
+        .attr("cy", tempScale(dec2024Data['Temperature']) + marginLine.top)
+        .attr("r", 5)
+        .attr("fill", "#8B0000");
+
+      svgLine.append("text")
+        .attr("x", monthScale(dec2024Data['Month']) + marginLine.left + 10)
+        .attr("y", tempScale(dec2024Data['Temperature']) + marginLine.top + 5)
+        .attr("text-anchor", "start")
+        .style("font-family", "Arial")
+        .text("2024");
 
       // BAR CHART
       const oni = await d3.csv("oni_data.csv");
@@ -299,11 +372,18 @@
       drawIntervals(positiveIntervals, "blue");
       drawIntervals(negativeIntervals, "red");
 
-      // Tooltip 
+      // Tooltips
+      const tooltipRect = chartAreaBar.append('rect')
+        .attr('opacity', 0)
+        .attr('fill', 'blue')  // Default color
+        .attr('rx', 5)  // Rounded corners
+        .attr('ry', 5);
+
       const tooltipBar = chartAreaBar.append('text')
         .attr('opacity', 0)
-        .attr('text-anchor', 'start')
-        .attr('alignment-baseline', 'middle');
+        .attr('text-anchor', 'middle')
+        .attr('alignment-baseline', 'middle')
+        .attr('fill', 'white');
 
       // Interactivity
       chartAreaBar.append('rect')
@@ -330,29 +410,37 @@
           .attr('x2', mouseX)
           .style('visibility', 'visible');
 
-        // Calculate the index by using the adjusted mouse position
         const index = Math.round(adjustedMouseX / timeScale.step());
         if (index >= 0 && index < oni.length) {
           const data = oni[index];
 
-          // Calculate the center of the bar
-          const barCenter = timeScale(data.combined) + timeScale.bandwidth() / 2 + marginBar.left;
-
-          // Update tooltip content and position
+          // Tooltip text content and position
           tooltipBar
             .text(`${data.SEAS} ${data.YR}: ${data.ANOM} °C (${(data.ANOM * 1.8).toFixed(1)} °F)`)
-            .attr('x', mouseX + (mouseX < chartWidthBar / 2 ? 10 : -10))
-            .attr('y', 20)  // Fixed y position towards the top of the chart
-            .attr('text-anchor', 'middle')  // Anchor text in the middle of the tooltip
-            .attr('fill', data.ANOM > 0 ? 'red' : data.ANOM < 0 ? 'blue' : 'black')  // Adjust color
+            .attr('x', mouseX)
+            .attr('y', 15)  // Fixed y position towards the top of the chart
             .attr('opacity', 1);  // Make visible
+
+          // Tooltip background size and position
+          const textWidth = tooltipBar.node().getBBox().width;
+          tooltipRect
+            .attr('x', mouseX - textWidth / 2 - 5)
+            .attr('y', 5)  // Slightly above the text
+            .attr('width', textWidth + 10)
+            .attr('height', 20)
+            .attr('fill', data.ANOM > 0 ? 'red' : data.ANOM < 0 ? 'blue' : 'gray')  // Color based on data
+            .attr('opacity', 1);  // Make visible
+
+          tooltipRect.raise();
+          tooltipBar.raise();
         }
       }
 
       chartAreaBar.on('mousemove', updateLinePosition);
       chartAreaBar.on('mouseleave', () => {
         verticalLine.style('visibility', 'hidden');
-        tooltipBar.attr('opacity', 0);  // Hide tooltip when mouse leaves
+        tooltipBar.attr('opacity', 0);
+        tooltipRect.attr('opacity', 0);
       });
 
       // BUBBLE CHART
@@ -406,9 +494,9 @@
       //   .range([5, 10]);
 
       // scalePow
-      const costScale = d3.scalePow()
-        .domain(costExtent)
-        .range([5, 10]);
+      // const costScale = d3.scalePow()
+      //   .domain(costExtent)
+      //   .range([5, 10]);
 
       // scaleLog
       // const costScale = d3.scaleLog()
@@ -438,7 +526,7 @@
       chartAreaBubble.selectAll("path.point").data(events)
         .join("path")
         .attr("class", "point")
-        .attr("d", d => halfCircleArc.outerRadius(costScale(d['Total CPI-Adjusted Cost (Billions of Dollars)']))())
+        .attr("d", d => halfCircleArc.outerRadius(Math.sqrt(d['Total CPI-Adjusted Cost (Billions of Dollars)']) * 10)())
         .attr("transform", d => {
           const monthPosition = monthScaleBubble(d.parsedMonth + (d.parsedDay / 30));
           return `translate(${monthPosition}, ${yearScale(d.parsedYear)})`;
