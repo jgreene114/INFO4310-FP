@@ -11,10 +11,13 @@
                 ]
             },
             "properties": {
-                "ISO_TIME": "2005-08-23 18:00:00",
+                "ISO_TIME": "8/23/05 18:00",
                 "NAME": "KATRINA",
+                "LAT": 23.1,
+                "LON": -75.1,
                 "USA_SSHS": -1,
                 "USA_WIND": 30,
+                "USA_RMW": "30",
                 "USA_STATUS": "TD",
                 "SEASON": 2005,
                 "NUMBER": 61,
@@ -31,10 +34,13 @@
                 ]
             },
             "properties": {
-                "ISO_TIME": "2005-08-23 21:00:00",
+                "ISO_TIME": "8/23/05 21:00",
                 "NAME": "KATRINA",
+                "LAT": 23.2476,
+                "LON": -75.4049,
                 "USA_SSHS": -1,
                 "USA_WIND": 30,
+                "USA_RMW": "35",
                 "USA_STATUS": "TD",
                 "SEASON": 2005,
                 "NUMBER": 61,
@@ -51,10 +57,13 @@
                 ]
             },
             "properties": {
-                "ISO_TIME": "2005-08-24 00:00:00",
+                "ISO_TIME": "8/24/05 0:00",
                 "NAME": "KATRINA",
+                "LAT": 23.4,
+                "LON": -75.7,
                 "USA_SSHS": -1,
                 "USA_WIND": 30,
+                "USA_RMW": "40",
                 "USA_STATUS": "TD",
                 "SEASON": 2005,
                 "NUMBER": 61,
@@ -71,10 +80,13 @@
                 ]
             },
             "properties": {
-                "ISO_TIME": "2005-08-24 03:00:00",
+                "ISO_TIME": "8/24/05 3:00",
                 "NAME": "KATRINA",
+                "LAT": 23.57,
+                "LON": -75.9726,
                 "USA_SSHS": -1,
                 "USA_WIND": 30,
+                "USA_RMW": "40",
                 "USA_STATUS": "TD",
                 "SEASON": 2005,
                 "NUMBER": 61,
@@ -91,10 +103,13 @@
                 ]
             },
             "properties": {
-                "ISO_TIME": "2005-08-24 06:00:00",
+                "ISO_TIME": "8/24/05 6:00",
                 "NAME": "KATRINA",
+                "LAT": 23.8,
+                "LON": -76.2,
                 "USA_SSHS": -1,
                 "USA_WIND": 30,
+                "USA_RMW": "40",
                 "USA_STATUS": "TD",
                 "SEASON": 2005,
                 "NUMBER": 61,
@@ -111,10 +126,13 @@
                 ]
             },
             "properties": {
-                "ISO_TIME": "2005-08-24 09:00:00",
+                "ISO_TIME": "8/24/05 9:00",
                 "NAME": "KATRINA",
+                "LAT": 24.1124,
+                "LON": -76.3577,
                 "USA_SSHS": -1,
                 "USA_WIND": 32,
+                "USA_RMW": "47",
                 "USA_STATUS": "TD",
                 "SEASON": 2005,
                 "NUMBER": 61,
@@ -131,10 +149,13 @@
                 ]
             },
             "properties": {
-                "ISO_TIME": "2005-08-24 12:00:00",
+                "ISO_TIME": "8/24/05 12:00",
                 "NAME": "KATRINA",
+                "LAT": 24.5,
+                "LON": -76.5,
                 "USA_SSHS": 0,
                 "USA_WIND": 35,
+                "USA_RMW": "55",
                 "USA_STATUS": "TS",
                 "SEASON": 2005,
                 "NUMBER": 61,
@@ -151,10 +172,13 @@
                 ]
             },
             "properties": {
-                "ISO_TIME": "2005-08-24 15:00:00",
+                "ISO_TIME": "8/24/05 15:00",
                 "NAME": "KATRINA",
+                "LAT": 24.9573,
+                "LON": -76.6627,
                 "USA_SSHS": 0,
                 "USA_WIND": 37,
+                "USA_RMW": "55",
                 "USA_STATUS": "TS",
                 "SEASON": 2005,
                 "NUMBER": 61,
@@ -171,10 +195,13 @@
                 ]
             },
             "properties": {
-                "ISO_TIME": "2005-08-24 18:00:00",
+                "ISO_TIME": "8/24/05 18:00",
                 "NAME": "KATRINA",
+                "LAT": 25.4,
+                "LON": -76.9,
                 "USA_SSHS": 0,
                 "USA_WIND": 40,
+                "USA_RMW": "55",
                 "USA_STATUS": "TS",
                 "SEASON": 2005,
                 "NUMBER": 61,
@@ -191,10 +218,13 @@
                 ]
             },
             "properties": {
-                "ISO_TIME": "2005-08-24 21:00:00",
+                "ISO_TIME": "8/24/05 21:00",
                 "NAME": "KATRINA",
+                "LAT": 25.7601,
+                "LON": -77.2772,
                 "USA_SSHS": 0,
                 "USA_WIND": 42,
+                "USA_RMW": "55",
                 "USA_STATUS": "TS",
                 "SEASON": 2005,
                 "NUMBER": 61,
@@ -211,10 +241,13 @@
                 ]
             },
             "properties": {
-                "ISO_TIME": "2005-08-25 00:00:00",
+                "ISO_TIME": "8/25/05 0:00",
                 "NAME": "KATRINA",
+                "LAT": 26.0,
+                "LON": -77.7,
                 "USA_SSHS": 0,
                 "USA_WIND": 45,
+                "USA_RMW": "55",
                 "USA_STATUS": "TS",
                 "SEASON": 2005,
                 "NUMBER": 61,
@@ -231,10 +264,13 @@
                 ]
             },
             "properties": {
-                "ISO_TIME": "2005-08-25 03:00:00",
+                "ISO_TIME": "8/25/05 3:00",
                 "NAME": "KATRINA",
+                "LAT": 26.0874,
+                "LON": -78.0654,
                 "USA_SSHS": 0,
                 "USA_WIND": 47,
+                "USA_RMW": "42",
                 "USA_STATUS": "TS",
                 "SEASON": 2005,
                 "NUMBER": 61,
@@ -251,10 +287,13 @@
                 ]
             },
             "properties": {
-                "ISO_TIME": "2005-08-25 06:00:00",
+                "ISO_TIME": "8/25/05 6:00",
                 "NAME": "KATRINA",
+                "LAT": 26.1,
+                "LON": -78.4,
                 "USA_SSHS": 0,
                 "USA_WIND": 50,
+                "USA_RMW": "30",
                 "USA_STATUS": "TS",
                 "SEASON": 2005,
                 "NUMBER": 61,
@@ -271,10 +310,13 @@
                 ]
             },
             "properties": {
-                "ISO_TIME": "2005-08-25 09:00:00",
+                "ISO_TIME": "8/25/05 9:00",
                 "NAME": "KATRINA",
+                "LAT": 26.1574,
+                "LON": -78.7075,
                 "USA_SSHS": 0,
                 "USA_WIND": 52,
+                "USA_RMW": "22",
                 "USA_STATUS": "TS",
                 "SEASON": 2005,
                 "NUMBER": 61,
@@ -291,10 +333,13 @@
                 ]
             },
             "properties": {
-                "ISO_TIME": "2005-08-25 12:00:00",
+                "ISO_TIME": "8/25/05 12:00",
                 "NAME": "KATRINA",
+                "LAT": 26.2,
+                "LON": -79.0,
                 "USA_SSHS": 0,
                 "USA_WIND": 55,
+                "USA_RMW": "15",
                 "USA_STATUS": "TS",
                 "SEASON": 2005,
                 "NUMBER": 61,
@@ -311,10 +356,13 @@
                 ]
             },
             "properties": {
-                "ISO_TIME": "2005-08-25 15:00:00",
+                "ISO_TIME": "8/25/05 15:00",
                 "NAME": "KATRINA",
+                "LAT": 26.2302,
+                "LON": -79.2941,
                 "USA_SSHS": 0,
                 "USA_WIND": 57,
+                "USA_RMW": "15",
                 "USA_STATUS": "TS",
                 "SEASON": 2005,
                 "NUMBER": 61,
@@ -331,10 +379,13 @@
                 ]
             },
             "properties": {
-                "ISO_TIME": "2005-08-25 18:00:00",
+                "ISO_TIME": "8/25/05 18:00",
                 "NAME": "KATRINA",
+                "LAT": 26.2,
+                "LON": -79.6,
                 "USA_SSHS": 0,
                 "USA_WIND": 60,
+                "USA_RMW": "15",
                 "USA_STATUS": "TS",
                 "SEASON": 2005,
                 "NUMBER": 61,
@@ -351,10 +402,13 @@
                 ]
             },
             "properties": {
-                "ISO_TIME": "2005-08-25 21:00:00",
+                "ISO_TIME": "8/25/05 21:00",
                 "NAME": "KATRINA",
+                "LAT": 26.0865,
+                "LON": -79.919,
                 "USA_SSHS": 1,
                 "USA_WIND": 66,
+                "USA_RMW": "12",
                 "USA_STATUS": "TS",
                 "SEASON": 2005,
                 "NUMBER": 61,
@@ -371,10 +425,13 @@
                 ]
             },
             "properties": {
-                "ISO_TIME": "2005-08-25 22:30:00",
+                "ISO_TIME": "8/25/05 22:30",
                 "NAME": "KATRINA",
+                "LAT": 26.0,
+                "LON": -80.1,
                 "USA_SSHS": 1,
                 "USA_WIND": 70,
+                "USA_RMW": "11",
                 "USA_STATUS": "HU",
                 "SEASON": 2005,
                 "NUMBER": 61,
@@ -391,10 +448,13 @@
                 ]
             },
             "properties": {
-                "ISO_TIME": "2005-08-26 00:00:00",
+                "ISO_TIME": "8/26/05 0:00",
                 "NAME": "KATRINA",
+                "LAT": 25.9,
+                "LON": -80.3,
                 "USA_SSHS": 1,
                 "USA_WIND": 70,
+                "USA_RMW": "10",
                 "USA_STATUS": "HU",
                 "SEASON": 2005,
                 "NUMBER": 61,
@@ -411,10 +471,13 @@
                 ]
             },
             "properties": {
-                "ISO_TIME": "2005-08-26 03:00:00",
+                "ISO_TIME": "8/26/05 3:00",
                 "NAME": "KATRINA",
+                "LAT": 25.6502,
+                "LON": -80.794,
                 "USA_SSHS": 1,
                 "USA_WIND": 67,
+                "USA_RMW": "15",
                 "USA_STATUS": "HU",
                 "SEASON": 2005,
                 "NUMBER": 61,
@@ -431,10 +494,13 @@
                 ]
             },
             "properties": {
-                "ISO_TIME": "2005-08-26 06:00:00",
+                "ISO_TIME": "8/26/05 6:00",
                 "NAME": "KATRINA",
+                "LAT": 25.4,
+                "LON": -81.3,
                 "USA_SSHS": 1,
                 "USA_WIND": 65,
+                "USA_RMW": "20",
                 "USA_STATUS": "HU",
                 "SEASON": 2005,
                 "NUMBER": 61,
@@ -451,10 +517,13 @@
                 ]
             },
             "properties": {
-                "ISO_TIME": "2005-08-26 09:00:00",
+                "ISO_TIME": "8/26/05 9:00",
                 "NAME": "KATRINA",
+                "LAT": 25.2273,
+                "LON": -81.6797,
                 "USA_SSHS": 1,
                 "USA_WIND": 70,
+                "USA_RMW": "20",
                 "USA_STATUS": "HU",
                 "SEASON": 2005,
                 "NUMBER": 61,
@@ -471,10 +540,13 @@
                 ]
             },
             "properties": {
-                "ISO_TIME": "2005-08-26 12:00:00",
+                "ISO_TIME": "8/26/05 12:00",
                 "NAME": "KATRINA",
+                "LAT": 25.1,
+                "LON": -82.0,
                 "USA_SSHS": 1,
                 "USA_WIND": 75,
+                "USA_RMW": "20",
                 "USA_STATUS": "HU",
                 "SEASON": 2005,
                 "NUMBER": 61,
@@ -491,10 +563,13 @@
                 ]
             },
             "properties": {
-                "ISO_TIME": "2005-08-26 15:00:00",
+                "ISO_TIME": "8/26/05 15:00",
                 "NAME": "KATRINA",
+                "LAT": 24.9998,
+                "LON": -82.2998,
                 "USA_SSHS": 1,
                 "USA_WIND": 80,
+                "USA_RMW": "17",
                 "USA_STATUS": "HU",
                 "SEASON": 2005,
                 "NUMBER": 61,
@@ -511,10 +586,13 @@
                 ]
             },
             "properties": {
-                "ISO_TIME": "2005-08-26 18:00:00",
+                "ISO_TIME": "8/26/05 18:00",
                 "NAME": "KATRINA",
+                "LAT": 24.9,
+                "LON": -82.6,
                 "USA_SSHS": 2,
                 "USA_WIND": 85,
+                "USA_RMW": "15",
                 "USA_STATUS": "HU",
                 "SEASON": 2005,
                 "NUMBER": 61,
@@ -531,10 +609,13 @@
                 ]
             },
             "properties": {
-                "ISO_TIME": "2005-08-26 21:00:00",
+                "ISO_TIME": "8/26/05 21:00",
                 "NAME": "KATRINA",
+                "LAT": 24.75,
+                "LON": -82.9426,
                 "USA_SSHS": 2,
                 "USA_WIND": 87,
+                "USA_RMW": "15",
                 "USA_STATUS": "HU",
                 "SEASON": 2005,
                 "NUMBER": 61,
@@ -551,10 +632,13 @@
                 ]
             },
             "properties": {
-                "ISO_TIME": "2005-08-27 00:00:00",
+                "ISO_TIME": "8/27/05 0:00",
                 "NAME": "KATRINA",
+                "LAT": 24.6,
+                "LON": -83.3,
                 "USA_SSHS": 2,
                 "USA_WIND": 90,
+                "USA_RMW": "15",
                 "USA_STATUS": "HU",
                 "SEASON": 2005,
                 "NUMBER": 61,
@@ -571,10 +655,13 @@
                 ]
             },
             "properties": {
-                "ISO_TIME": "2005-08-27 03:00:00",
+                "ISO_TIME": "8/27/05 3:00",
                 "NAME": "KATRINA",
+                "LAT": 24.4774,
+                "LON": -83.65,
                 "USA_SSHS": 2,
                 "USA_WIND": 92,
+                "USA_RMW": "12",
                 "USA_STATUS": "HU",
                 "SEASON": 2005,
                 "NUMBER": 61,
@@ -591,10 +678,13 @@
                 ]
             },
             "properties": {
-                "ISO_TIME": "2005-08-27 06:00:00",
+                "ISO_TIME": "8/27/05 6:00",
                 "NAME": "KATRINA",
+                "LAT": 24.4,
+                "LON": -84.0,
                 "USA_SSHS": 2,
                 "USA_WIND": 95,
+                "USA_RMW": "10",
                 "USA_STATUS": "HU",
                 "SEASON": 2005,
                 "NUMBER": 61,
@@ -611,10 +701,13 @@
                 ]
             },
             "properties": {
-                "ISO_TIME": "2005-08-27 09:00:00",
+                "ISO_TIME": "8/27/05 9:00",
                 "NAME": "KATRINA",
+                "LAT": 24.3775,
+                "LON": -84.3574,
                 "USA_SSHS": 3,
                 "USA_WIND": 97,
+                "USA_RMW": "10",
                 "USA_STATUS": "HU",
                 "SEASON": 2005,
                 "NUMBER": 61,
@@ -631,10 +724,13 @@
                 ]
             },
             "properties": {
-                "ISO_TIME": "2005-08-27 12:00:00",
+                "ISO_TIME": "8/27/05 12:00",
                 "NAME": "KATRINA",
+                "LAT": 24.4,
+                "LON": -84.7,
                 "USA_SSHS": 3,
                 "USA_WIND": 100,
+                "USA_RMW": "10",
                 "USA_STATUS": "HU",
                 "SEASON": 2005,
                 "NUMBER": 61,
@@ -651,10 +747,13 @@
                 ]
             },
             "properties": {
-                "ISO_TIME": "2005-08-27 15:00:00",
+                "ISO_TIME": "8/27/05 15:00",
                 "NAME": "KATRINA",
+                "LAT": 24.4274,
+                "LON": -85.0076,
                 "USA_SSHS": 3,
                 "USA_WIND": 100,
+                "USA_RMW": "20",
                 "USA_STATUS": "HU",
                 "SEASON": 2005,
                 "NUMBER": 61,
@@ -671,10 +770,13 @@
                 ]
             },
             "properties": {
-                "ISO_TIME": "2005-08-27 18:00:00",
+                "ISO_TIME": "8/27/05 18:00",
                 "NAME": "KATRINA",
+                "LAT": 24.5,
+                "LON": -85.3,
                 "USA_SSHS": 3,
                 "USA_WIND": 100,
+                "USA_RMW": "30",
                 "USA_STATUS": "HU",
                 "SEASON": 2005,
                 "NUMBER": 61,
@@ -691,10 +793,13 @@
                 ]
             },
             "properties": {
-                "ISO_TIME": "2005-08-27 21:00:00",
+                "ISO_TIME": "8/27/05 21:00",
                 "NAME": "KATRINA",
+                "LAT": 24.6273,
+                "LON": -85.5851,
                 "USA_SSHS": 3,
                 "USA_WIND": 100,
+                "USA_RMW": "30",
                 "USA_STATUS": "HU",
                 "SEASON": 2005,
                 "NUMBER": 61,
@@ -711,10 +816,13 @@
                 ]
             },
             "properties": {
-                "ISO_TIME": "2005-08-28 00:00:00",
+                "ISO_TIME": "8/28/05 0:00",
                 "NAME": "KATRINA",
+                "LAT": 24.8,
+                "LON": -85.9,
                 "USA_SSHS": 3,
                 "USA_WIND": 100,
+                "USA_RMW": "30",
                 "USA_STATUS": "HU",
                 "SEASON": 2005,
                 "NUMBER": 61,
@@ -731,10 +839,13 @@
                 ]
             },
             "properties": {
-                "ISO_TIME": "2005-08-28 03:00:00",
+                "ISO_TIME": "8/28/05 3:00",
                 "NAME": "KATRINA",
+                "LAT": 24.9849,
+                "LON": -86.2702,
                 "USA_SSHS": 3,
                 "USA_WIND": 112,
+                "USA_RMW": "27",
                 "USA_STATUS": "HU",
                 "SEASON": 2005,
                 "NUMBER": 61,
@@ -751,10 +862,13 @@
                 ]
             },
             "properties": {
-                "ISO_TIME": "2005-08-28 06:00:00",
+                "ISO_TIME": "8/28/05 6:00",
                 "NAME": "KATRINA",
+                "LAT": 25.2,
+                "LON": -86.7,
                 "USA_SSHS": 4,
                 "USA_WIND": 125,
+                "USA_RMW": "25",
                 "USA_STATUS": "HU",
                 "SEASON": 2005,
                 "NUMBER": 61,
@@ -771,10 +885,13 @@
                 ]
             },
             "properties": {
-                "ISO_TIME": "2005-08-28 09:00:00",
+                "ISO_TIME": "8/28/05 9:00",
                 "NAME": "KATRINA",
+                "LAT": 25.435,
+                "LON": -87.1926,
                 "USA_SSHS": 4,
                 "USA_WIND": 135,
+                "USA_RMW": "22",
                 "USA_STATUS": "HU",
                 "SEASON": 2005,
                 "NUMBER": 61,
@@ -791,10 +908,13 @@
                 ]
             },
             "properties": {
-                "ISO_TIME": "2005-08-28 12:00:00",
+                "ISO_TIME": "8/28/05 12:00",
                 "NAME": "KATRINA",
+                "LAT": 25.7,
+                "LON": -87.7,
                 "USA_SSHS": 5,
                 "USA_WIND": 145,
+                "USA_RMW": "20",
                 "USA_STATUS": "HU",
                 "SEASON": 2005,
                 "NUMBER": 61,
@@ -811,10 +931,13 @@
                 ]
             },
             "properties": {
-                "ISO_TIME": "2005-08-28 15:00:00",
+                "ISO_TIME": "8/28/05 15:00",
                 "NAME": "KATRINA",
+                "LAT": 25.97,
+                "LON": -88.1802,
                 "USA_SSHS": 5,
                 "USA_WIND": 147,
+                "USA_RMW": "20",
                 "USA_STATUS": "HU",
                 "SEASON": 2005,
                 "NUMBER": 61,
@@ -831,10 +954,13 @@
                 ]
             },
             "properties": {
-                "ISO_TIME": "2005-08-28 18:00:00",
+                "ISO_TIME": "8/28/05 18:00",
                 "NAME": "KATRINA",
+                "LAT": 26.3,
+                "LON": -88.6,
                 "USA_SSHS": 5,
                 "USA_WIND": 150,
+                "USA_RMW": "20",
                 "USA_STATUS": "HU",
                 "SEASON": 2005,
                 "NUMBER": 61,
@@ -851,10 +977,13 @@
                 ]
             },
             "properties": {
-                "ISO_TIME": "2005-08-28 21:00:00",
+                "ISO_TIME": "8/28/05 21:00",
                 "NAME": "KATRINA",
+                "LAT": 26.7199,
+                "LON": -88.9376,
                 "USA_SSHS": 5,
                 "USA_WIND": 145,
+                "USA_RMW": "20",
                 "USA_STATUS": "HU",
                 "SEASON": 2005,
                 "NUMBER": 61,
@@ -871,10 +1000,13 @@
                 ]
             },
             "properties": {
-                "ISO_TIME": "2005-08-29 00:00:00",
+                "ISO_TIME": "8/29/05 0:00",
                 "NAME": "KATRINA",
+                "LAT": 27.2,
+                "LON": -89.2,
                 "USA_SSHS": 5,
                 "USA_WIND": 140,
+                "USA_RMW": "20",
                 "USA_STATUS": "HU",
                 "SEASON": 2005,
                 "NUMBER": 61,
@@ -891,10 +1023,13 @@
                 ]
             },
             "properties": {
-                "ISO_TIME": "2005-08-29 03:00:00",
+                "ISO_TIME": "8/29/05 3:00",
                 "NAME": "KATRINA",
+                "LAT": 27.6702,
+                "LON": -89.447,
                 "USA_SSHS": 4,
                 "USA_WIND": 132,
+                "USA_RMW": "20",
                 "USA_STATUS": "HU",
                 "SEASON": 2005,
                 "NUMBER": 61,
@@ -911,10 +1046,13 @@
                 ]
             },
             "properties": {
-                "ISO_TIME": "2005-08-29 06:00:00",
+                "ISO_TIME": "8/29/05 6:00",
                 "NAME": "KATRINA",
+                "LAT": 28.2,
+                "LON": -89.6,
                 "USA_SSHS": 4,
                 "USA_WIND": 125,
+                "USA_RMW": "20",
                 "USA_STATUS": "HU",
                 "SEASON": 2005,
                 "NUMBER": 61,
@@ -931,10 +1069,13 @@
                 ]
             },
             "properties": {
-                "ISO_TIME": "2005-08-29 09:00:00",
+                "ISO_TIME": "8/29/05 9:00",
                 "NAME": "KATRINA",
+                "LAT": 28.8072,
+                "LON": -89.6162,
                 "USA_SSHS": 4,
                 "USA_WIND": 116,
+                "USA_RMW": "20",
                 "USA_STATUS": "HU",
                 "SEASON": 2005,
                 "NUMBER": 61,
@@ -951,10 +1092,13 @@
                 ]
             },
             "properties": {
-                "ISO_TIME": "2005-08-29 11:10:00",
+                "ISO_TIME": "8/29/05 11:10",
                 "NAME": "KATRINA",
+                "LAT": 29.3,
+                "LON": -89.6,
                 "USA_SSHS": 3,
                 "USA_WIND": 110,
+                "USA_RMW": "20",
                 "USA_STATUS": "HU",
                 "SEASON": 2005,
                 "NUMBER": 61,
@@ -971,10 +1115,13 @@
                 ]
             },
             "properties": {
-                "ISO_TIME": "2005-08-29 12:00:00",
+                "ISO_TIME": "8/29/05 12:00",
                 "NAME": "KATRINA",
+                "LAT": 29.5,
+                "LON": -89.6,
                 "USA_SSHS": 3,
                 "USA_WIND": 110,
+                "USA_RMW": "20",
                 "USA_STATUS": "HU",
                 "SEASON": 2005,
                 "NUMBER": 61,
@@ -991,10 +1138,13 @@
                 ]
             },
             "properties": {
-                "ISO_TIME": "2005-08-29 14:45:00",
+                "ISO_TIME": "8/29/05 14:45",
                 "NAME": "KATRINA",
+                "LAT": 30.2,
+                "LON": -89.6,
                 "USA_SSHS": 3,
                 "USA_WIND": 105,
+                "USA_RMW": "22",
                 "USA_STATUS": "HU",
                 "SEASON": 2005,
                 "NUMBER": 61,
@@ -1011,10 +1161,13 @@
                 ]
             },
             "properties": {
-                "ISO_TIME": "2005-08-29 15:00:00",
+                "ISO_TIME": "8/29/05 15:00",
                 "NAME": "KATRINA",
+                "LAT": 30.2673,
+                "LON": -89.6019,
                 "USA_SSHS": 3,
                 "USA_WIND": 103,
+                "USA_RMW": "22",
                 "USA_STATUS": "HU",
                 "SEASON": 2005,
                 "NUMBER": 61,
@@ -1031,10 +1184,13 @@
                 ]
             },
             "properties": {
-                "ISO_TIME": "2005-08-29 18:00:00",
+                "ISO_TIME": "8/29/05 18:00",
                 "NAME": "KATRINA",
+                "LAT": 31.1,
+                "LON": -89.6,
                 "USA_SSHS": 1,
                 "USA_WIND": 80,
+                "USA_RMW": "25",
                 "USA_STATUS": "HU",
                 "SEASON": 2005,
                 "NUMBER": 61,
@@ -1051,10 +1207,13 @@
                 ]
             },
             "properties": {
-                "ISO_TIME": "2005-08-29 21:00:00",
+                "ISO_TIME": "8/29/05 21:00",
                 "NAME": "KATRINA",
+                "LAT": 31.8661,
+                "LON": -89.4001,
                 "USA_SSHS": 1,
                 "USA_WIND": 65,
+                "USA_RMW": "27",
                 "USA_STATUS": "HU",
                 "SEASON": 2005,
                 "NUMBER": 61,
@@ -1071,10 +1230,13 @@
                 ]
             },
             "properties": {
-                "ISO_TIME": "2005-08-30 00:00:00",
+                "ISO_TIME": "8/30/05 0:00",
                 "NAME": "KATRINA",
+                "LAT": 32.6,
+                "LON": -89.1,
                 "USA_SSHS": 0,
                 "USA_WIND": 50,
+                "USA_RMW": "30",
                 "USA_STATUS": "TS",
                 "SEASON": 2005,
                 "NUMBER": 61,
@@ -1091,10 +1253,13 @@
                 ]
             },
             "properties": {
-                "ISO_TIME": "2005-08-30 03:00:00",
+                "ISO_TIME": "8/30/05 3:00",
                 "NAME": "KATRINA",
+                "LAT": 33.3499,
+                "LON": -88.8569,
                 "USA_SSHS": 0,
                 "USA_WIND": 45,
+                "USA_RMW": "30",
                 "USA_STATUS": "TS",
                 "SEASON": 2005,
                 "NUMBER": 61,
@@ -1111,10 +1276,13 @@
                 ]
             },
             "properties": {
-                "ISO_TIME": "2005-08-30 06:00:00",
+                "ISO_TIME": "8/30/05 6:00",
                 "NAME": "KATRINA",
+                "LAT": 34.1,
+                "LON": -88.6,
                 "USA_SSHS": 0,
                 "USA_WIND": 40,
+                "USA_RMW": "30",
                 "USA_STATUS": "TS",
                 "SEASON": 2005,
                 "NUMBER": 61,
@@ -1131,10 +1299,13 @@
                 ]
             },
             "properties": {
-                "ISO_TIME": "2005-08-30 09:00:00",
+                "ISO_TIME": "8/30/05 9:00",
                 "NAME": "KATRINA",
+                "LAT": 34.8572,
+                "LON": -88.3364,
                 "USA_SSHS": 0,
                 "USA_WIND": 35,
+                "USA_RMW": "30",
                 "USA_STATUS": "TS",
                 "SEASON": 2005,
                 "NUMBER": 61,
@@ -1151,10 +1322,13 @@
                 ]
             },
             "properties": {
-                "ISO_TIME": "2005-08-30 12:00:00",
+                "ISO_TIME": "8/30/05 12:00",
                 "NAME": "KATRINA",
+                "LAT": 35.6,
+                "LON": -88.0,
                 "USA_SSHS": -1,
                 "USA_WIND": 30,
+                "USA_RMW": "30",
                 "USA_STATUS": "TD",
                 "SEASON": 2005,
                 "NUMBER": 61,
@@ -1171,10 +1345,13 @@
                 ]
             },
             "properties": {
-                "ISO_TIME": "2005-08-30 15:00:00",
+                "ISO_TIME": "8/30/05 15:00",
                 "NAME": "KATRINA",
+                "LAT": 36.2918,
+                "LON": -87.5804,
                 "USA_SSHS": -1,
                 "USA_WIND": 30,
+                "USA_RMW": " ",
                 "USA_STATUS": "TD",
                 "SEASON": 2005,
                 "NUMBER": 61,
@@ -1191,10 +1368,13 @@
                 ]
             },
             "properties": {
-                "ISO_TIME": "2005-08-30 18:00:00",
+                "ISO_TIME": "8/30/05 18:00",
                 "NAME": "KATRINA",
+                "LAT": 37.0,
+                "LON": -87.0,
                 "USA_SSHS": -1,
                 "USA_WIND": 30,
+                "USA_RMW": " ",
                 "USA_STATUS": "TD",
                 "SEASON": 2005,
                 "NUMBER": 61,
@@ -1211,10 +1391,13 @@
                 ]
             },
             "properties": {
-                "ISO_TIME": "2005-08-30 21:00:00",
+                "ISO_TIME": "8/30/05 21:00",
                 "NAME": "KATRINA",
+                "LAT": 37.7916,
+                "LON": -86.2537,
                 "USA_SSHS": -1,
                 "USA_WIND": 30,
+                "USA_RMW": " ",
                 "USA_STATUS": "TD",
                 "SEASON": 2005,
                 "NUMBER": 61,
@@ -1231,10 +1414,13 @@
                 ]
             },
             "properties": {
-                "ISO_TIME": "2005-08-31 00:00:00",
+                "ISO_TIME": "8/31/05 0:00",
                 "NAME": "KATRINA",
+                "LAT": 38.6,
+                "LON": -85.3,
                 "USA_SSHS": -4,
                 "USA_WIND": 30,
+                "USA_RMW": " ",
                 "USA_STATUS": "EX",
                 "SEASON": 2005,
                 "NUMBER": 61,
@@ -1251,10 +1437,13 @@
                 ]
             },
             "properties": {
-                "ISO_TIME": "2005-08-31 03:00:00",
+                "ISO_TIME": "8/31/05 3:00",
                 "NAME": "KATRINA",
+                "LAT": 39.3681,
+                "LON": -84.1578,
                 "USA_SSHS": -4,
                 "USA_WIND": 27,
+                "USA_RMW": " ",
                 "USA_STATUS": "EX",
                 "SEASON": 2005,
                 "NUMBER": 61,
@@ -1271,10 +1460,13 @@
                 ]
             },
             "properties": {
-                "ISO_TIME": "2005-08-31 06:00:00",
+                "ISO_TIME": "8/31/05 6:00",
                 "NAME": "KATRINA",
+                "LAT": 40.1,
+                "LON": -82.9,
                 "USA_SSHS": -4,
                 "USA_WIND": 25,
+                "USA_RMW": " ",
                 "USA_STATUS": "EX",
                 "SEASON": 2005,
                 "NUMBER": 61,

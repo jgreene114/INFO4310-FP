@@ -14,11 +14,12 @@ function processGeojson(geojsonData) {
             properties: {
                 windSpeed: (point1.properties.USA_WIND + point2.properties.USA_WIND) / 2,
                 sshs: point1.properties.USA_SSHS,
-
+                radiusMaxSpeed: (point1.properties.USA_RMW + point2.properties.USA_RMW) / 2,
                 startProperties: point1.properties,
                 endProperties: point2.properties,
             }
         };
+        // console.log(segment)
 
         segments.push(segment);
     }
@@ -38,7 +39,7 @@ class HurricaneTrack {
     index;
     segments;
     g;
-    sshsScale;
+    trackWidthScale;
     infoViews;
     infoIdxs;
 
@@ -49,9 +50,11 @@ class HurricaneTrack {
         this.index = 0;
         this.walkthroughID = walkthroughID;
         this.segments = processGeojson(data)
-        this.sshsScale = d3.scaleLinear()
+        this.trackWidthScale = d3.scaleLinear()
             .domain(d3.extent(this.segments, d => d.properties.windSpeed))
-            .range([5, 100]);
+            .domain([30, 150])
+            .range([20, 150])
+            .clamp(true);
         this.mapID = mapID
         this.createMap()
 
@@ -110,51 +113,32 @@ class HurricaneTrack {
         }
     }
 
-    // goToIdx(i) {
-    //     if (i < this.length) {
-    //         this.prevPoint = this.currentPoint;
-    //         this.index = i;
-    //         this.currentPoint = this.data[this.index];
-    //         // console.log(this.index)
-    //         // console.log(this.currentPoint)
+
+    // createRoute() {
+    //     // let routeFeatures = [];
+    //     let latLngs = [];
     //
-    //         if (this.currentPoint.LAT == null || this.currentPoint.LON == null) {
-    //             console.error("Invalid data point:", point);
-    //             return;
-    //         }
+    //     // let previousCoords = null;
+    //     this.data.forEach(feature => {
+    //         let coords = feature.geometry.coordinates;
+    //         let latLng = new L.LatLng(coords[1], coords[0]);
+    //         // let marker = L.marker(latLng);
+    //         // routeFeatures.push(marker);
+    //         latLngs.push(latLng);
     //
-    //         this.moveMap(this.currentPoint.LAT, this.currentPoint.LON, 7)
+    //         // console.log(feature)
     //
-    //     } else {
-    //         console.error("Invalid index: " + i)
-    //     }
+    //         // if (previousCoords) {
+    //         //     let line = L.polyline([previousCoords, latLng], {smoothFactor: 1.0});
+    //         //     routeFeatures.push(line);
+    //         // }
+    //         // previousCoords = latLng;
+    //     });
+    //
+    //     // return L.featureGroup(routeFeatures).addTo(this.map);;
+    //
+    //     return latLngs;
     // }
-
-    createRoute() {
-        // let routeFeatures = [];
-        let latLngs = [];
-
-        // let previousCoords = null;
-        this.data.forEach(feature => {
-            let coords = feature.geometry.coordinates;
-            let latLng = new L.LatLng(coords[1], coords[0]);
-            // let marker = L.marker(latLng);
-            // routeFeatures.push(marker);
-            latLngs.push(latLng);
-
-            // console.log(feature)
-
-            // if (previousCoords) {
-            //     let line = L.polyline([previousCoords, latLng], {smoothFactor: 1.0});
-            //     routeFeatures.push(line);
-            // }
-            // previousCoords = latLng;
-        });
-
-        // return L.featureGroup(routeFeatures).addTo(this.map);;
-
-        return latLngs;
-    }
 
     unionSegment(existingUnion, newSegment, widthScale) {
         if (!existingUnion) {
@@ -166,7 +150,6 @@ class HurricaneTrack {
 
 
         let updatedUnion;
-
         const bufferSize = widthScale(newSegment.properties.windSpeed);
         const bufferedSegment = turf.buffer(newSegment, bufferSize, {units: 'miles'});
 
@@ -182,7 +165,7 @@ class HurricaneTrack {
                 weight: 3,
                 opacity: 0.8
             },
-            interactive: false,
+            // interactive: false,
         })
         existingUnion.geoJson = updatedUnion;
 
@@ -192,7 +175,7 @@ class HurricaneTrack {
     getTrackPolygon(endI, begI = 0) {
         let existingUnion = null
         for (let j = begI; j < endI; j++) {
-            existingUnion = this.unionSegment(existingUnion, this.segments[j], this.sshsScale)
+            existingUnion = this.unionSegment(existingUnion, this.segments[j], this.trackWidthScale)
         }
 
         return existingUnion;
@@ -220,6 +203,9 @@ class HurricaneTrack {
     }
 
     getTrackView(i) {
+        if (i == "last") {
+            i = this.infoViews.length - 1
+        }
         return this.infoViews[i];
     }
 

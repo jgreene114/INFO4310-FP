@@ -34,6 +34,7 @@ if __name__ == "__main__":
         'LON',
         'USA_SSHS',
         'USA_WIND',
+        'USA_RMW',
         'USA_STATUS',
         'SEASON',
         'NUMBER',

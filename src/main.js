@@ -11,20 +11,6 @@ function animateTransition(newStr, container, separators) {
     const oldSeparators = oldStr.match(separatorPattern) || [];
     let currentParts = [...oldParts];
 
-    // const update = () => {
-    //     currentParts = currentParts.map((part, index) => {
-    //         if (index >= newParts.length) return '';
-    //         if (newParts[index] === part) return part;
-    //
-    //         const oldChars = part.split('');
-    //         const newChars = newParts[index].split('');
-    //         const result = oldChars.map((char, charIndex) => {
-    //             if (charIndex >= newChars.length) return '';
-    //             return newChars[charIndex] === char ? char : symbols[Math.floor(Math.random() * symbols.length)];
-    //         }).join('');
-    //         return result;
-    //     });
-
     const update = () => {
         currentParts = currentParts.map((part, index) => {
             if (index >= newParts.length) return '';
@@ -37,7 +23,7 @@ function animateTransition(newStr, container, separators) {
                 if (newChars[charIndex] === char) {
                     return char;
                 } else {
-                    return `<span style="color: #a17738ff;">${symbols[Math.floor(Math.random() * symbols.length)]}</span>`;
+                    return `<span style="color: #a17738ff; opacity: .8">${symbols[Math.floor(Math.random() * symbols.length)]}</span>`;
                 }
             }).join('');
 
@@ -47,44 +33,110 @@ function animateTransition(newStr, container, separators) {
         container.html(currentParts.map((part, i) => part + (oldSeparators[i] || '')).join(''));
     };
 
-    let scrambler = d3.interval(update, 70);
+    let scrambler = d3.interval(update, 100);
 
     setTimeout(() => {
         scrambler.stop();
         container.html(newParts.map((part, i) => part + (i < oldSeparators.length ? oldSeparators[i] : '')).join(''));
-    }, 400);
+    }, 350);
 }
 
 function animateIncreaseDecrease(newStr, container) {
-    let oldTextContainer = container.select(".current-text")
-    let newTextContainer = container.select(".new-text")
-    console.log(container.node())
+    // console.log(container.node())
+    // let containerHeight = container.style('height')
+    // container.style("height", containerHeight)
+    // console.log("height", containerHeight)
+
+    let currentTextContainer = container.select(".current-text");
+    let newTextContainer = container.select(".new-text");
 
     if (newTextContainer.node() != null) {
-        newTextContainer.remove()
-
+        newTextContainer.remove();
     }
+
+    let oldStr = 0;
+    try {
+        oldStr = currentTextContainer.html();
+    } catch (error) {
+    }
+
+    let oldNumber = parseInt(oldStr, 10);
+    let newNumber = parseInt(newStr, 10);
+
+    let diff = newNumber - oldNumber;
+    let increase = diff > 0;
+
+    let changeColor = increase ? "red" : "green"
+    let dimOpacity = .6
+    if (diff === 0) {
+        return
+        changeColor = "grey";
+        dimOpacity = 1
+    }
+
+    let currentTextMove = increase ? "-" : ""
+    let currentTextEase = d3.easeExpOut
+    let newTextStart = increase ? "" : "-"
+    let newTextEase = d3.easeExpOut
+
+    let translateDist = 25;
+    let duration = 300
+
     newTextContainer = container.append('div')
         .classed("new-text", true)
-        .html(newStr)
-    console.log(newTextContainer)
+        .style("color", changeColor)
+        .style("opacity", 0)
+        .style("transform", `translateY(${newTextStart}${translateDist}px) rotateX(${currentTextMove}90deg)`)
+        .html(newStr);
 
-    let oldStr = oldTextContainer.html()
+    currentTextContainer
+        .transition()
+        .duration(20)
+        .style("opacity", dimOpacity)
+        .transition()
+        .duration(duration/2)
+        .style("color", changeColor)
 
-    console.log(oldTextContainer.node(), newTextContainer.node(), oldStr, newStr)
+    currentTextContainer
+        .transition()
+        .ease(currentTextEase)
+        .duration(duration)
+        .style("transform", `translateY(${currentTextMove}${translateDist}px) rotateX(${newTextStart}90deg)`)
+        .style("color", changeColor)
+        .style("opacity", 0)
+        .on("end", () => {
+            currentTextContainer.remove()
+
+            newTextContainer
+                .classed("new-text", false)
+                .classed("current-text", true)
+                .transition()
+                .ease(newTextEase)
+                .duration(duration)
+                .style("opacity", dimOpacity)
+                .style("transform", "translateY(0px) rotateX(0deg)")
+                .transition()
+                .style("opacity", 1)
+                .transition()
+                .delay(200)
+                .duration(duration*2)
+                .style("color", null)
+        });
 
 }
 
 function formatISOStr(isoStr) {
-    let parseTime = d3.timeParse("%Y-%m-%d %H:%M:%S");
+    let parseTime = d3.timeParse("%m/%d/%y %H:%M");
 
-    let formatDate = d3.timeFormat("%m/%d/%Y");
-    let formatTime = d3.timeFormat("%I:%M %p");
+    // let formatDate = d3.timeFormat("%m/%d/%Y");
+    let formatDate = d3.timeFormat("%b %d, %Y");
+    let formatTime = d3.timeFormat("%I:%M");
+    let formatAMPM = d3.timeFormat("%p");
 
 
     let date = parseTime(isoStr);
 
-    let formattedDate = formatDate(date) + '<br>' + formatTime(date);
+    let formattedDate = [formatDate(date), formatTime(date), formatAMPM(date)];
 
     // console.log("Formatted Date:", formattedDate);
     return formattedDate;
@@ -126,39 +178,15 @@ const pageLoad = async function () {
 
 
     let idxs = walkthrough.findChangesInColumn('USA_SSHS')
+    idxs.unshift(0)
     if (!idxs.includes(walkthrough.data.length - 1)) { idxs.push(walkthrough.data.length - 1) }
 
-    // function processGeojson(geojsonData, map) {
-    //     let segments = [];
-    //
-    //     for (let i = 0; i < geojsonData.features.length - 1; i++) {
-    //         const point1 = geojsonData.features[i];
-    //         const point2 = geojsonData.features[i + 1];
-    //
-    //         const segment = {
-    //             type: 'Feature',
-    //             geometry: {
-    //                 type: 'LineString',
-    //                 coordinates: [point1.geometry.coordinates, point2.geometry.coordinates]
-    //             },
-    //             properties: {
-    //                 windSpeed: (point1.properties.USA_WIND + point2.properties.USA_WIND) / 2,
-    //                 sshs: point1.properties.USA_SSHS,
-    //                 ISO_TIME: point1.properties.ISO_TIME
-    //             }
-    //         };
-    //
-    //         segments.push(segment);
-    //     }
-    //     return segments;
-    // }
-
-    const latlngs = walkthrough.data.map(function (feature) {
-        return [
-            feature.geometry.coordinates[1],
-            feature.geometry.coordinates[0]
-        ];
-    });
+    // const latlngs = walkthrough.data.map(function (feature) {
+    //     return [
+    //         feature.geometry.coordinates[1],
+    //         feature.geometry.coordinates[0]
+    //     ];
+    // });
 
     // let track = new L.Polyline(latlngs, {
     //     className: "track-line-path",
@@ -174,9 +202,12 @@ const pageLoad = async function () {
     // const trackLine = d3.select(".track-line-path")
 
     const mapHeader = d3.select("#map-info-header")
-    const mapHeaderDate = mapHeader.select("#date .map-header-info-value")
+    const mapHeaderDate = mapHeader.select("#datedate")
+    const mapHeaderTime = mapHeader.select("#datetime")
+    const mapHeaderAMPM = mapHeader.select("#dateAMPM")
     const mapHeaderStormClf = mapHeader.select("#storm-clf .map-header-info-value")
     const mapHeaderWindSpeed = mapHeader.select("#wind-speed .map-header-info-value")
+
 
 
     let trackPolygon = L.polygon(
@@ -213,20 +244,79 @@ const pageLoad = async function () {
         let stormClf = data.properties.USA_SSHS
 
         let windSpeedStr = "" + windSpeed //"" + (" ".repeat(3 - windSpeed.toString().length)) + windSpeed
-
-        // animateTransition(formatISOStr(date), mapHeaderDate, ["-", "/", "<br>"])
+        let fmtdDateTime = formatISOStr(date)
+        animateTransition(fmtdDateTime[0], mapHeaderDate, ["-", "/", "<br>"])
+        animateTransition(fmtdDateTime[1], mapHeaderTime, ["-", "/", "<br>"])
+        animateTransition(fmtdDateTime[2], mapHeaderAMPM, ["-", "/", "<br>"])
         // animateTransition(windSpeedStr, mapHeaderWindSpeed, [])
         // animateTransition(stormClf + "", mapHeaderStormClf, [" ", " "])
 
         animateIncreaseDecrease(stormClf, mapHeaderStormClf)
+        animateIncreaseDecrease(windSpeedStr, mapHeaderWindSpeed)
+
+        updateTooltipValueText()
     }
+
+    let mapOverlayContainers = d3.selectAll(".overlay-map").nodes()
+
+    mapOverlayContainers.forEach(function (parent, i) {
+        gsap.timeline({
+            scrollTrigger: {
+                trigger: parent,
+                scroller: infoContainer,
+                // markers: true,
+                start: "top bottom-=5px", //-=100",
+                end: "bottom bottom-=5px", //-=100",
+                onEnter: () => {
+                    mapHeader
+                        .style("display", 'none')
+                        .style("visibility", 'hidden');
+                    mapHeaderTooltip
+                        .style("display", "none")
+                },
+                onEnterBack: () => {
+                    mapHeader
+                        .style("display", 'none')
+                        .style("visibility", 'hidden');
+                    mapHeaderTooltip
+                        .style("display", "none")
+                },
+                onLeave: () => {
+                    mapHeader
+                        .style("display", 'flex')
+                        .style("visibility", 'visible');
+                },
+                onLeaveBack: () => {
+                    mapHeader
+                        .style("display", 'flex')
+                        .style("visibility", 'visible');
+                },
+                scrub: 3,
+            },
+            toggleActions: "restart reverse restart reverse",
+        })
+    })
+    const mdrPolygonCoords = [
+        [10, -20],
+        [10, -85],
+        [20, -85],
+        [20, -20]
+    ];
+    let mdrPolygon = L.polygon(mdrPolygonCoords, {
+        // color: "#1C2143",
+        color: '#219ebcff',
+        fillColor: '#219ebcff',
+        fillOpacity: 0.2,
+        interactive: false,
+    })
+    let form2Prev = false;
 
     trackPolygon.addTo(walkthrough.map)
     infoParents.forEach(function (parent, i) {
         if (infoChildren[i]) {
-            let target = infoChildren[i]
-
+            let target = infoChildren[i];
             let prevCoords, prevGeoJson;
+
             if (i == 0) {
                 prevGeoJson = walkthrough.getTrackView(i).geoJson
             } else {
@@ -249,104 +339,60 @@ const pageLoad = async function () {
                 scrollTrigger: {
                     trigger: parent,
                     scroller: infoContainer,
-                    markers: true,
+                    // markers: true,
                     start: "top bottom-=5", //-=100",
                     end: "bottom bottom-=5", //-=100",
                     onEnter: () => {
                         changeHeader(i)
+                        toolTipTextExplanation.html("")
+                        toolTipInfoIcon.text("info_i")
+                        hideTooltip()
                     },
                     onEnterBack: () => {
                         changeHeader(i)
+                        toolTipTextExplanation.html("")
+                        toolTipInfoIcon.text("icon_i")
+                        hideTooltip()
                     },
                     onUpdate: (self) => {
-                        let currentZoom = walkthrough.map.getZoom();
+                        updateTooltipValueText()
+                        // let currentZoom = walkthrough.map.getZoom();
+                        if (target.id == "formation-2") {
 
-                        simTrackPolygon.setLatLngs(interpolator(self.progress))
 
-                        // let newBounds = simTrackPolygon.getBounds();
-                        // let newZoom = walkthrough.map.getBoundsZoom(newBounds, true);
-                        // let zoomChange = false
-                        // if (prevZoom !== newZoom) {
-                        //     console.log(prevZoom, newZoom)
-                        //     zoomChange = true;
-                        //     prevZoom = newZoom
-                        //     console.log('zoom change')
-                        // } else {
-                        //     // console.log('no zoom change')
-                        // }
-                        // if (currentZoom !== newZoom) {console.log("not equal")}
-                        // console.log("start")
-                        // console.log(currentZoom, newZoom)
-                        // trackLine
-                        //     // .style("stroke-dasharray", (((increment * i) + (increment * self.progress)) * 100) + "%, 100%")
-                        //     .style("stroke-dasharray", (((increment * i) + (increment * self.progress)) * lineLen) + "," + lineLen)
-                        // console.log((((increment * i) + (increment * self.progress)) * lineLen) + "," + lineLen)
-                        // console.log("changeview")
+                            mdrPolygon.addTo(walkthrough.map)
 
-                        walkthrough.map.flyToBounds(simTrackPolygon.getBounds(), {
-                            duration: .1,
-                            animate: false,
-                            padding: [30, 30]
-                        })
-                        trackPolygon.setLatLngs(interpolator(self.progress))
+                            walkthrough.map.flyToBounds(mdrPolygon.getBounds(), {
+                                duration: .1,
+                                animate: true,
+                                padding: [30, 30]
+                            })
+                            form2Prev = true
+                        } else {
+                            if (mdrPolygon) {mdrPolygon.remove()}
+                            simTrackPolygon.setLatLngs(interpolator(self.progress))
+                            walkthrough.map.flyToBounds(simTrackPolygon.getBounds(), {
+                                duration: .1,
+                                animate: form2Prev,
+                                padding: [30, 30]
+                            })
+                            trackPolygon.setLatLngs(interpolator(self.progress))
+                            form2Prev = false
+                        }
                     },
-                    scrub: 3,
+                    scrub: 2,
                 },
                 toggleActions: "restart reverse restart reverse",
             })
                 .fromTo(target,
                     // {y: "100%"},
                     {y: "100vh"},
-                    {y: "random([30vh,37vh,45vh,50vh,60vh])", duration: .5, ease: "power1.inOut"},
+                    {y: "random([20vh,27vh,32vh,25vh,21vh])", duration: .5, ease: "power1.inOut"},
                 )
         } else {
             console.error("NO INFO CHILD", i)
         }
     })
-
-    // console.log(trackLine.node().getTotalLength())
-    // let polyline = L.polyline(latlngs, {
-    //     color: 'red',
-    //     snakingSpeed: 300000,
-    //     smoothFactor: 0
-    // })
-    // polyline.addTo(walkthrough.map)
-    // setTimeout(() => {polyline.snakeIn()}, 2000);
-    // var trd = [63.5, 11],
-    //     mad = [40.5, -3.5],
-    //     lnd = [51.5, -0.5],
-    //     ams = [52.3, 4.75],
-    //     vlc = [39.5, -0.5];
-    //
-    //
-    // var route = L.featureGroup([
-    //     L.marker(trd),
-    //     L.polyline([trd, ams]),
-    //     L.marker(ams),
-    //     L.polyline([ams, lnd]),
-    //     L.marker(lnd),
-    //     L.polyline([lnd, mad]),
-    //     L.marker(mad),
-    //     L.polyline([mad, vlc]),
-    //     L.marker(vlc)
-    // ]);
-    //
-    // var map = L.map('map');
-    //
-    // var positron = L.tileLayer('http://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}.png', {
-    //     attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors, &copy; <a href="http://cartodb.com/attributions">CartoDB</a>'
-    // }).addTo(map);
-    //
-    // let route = walkthrough.createRoute()
-    //
-    // walkthrough.map.fitBounds(route.getBounds());
-    // 	map.addLayer(new L.Marker(latlngs[0]));
-    // 	map.addLayer(new L.Marker(latlngs[len - 1]));
-    // walkthrough.map.addLayer(route);
-    // function snake() {
-    //     route.snakeIn();
-    // }
-    // snake()
 
     const titleMap = L.map("title-page-map", {
         zoomControl: false,
@@ -354,8 +400,8 @@ const pageLoad = async function () {
         scrollWheelZoom: false,
         doubleClickZoom: false,
         touchZoom: false,
-        interactive: false
-    }).setView([-52.5, 20], 2);
+        interactive: true
+    })
 
     // found on https://leaflet-extras.github.io/leaflet-providers/preview/index.html
     L.tileLayer('https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png', {
@@ -363,23 +409,135 @@ const pageLoad = async function () {
         subdomains: 'abcd',
     }).addTo(titleMap);
 
-    const mdrPolygonCoords = [
-        [10, -20],
-        [10, -85],
-        [20, -85],
-        [20, -20]
-    ];
-
-    const mdrPolygon = L.polygon(mdrPolygonCoords, {
-        color: "#023047ff",
-        fillColor: '#fcd29fff',
-        fillOpacity: 0.5,
+    let geoJson = walkthrough.getTrackView('last').geoJson;
+    const finalKatrinaTrack = L.polygon(reverseLatLon(geoJson.geometry.coordinates[0]), {
+        color: "#1C2143",
+        fillColor: '#F3CD74',
+        fillOpacity: 0.8,
+        className: "track-path",
         interactive: false,
     }).addTo(titleMap);
-    // polyline.snakeIn();
+    // titleMap.fitBounds(finalKatrinaTrack.getBounds(), {
+    //     padding: [10, 160]
+    // })
+
+    titleMap.setView([30, -75], 5)
+
+    // let coordsDisplay = document.getElementById('coords');
+    //
+    // titleMap.on('mousemove', function (e) {
+    //     let lat = e.latlng.lat.toFixed(5);
+    //     let lng = e.latlng.lng.toFixed(5);
+    //     coordsDisplay.innerHTML = `Latitude: ${lat}, Longitude: ${lng}`;
+    // });
+
+    let mapHeaderTooltip = d3.select("#map-header-tooltip")
+    let mapHeaderParentStormClf = d3.select("#storm-clf")
+
+    let timeout;
+
+    function showTooltip() {
+        clearTimeout(timeout);
+        mapHeaderTooltip
+            .style("display", null)
+            .transition()
+            .duration(200)
+            .style("opacity", 1)
+        toolTipInfoIcon
+            .style("display", null)
+        updateTooltipValueText()
+    }
+
+    function hideTooltip(timeoutTime = 1300) {
+        if (toolTipTextExplanation.html() === "") {
+            timeout = setTimeout(() => {
+                mapHeaderTooltip
+                    .transition()
+                    .duration(200)
+                    .style("opacity", 0)
+                    .on("end", () => {
+                        mapHeaderTooltip
+                            .style("display", "none")
+                    })
+                toolTipInfoIcon.html("info_i")
+            }, timeoutTime);
+        }
+    }
+
+    async function updateTooltipValueText() {
+
+        let element = d3.select("#storm-clf")
+        let node = element.node()
+        let bbox = node.getBoundingClientRect()
+        let sshsValue = await element.select(".map-header-info-value").select(".current-text").text()
+        mapHeaderTooltip.select("#tooltip-current-text")
+            .html(sshsExplanationDict[sshsValue])
+
+        mapHeaderTooltip
+            .style("top", `${bbox.y + bbox.height + 10}px`)
+    }
+
+    mapHeaderParentStormClf
+        .on("mouseover", (event, d) => {
+            showTooltip()
+
+        })
+        .on("mouseout", (event, d) => {
+            hideTooltip()
+        })
+
+    mapHeaderTooltip
+        .on("mouseover", (event, d) => {
+            showTooltip()
+        })
+        .on("mouseout", (event, d) => {
+            hideTooltip()
+        })
+
+    let toolTipTextExplanation = mapHeaderTooltip.select("#tooltip-text")
+    let toolTipInfoIcon = mapHeaderTooltip.select("#tooltip-info-icon")
+
+    d3.select("#tooltip-info-icon")
+        .on("click", function() {
+            if (toolTipTextExplanation.html() == "") {
+                toolTipTextExplanation
+                    .style("display", null)
+                    .html(sshsExplanationHtml)
+                toolTipInfoIcon.text("remove")
+            } else {
+                toolTipTextExplanation
+                    .style("display", "none")
+                    .html("")
+                toolTipInfoIcon.text("info_i")
+            }
+        })
+
+    d3.select("#tooltip-close-button")
+        .on("click", () => {
+            // hideTooltip(0)
+            mapHeaderTooltip
+                .transition()
+                .duration(200)
+                .style("opacity", 0)
+                .on("end", () => {
+                    mapHeaderTooltip
+                        .style("display", "none")
+                    toolTipInfoIcon
+                        .style("display", null)
+                        .text("info_i")
+                    toolTipTextExplanation
+                        .style("display", "none")
+                        .html("")
+                })
 
 
+        })
+
+    mapHeaderTooltip
+        .style("display", "none")
 
 }
 
-pageLoad()
+pageLoad().then(async r => {
+    await requestDataCharts();
+})
