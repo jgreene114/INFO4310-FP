@@ -2,7 +2,7 @@
 const svgLine = d3.select("svg#lineplot");
 const widthLine = svgLine.attr("width");
 const heightLine = svgLine.attr("height");
-const marginLine = {top: 10, right: 10, bottom: 50, left: 60};
+const marginLine = { top: 40, right: 10, bottom: 50, left: 60 };
 const chartWidthLine = widthLine - marginLine.left - marginLine.right;
 const chartHeightLine = heightLine - marginLine.top - marginLine.bottom;
 
@@ -14,7 +14,7 @@ let chartAreaLine = svgLine.append("g").attr("id", "points")
 const svgBar = d3.select("svg#barchart");
 const widthBar = svgBar.attr("width");
 const heightBar = svgBar.attr("height");
-const marginBar = {top: 50, right: 60, bottom: 50, left: 50};
+const marginBar = { top: 50, right: 60, bottom: 50, left: 50 };
 const chartWidthBar = widthBar - marginBar.left - marginBar.right;
 const chartHeightBar = heightBar - marginBar.top - marginBar.bottom;
 
@@ -26,7 +26,7 @@ let chartAreaBar = svgBar.append("g").attr("id", "points")
 const svgBubble = d3.select("svg#bubblechart");
 const widthBubble = svgBubble.attr("width");
 const heightBubble = svgBubble.attr("height");
-const marginBubble = {top: 20, right: 10, bottom: 50, left: 50};
+const marginBubble = { top: 20, right: 10, bottom: 50, left: 50 };
 const chartWidthBubble = widthBubble - marginBubble.left - marginBubble.right;
 const chartHeightBubble = heightBubble - marginBubble.top - marginBubble.bottom;
 
@@ -161,7 +161,7 @@ const requestData = async function () {
                 }
             });
         });
-        monthlyAverages.push({Month: month, Temperature: totalTemp / count});
+        monthlyAverages.push({ Month: month, Temperature: totalTemp / count });
     }
 
     chartAreaLine.append("path")
@@ -290,7 +290,7 @@ const requestData = async function () {
     // Highlights
     let positiveIntervals = [];
     let negativeIntervals = [];
-    let currentInterval = {start: null, end: null};
+    let currentInterval = { start: null, end: null };
 
     oni.forEach((d, i) => {
         if (d.ANOM > 0.5) {
@@ -299,8 +299,8 @@ const requestData = async function () {
             }
             currentInterval.end = i;
         } else if (d.ANOM <= 0.5 && currentInterval.start !== null) {
-            positiveIntervals.push({...currentInterval});
-            currentInterval = {start: null, end: null};
+            positiveIntervals.push({ ...currentInterval });
+            currentInterval = { start: null, end: null };
         }
         if (d.ANOM < -0.5) {
             if (currentInterval.start === null) {
@@ -308,16 +308,16 @@ const requestData = async function () {
             }
             currentInterval.end = i;
         } else if (d.ANOM >= -0.5 && currentInterval.start !== null) {
-            negativeIntervals.push({...currentInterval});
-            currentInterval = {start: null, end: null};
+            negativeIntervals.push({ ...currentInterval });
+            currentInterval = { start: null, end: null };
         }
     });
 
     if (currentInterval.start !== null) {
         if (oni[currentInterval.start].ANOM > 0.5) {
-            positiveIntervals.push({...currentInterval});
+            positiveIntervals.push({ ...currentInterval });
         } else if (oni[currentInterval.start].ANOM < -0.5) {
-            negativeIntervals.push({...currentInterval});
+            negativeIntervals.push({ ...currentInterval });
         }
     }
 
@@ -450,7 +450,7 @@ const requestData = async function () {
     // X Axis
     const monthScaleBubble = d3.scaleLinear()
         .domain([1, 12])
-        .range([20, chartWidthLine - 20]);
+        .range([20, chartWidthBubble - 20]);
 
     let topAxisBubble = d3.axisTop(monthScaleBubble)
         .tickFormat(d => monthNames[d - 1]);
@@ -477,7 +477,11 @@ const requestData = async function () {
         .startAngle(-Math.PI / 2)
         .endAngle(Math.PI / 2);
 
-    chartAreaBubble.selectAll("path.point").data(events)
+    const filteredEvents = events.filter(d =>
+        d['Total CPI-Adjusted Cost (Billions of Dollars)'] > 2 && d['Disaster'] !== 'Wildfire'
+    );
+
+    chartAreaBubble.selectAll("path.point").data(filteredEvents)
         .join("path")
         .attr("class", "point")
         .attr("d", d => halfCircleArc.outerRadius(Math.sqrt(d['Total CPI-Adjusted Cost (Billions of Dollars)']) * 10)())
@@ -485,53 +489,38 @@ const requestData = async function () {
             const monthPosition = monthScaleBubble(d.parsedMonth + (d.parsedDay / 30));
             return `translate(${monthPosition}, ${yearScale(d.parsedYear)})`;
         })
-        .attr("opacity", 0.8)
+        .attr("opacity", 0.65)
         .style("fill", d => disScale(d['Disaster']))
-        .on("mouseover", function (event, d) {
+        .style("cursor", "pointer")
+        .on("mouseover", function () {
+            d3.select("body").append("div")
+                .attr("id", "tooltip")
+                .style("position", "absolute")
+                .style("padding", "5px 10px")
+                .style("background", "white")
+                .style("opacity", 0.85)
+                .style("border", "1px solid black")
+                .style("border-radius", "5px")
+                .style("pointer-events", "none") // Ensure the tooltip doesn't interfere with mouse events
+                .style("font-size", "12px"); // Adjust font size for the tooltip text
+        })
+        .on("mousemove", function (event, d) {
             d3.select(this)
                 .transition()
-                .duration(200)
+                .duration(50) // Quicker transition to be more responsive
                 .attr("opacity", 1)
                 .attr("stroke", "black")
                 .attr("stroke-width", 2);
 
-            const tooltipGroup = chartAreaBubble.append("g")
-                .attr("id", "tooltip")
-                .attr("transform", `translate(${event.x - marginBubble.left}, ${event.y - marginBubble.top - 30})`);
+            const tooltipDiv = d3.select("#tooltip")
+                .html(`${d.Name}<br/><strong>$${parseFloat(d['Total CPI-Adjusted Cost (Billions of Dollars)']).toFixed(2)} billion</strong>`);
 
-            const eventName = d.Name;
-            const eventCost = `$${parseFloat(d['Total CPI-Adjusted Cost (Billions of Dollars)']).toFixed(2)} billion`;
+            const tooltipWidth = tooltipDiv.node().offsetWidth;
+            const tooltipX = event.pageX - tooltipWidth / 2;
+            const tooltipY = event.pageY + 15; // Position below the cursor with some spacing
 
-            const nameText = tooltipGroup.append("text")
-                .attr("y", -5)
-                .style("font-size", "12px")
-                .style("font-weight", "bold")
-                .text(eventName)
-                .attr("text-anchor", "middle");
-
-            const costText = tooltipGroup.append("text")
-                .attr("y", 10)
-                .style("font-size", "12px")
-                .style("font-weight", "normal")
-                .text(eventCost)
-                .attr("text-anchor", "middle");
-
-            const nameWidth = nameText.node().getBBox().width;
-            const costWidth = costText.node().getBBox().width;
-            const maxWidth = Math.max(nameWidth, costWidth) + 20;
-
-            tooltipGroup.insert("rect", "text")
-                .attr("x", -(maxWidth / 2))
-                .attr("y", -20)
-                .attr("width", maxWidth)
-                .attr("height", 40)
-                .attr("fill", "white")
-                .attr("opacity", 0.85)
-                .attr("stroke", "black")
-                .attr("stroke-width", 1)
-                .attr("rx", 5)
-                .attr("ry", 5);
-
+            tooltipDiv.style("left", `${tooltipX}px`)
+                .style("top", `${tooltipY}px`);
         })
         .on("mouseout", function () {
             d3.select(this)
