@@ -288,9 +288,9 @@ body {
     /*visibility: hidden;*/
     pointer-events: all;
     padding: 10px;
-    background: rgba(98, 165, 180, 0.3);
+    background: rgba(165, 214, 225, 0.3);
     border: 3px solid rgba(33, 158, 188, 1);
-    backdrop-filter: blur(10px);
+    backdrop-filter: blur(55px);
     color: var(--dark-blue);
     font-family: "Roboto Light";
     border-radius: 5px;
@@ -314,8 +314,10 @@ body {
         }
 
         button:hover {
-            transition: all 1s ease;
-            background-color: rgba(128, 128, 128, 0.42);
+            /*transition: all 1s;*/
+            /*background-color: rgba(128, 128, 128, 0.42);*/
+            font-weight: bolder;
+            border-width: 2.5px;
 
         }
     }
@@ -465,6 +467,10 @@ a {
     pointer-events: auto;
     /*text-decoration: none;*/
 }
+
+/*a:hover {*/
+/*    */
+/*}*/
 
 .quotation {
     /*font-size: 10px;*/

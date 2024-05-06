@@ -469,7 +469,12 @@ const pageLoad = async function () {
         let element = d3.select("#storm-clf")
         let node = element.node()
         let bbox = node.getBoundingClientRect()
-        let sshsValue = await element.select(".map-header-info-value").select(".current-text").text()
+        let sshsValue;
+        try {
+            sshsValue = await element.select(".map-header-info-value").select(".current-text").text()
+        } catch (error) {
+            console.error("text not loading, reload page")
+        }
         mapHeaderTooltip.select("#tooltip-current-text")
             .html(sshsExplanationDict[sshsValue])
 
