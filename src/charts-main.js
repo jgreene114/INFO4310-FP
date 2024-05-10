@@ -314,8 +314,6 @@ const requestDataCharts = async function () {
     const bottomAxisBar = d3.axisBottom(timeScale)
         .tickValues(selectedTicks);
 
-    const tickFilter = (d, i) => i % Math.floor(oni.length / 10) === 0
-
     annotationsBar.append("g")
         .attr("class", "x axis")
         .attr("transform", `translate(${marginBar.left},${chartHeightBar + marginBar.top + 10})`)
@@ -471,6 +469,37 @@ const requestDataCharts = async function () {
         .style("font-size", "15px")
         .style("font-family", "Arial")
         .text("3-Month Running Mean of Niño 3.4 SST Anomalies");
+
+    // // Brush
+    // const brush = d3.brushX()
+    //     .extent([[marginBar.left + 50, marginBar.top + 50], [marginBar.left + chartWidthBar, chartHeightBar + marginBar.top]])
+    //     .on("end", brushed);
+
+    // function brushed(event) {
+    //     const selection = event.selection;
+    //     if (selection) {
+    //         const [x0, x1] = selection.map(d => d - marginBar.left);
+    //         const newDomain = timeScale.domain().filter(d => {
+    //             const pos = timeScale(d) + timeScale.bandwidth() / 2;
+    //             return pos >= x0 && pos <= x1;
+    //         });
+    //         timeScale.domain(newDomain);
+    //         chartAreaBar.selectAll("rect")
+    //             .attr("x", d => timeScale(d.combined))
+    //             .attr("width", timeScale.bandwidth());
+    //         annotationsBar.select(".x.axis").call(bottomAxisBar);
+    //     } else {
+    //         timeScale.domain(oni.map(d => d.combined));
+    //         chartAreaBar.selectAll("rect")
+    //             .attr("x", d => timeScale(d.combined))
+    //             .attr("width", timeScale.bandwidth());
+    //         annotationsBar.select(".x.axis").call(bottomAxisBar);
+    //     }
+    // }
+
+    // chartAreaBar.append("g")
+    //     .attr("class", "brush")
+    //     .call(brush);
 
     // BUBBLE CHART
     const events = await d3.csv("./data/events-us.csv", function (d) {

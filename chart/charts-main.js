@@ -265,8 +265,6 @@ const requestData = async function () {
     const bottomAxisBar = d3.axisBottom(timeScale)
         .tickValues(selectedTicks);
 
-    const tickFilter = (d, i) => i % Math.floor(oni.length / 10) === 0
-
     annotationsBar.append("g")
         .attr("class", "x axis")
         .attr("transform", `translate(${marginBar.left},${chartHeightBar + marginBar.top + 10})`)
