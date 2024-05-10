@@ -477,9 +477,19 @@ const requestData = async function () {
         .startAngle(-Math.PI / 2)
         .endAngle(Math.PI / 2);
 
-    const filteredEvents = events.filter(d =>
-        d['Total CPI-Adjusted Cost (Billions of Dollars)'] > 2
-    );
+    const disasterOrder = {
+        "Drought": 1,
+        "Wildfire": 2,
+        "Severe Storm": 2,
+        "Freeze": 3,
+        "Winter Storm": 3,
+        "Flooding": 4,
+        "Tropical Cyclone": 5
+    };
+
+    const filteredEvents = events
+        .filter(d => d['Total CPI-Adjusted Cost (Billions of Dollars)'] > 2)
+        .sort((a, b) => disasterOrder[a.Disaster] - disasterOrder[b.Disaster]);
 
     chartAreaBubble.selectAll("path.point").data(filteredEvents)
         .join("path")
@@ -489,7 +499,9 @@ const requestData = async function () {
             const monthPosition = monthScaleBubble(d.parsedMonth + (d.parsedDay / 30));
             return `translate(${monthPosition}, ${yearScale(d.parsedYear)})`;
         })
-        .attr("opacity", 0.65)
+        .attr("opacity", 0.7)
+        .attr("stroke", "black")
+        .attr("stroke-width", 0.3)
         .style("fill", d => disScale(d['Disaster']))
         .style("cursor", "pointer")
         .on("mouseover", function () {
@@ -501,13 +513,13 @@ const requestData = async function () {
                 .style("opacity", 0.85)
                 .style("border", "1px solid black")
                 .style("border-radius", "5px")
-                .style("pointer-events", "none") // Ensure the tooltip doesn't interfere with mouse events
-                .style("font-size", "12px"); // Adjust font size for the tooltip text
+                .style("pointer-events", "none")
+                .style("font-size", "12px");
         })
         .on("mousemove", function (event, d) {
             d3.select(this)
                 .transition()
-                .duration(50) // Quicker transition to be more responsive
+                .duration(50)
                 .attr("opacity", 1)
                 .attr("stroke", "black")
                 .attr("stroke-width", 2);
@@ -526,8 +538,8 @@ const requestData = async function () {
             d3.select(this)
                 .transition()
                 .duration(200)
-                .attr("opacity", 0.8)
-                .attr("stroke", "none");
+                .attr("opacity", 0.7)
+                .attr("stroke-width", "0.3");
             d3.selectAll("#tooltip").remove();
         });
 
