@@ -470,7 +470,7 @@ const requestData = async function () {
 
     const disScale = d3.scaleOrdinal()
         .domain(['Flooding', 'Tropical Cyclone', 'Drought', 'Freeze', 'Severe Storm', 'Winter Storm', 'Wildfire'])
-        .range(['#1f77b4', '#08306b', '#ffdb58', '#d9d9d9', '#31a354', '#bdbdbd', '#ff6347']);
+        .range(['#41b6c4', '#081d58', '#ffffd9', '#cccccc', '#c7e9b4', '#cccccc', '#ffffd9']);
 
     const halfCircleArc = d3.arc()
         .innerRadius(0)
@@ -478,7 +478,7 @@ const requestData = async function () {
         .endAngle(Math.PI / 2);
 
     const filteredEvents = events.filter(d =>
-        d['Total CPI-Adjusted Cost (Billions of Dollars)'] > 2 && d['Disaster'] !== 'Wildfire'
+        d['Total CPI-Adjusted Cost (Billions of Dollars)'] > 2
     );
 
     chartAreaBubble.selectAll("path.point").data(filteredEvents)
