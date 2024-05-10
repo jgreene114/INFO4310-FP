@@ -15,7 +15,7 @@ function getViewportDimensions() {
 
 
 async function drawCharts(dimensions) {
-    console.log(dimensions)
+    // console.log(dimensions)
 
 // LINE PLOT
     const svgLine = d3.select("svg#lineplot")
@@ -87,7 +87,7 @@ const requestDataCharts = async function () {
 
     // LINE PLOT
     const sst = await d3.csv("./data/sst.csv");
-    console.log(sst)
+    // console.log(sst)
 
     // Y axis
     const tempExtent = d3.extent(sst, d => d['Temperature']);
@@ -254,7 +254,7 @@ const requestDataCharts = async function () {
 
     // BAR CHART
     const oni = await d3.csv("./data/oni_data.csv");
-    console.log(oni)
+    // console.log(oni)
 
     // Y Axis
     const celsiusScale = d3.scaleLinear().domain([-3, 3]).range([chartHeightBar, 0]);
@@ -481,7 +481,7 @@ const requestDataCharts = async function () {
         return d;
     });
 
-    console.log(events)
+    // console.log(events)
 
     // Y Axis
     const years = d3.range(1980, 2025);

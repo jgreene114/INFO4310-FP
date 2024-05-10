@@ -79,8 +79,8 @@ function animateIncreaseDecrease(newStr, container) {
     let newTextStart = increase ? "" : "-"
     let newTextEase = d3.easeExpOut
 
-    let translateDist = 25;
-    let duration = 300
+    let translateDist = 15;
+    let duration = 250
 
     newTextContainer = container.append('div')
         .classed("new-text", true)
@@ -178,8 +178,11 @@ const pageLoad = async function () {
 
 
     let idxs = walkthrough.findChangesInColumn('USA_SSHS')
-    idxs.unshift(0)
+    // idxs.unshift(0)
+    idxs.splice(2, 0, 17)
     if (!idxs.includes(walkthrough.data.length - 1)) { idxs.push(walkthrough.data.length - 1) }
+
+    // console.log(idxs)
 
     // const latlngs = walkthrough.data.map(function (feature) {
     //     return [
@@ -448,7 +451,7 @@ const pageLoad = async function () {
         updateTooltipValueText()
     }
 
-    function hideTooltip(timeoutTime = 1300) {
+    function hideTooltip(timeoutTime = 500) {
         if (toolTipTextExplanation.html() === "") {
             timeout = setTimeout(() => {
                 mapHeaderTooltip
