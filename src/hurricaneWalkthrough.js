@@ -77,7 +77,6 @@ class HurricaneTrack {
         }).addTo(this.map);
         this.map.attributionControl.setPosition('bottomright');
         this.initialMapView();
-
     }
 
     moveMap(lat, lon, zoom) {

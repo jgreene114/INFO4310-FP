@@ -30,7 +30,9 @@ columnsToKeep = [
     # 'USA_RECORD',
 ]
 df = df[columnsToKeep]
-df.sort_values(by=['ISO_TIME'])
+# df.sort_values(by=['ISO_TIME'])
 katrinaDf = df[df['SID'] == "2005236N23285"].copy()
+katrinaDf['USA_WIND'] = katrinaDf['USA_WIND'] * 1.15078
+katrinaDf['USA_WIND'] = katrinaDf['USA_WIND'].round(0).astype(int)
 katrinaDf.sort_values(by=['ISO_TIME'], inplace=True)
 katrinaDf.to_csv('./data/katrinaTrack.csv', index=False)

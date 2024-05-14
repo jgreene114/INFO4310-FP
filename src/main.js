@@ -48,13 +48,20 @@ function animateIncreaseDecrease(newStr, container) {
     // console.log("height", containerHeight)
 
     let currentTextContainer = container.select(".current-text");
-    let newTextContainer = container.select(".new-text");
 
-    if (newTextContainer.node() != null) {
-        newTextContainer.remove();
+    // let newTextContainer = container.select(".new-text");
+
+    if (!currentTextContainer.node()) {
+        console.error("Text containers not found, skipping animation.");
+        return;
     }
 
-    let oldStr = 0;
+
+    // if (newTextContainer.node() != null) {
+    //     newTextContainer.remove();
+    // }
+
+    let oldStr;
     try {
         oldStr = currentTextContainer.html();
     } catch (error) {
@@ -74,59 +81,126 @@ function animateIncreaseDecrease(newStr, container) {
         dimOpacity = 1
     }
 
-    let currentTextMove = increase ? "-" : ""
-    let currentTextEase = d3.easeExpOut
-    let newTextStart = increase ? "" : "-"
-    let newTextEase = d3.easeExpOut
-
-    let translateDist = 15;
-    let duration = 250
-
-    newTextContainer = container.append('div')
-        .classed("new-text", true)
-        .style("color", changeColor)
-        .style("opacity", 0)
-        .style("transform", `translateY(${newTextStart}${translateDist}px) rotateX(${currentTextMove}90deg)`)
-        .html(newStr);
+    let duration = 425
 
     currentTextContainer
+        .style("text-shadow", `0px 0px 0px ${changeColor}`)
+        .html(newStr)
         .transition()
-        .duration(20)
-        .style("opacity", dimOpacity)
-        .transition()
-        .duration(duration/2)
-        .style("color", changeColor)
-
-    currentTextContainer
-        .transition()
-        .ease(currentTextEase)
         .duration(duration)
-        .style("transform", `translateY(${currentTextMove}${translateDist}px) rotateX(${newTextStart}90deg)`)
         .style("color", changeColor)
-        .style("opacity", 0)
+        .style("opacity", dimOpacity)
+        .style("text-shadow", `0px 0px 4px ${changeColor}`)
         .on("end", () => {
-            currentTextContainer.remove()
-
-            newTextContainer
-                .classed("new-text", false)
-                .classed("current-text", true)
+            currentTextContainer
                 .transition()
-                .ease(newTextEase)
                 .duration(duration)
-                .style("opacity", dimOpacity)
-                .style("transform", "translateY(0px) rotateX(0deg)")
-                .transition()
-                .style("opacity", 1)
-                .transition()
-                .delay(200)
-                .duration(duration*2)
+                .style("text-shadow", `0px 0px 0px ${changeColor}`)
                 .style("color", null)
-        });
-
+                .style("opacity", null)
+                .on("end", () => {
+                    currentTextContainer.style("text-shadow", null)
+                })
+        })
 }
 
+
+// function animateIncreaseDecrease(newStr, container) {
+//     // console.log(container.node())
+//     // let containerHeight = container.style('height')
+//     // container.style("height", containerHeight)
+//     // console.log("height", containerHeight)
+//
+//     let currentTextContainer = container.select(".current-text");
+//     let newTextContainer = container.select(".new-text");
+//
+//     if (!currentTextContainer.node()) {
+//         console.error("Text containers not found, skipping animation.");
+//         return;
+//     }
+//
+//
+//     if (newTextContainer.node() != null) {
+//         newTextContainer.remove();
+//     }
+//
+//     let oldStr = 0;
+//     try {
+//         oldStr = currentTextContainer.html();
+//     } catch (error) {
+//     }
+//
+//     let oldNumber = parseInt(oldStr, 10);
+//     let newNumber = parseInt(newStr, 10);
+//
+//     let diff = newNumber - oldNumber;
+//     let increase = diff > 0;
+//
+//     let changeColor = increase ? "red" : "green"
+//     let dimOpacity = .6
+//     if (diff === 0) {
+//         return
+//         changeColor = "grey";
+//         dimOpacity = 1
+//     }
+//
+//     let currentTextMove = increase ? "-" : ""
+//     let currentTextEase = d3.easeExpOut
+//     let newTextStart = increase ? "" : "-"
+//     let newTextEase = d3.easeExpOut
+//
+//     let translateDist = 15;
+//     let duration = 250
+//
+//     newTextContainer = container.append('div')
+//         .classed("new-text", true)
+//         .style("color", changeColor)
+//         .style("opacity", 0)
+//         .style("transform", `translateY(${newTextStart}${translateDist}px) rotateX(${currentTextMove}90deg)`)
+//         .html(newStr);
+//
+//     currentTextContainer
+//         .transition()
+//         .duration(20)
+//         .style("opacity", dimOpacity)
+//         .transition()
+//         .duration(duration/2)
+//         .style("color", changeColor)
+//
+//     currentTextContainer
+//         .transition()
+//         .ease(currentTextEase)
+//         .duration(duration)
+//         .style("transform", `translateY(${currentTextMove}${translateDist}px) rotateX(${newTextStart}90deg)`)
+//         .style("color", changeColor)
+//         .style("opacity", 0)
+//         .on("end", () => {
+//
+//             newTextContainer
+//                 .classed("current-text", true)
+//                 .classed("new-text", false)
+//                 .transition()
+//                 .ease(newTextEase)
+//                 .duration(duration)
+//                 .style("opacity", dimOpacity)
+//                 .style("transform", "translateY(0px) rotateX(0deg)")
+//                 .transition()
+//                 .style("opacity", 1)
+//                 .transition()
+//                 .delay(200)
+//                 .duration(duration*2)
+//                 .style("color", null)
+//
+//             // currentTextContainer.remove()
+//
+//         })
+//         .remove();
+//
+// }
+
 function formatISOStr(isoStr) {
-    let parseTime = d3.timeParse("%m/%d/%y %H:%M");
+    // let parseTime = d3.timeParse("%m/%d/%y %H:%M");
+    let parseTime = d3.timeParse("%Y-%m-%d %H:%M:%S");
 
     // let formatDate = d3.timeFormat("%m/%d/%Y");
     let formatDate = d3.timeFormat("%b %d, %Y");
@@ -135,7 +209,8 @@ function formatISOStr(isoStr) {
 
 
     let date = parseTime(isoStr);
-
+    console.log(isoStr)
+    console.log(date)
     let formattedDate = [formatDate(date), formatTime(date), formatAMPM(date)];
 
     // console.log("Formatted Date:", formattedDate);
@@ -179,6 +254,7 @@ const pageLoad = async function () {
 
     let idxs = walkthrough.findChangesInColumn('USA_SSHS')
     // idxs.unshift(0)
+    idxs.splice(2, 0, 17)
     idxs.splice(2, 0, 17)
     if (!idxs.includes(walkthrough.data.length - 1)) { idxs.push(walkthrough.data.length - 1) }
 
@@ -312,6 +388,20 @@ const pageLoad = async function () {
         fillOpacity: 0.2,
         interactive: false,
     })
+    let nino3_4Polygon = L.polygon([
+        [5, -170],
+        [5, -120],
+        [-5, -120],
+        [-5, -170],
+    ], {
+        // color: "#1C2143",
+        color: '#219ebcff',
+        fillColor: '#219ebcff',
+        fillOpacity: 0.2,
+        interactive: false,
+    })
+
+
     let form2Prev = false;
 
     trackPolygon.addTo(walkthrough.map)
@@ -371,8 +461,18 @@ const pageLoad = async function () {
                                 padding: [30, 30]
                             })
                             form2Prev = true
+                        } else if (target.id == "formation-3") {
+                            nino3_4Polygon.addTo(walkthrough.map)
+
+                            walkthrough.map.flyToBounds(nino3_4Polygon.getBounds(), {
+                                duration: .1,
+                                animate: true,
+                                padding: [100, 30]
+                            })
+                            form2Prev = true
                         } else {
                             if (mdrPolygon) {mdrPolygon.remove()}
+                            if (nino3_4Polygon) {nino3_4Polygon.remove()}
                             simTrackPolygon.setLatLngs(interpolator(self.progress))
                             walkthrough.map.flyToBounds(simTrackPolygon.getBounds(), {
                                 duration: .1,
@@ -390,7 +490,18 @@ const pageLoad = async function () {
                 .fromTo(target,
                     // {y: "100%"},
                     {y: "100vh"},
-                    {y: "random([20vh,27vh,32vh,25vh,21vh])", duration: .5, ease: "power1.inOut"},
+                    {
+                        y: function() {
+                            let targetHeight = target.offsetHeight;
+                            if (targetHeight > 400) {
+                                return (window.innerHeight / 2) - (target.offsetHeight / 2);
+                            } else {
+                                return "random([20vh,19vh,16vh,23vh,18vh])";
+                            }
+                        },
+                        duration: .5, ease: "power1.inOut"
+                    },
+                    // {y: "random([20vh,27vh,32vh,25vh,21vh])", duration: .5, ease: "power1.inOut"},
                 )
         } else {
             console.error("NO INFO CHILD", i)
@@ -477,6 +588,7 @@ const pageLoad = async function () {
             sshsValue = await element.select(".map-header-info-value").select(".current-text").text()
         } catch (error) {
             console.error("text not loading, reload page")
+            sshsValue = "0"
         }
         mapHeaderTooltip.select("#tooltip-current-text")
             .html(sshsExplanationDict[sshsValue])
@@ -544,6 +656,67 @@ const pageLoad = async function () {
     mapHeaderTooltip
         .style("display", "none")
 
+
+    function hoverWordExplanation(elemID, explanation) {
+        let elem = d3.select(elemID);
+
+        elem.on("mouseover", (event) => {
+            d3.select("#definition-popup")
+                .html(explanation)
+                .transition()
+                .duration(200)
+                .style("left", event.x + "px")
+                .style("display", "block")
+                .style("opacity", 1).style("top", event.y + 2 + "px")
+        })
+            .on("mouseout", (event) => {
+                d3.select("#definition-popup")
+                    .transition()
+                    .delay(2000)
+                    .duration(200)
+                    .style("opacity", 0)
+                    .style("top", null)
+                    .style("left", null)
+                    .style("display", null)
+                    .on("end", () => {
+                        d3.select("#definition-popup").html("")
+                    })
+            })
+    }
+
+    let explanation = `"Vertical wind shear is the change in wind speed with height." <a href="https://www.noaa.gov/jetstream/tropical/tropical-cyclone-introduction"
+                         target="_blank">(CITE)</a>`
+    hoverWordExplanation("#vertical-wind-shear", explanation)
+
+
+    function alignContainers() {
+        function getScrollbarWidth(elementId) {
+            var element = d3.select(elementId).node();
+            if (element) {
+                return element.offsetWidth - element.clientWidth;
+            }
+            return 0;
+        }
+
+        let scrollbarWidth = getScrollbarWidth("#info-container")
+
+        let mapCont = d3.select("#map-container")
+        let interactivesCont = d3.select("#interactives-container")
+
+        mapCont
+            .style("width", `calc(100% - ${scrollbarWidth}px)`)
+            .style("margin-right", `${scrollbarWidth}px`)
+
+        interactivesCont
+            .style("width", `calc(100% - ${scrollbarWidth}px)`)
+            .style("margin-right", `${scrollbarWidth}px`)
+    }
+
+    alignContainers();
+
+    d3.select(window).on("resize", function () {
+        alignContainers();
+    });
 }
 
 pageLoad().then(async r => {
