@@ -10,6 +10,18 @@ let annotationsLine = svgLine.append("g").attr("id", "annotations");
 let chartAreaLine = svgLine.append("g").attr("id", "points")
     .attr("transform", `translate(${marginLine.left},${marginLine.top})`);
 
+// MDR PLOT
+const svgMdr = d3.select("svg#mdrplot");
+const widthMdr = svgMdr.attr("width");
+const heightMdr = svgMdr.attr("height");
+const marginMdr = { top: 40, right: 10, bottom: 50, left: 60 };
+const chartWidthMdr = widthMdr - marginMdr.left - marginMdr.right;
+const chartHeightMdr = heightMdr - marginMdr.top - marginMdr.bottom;
+
+let annotationsMdr = svgMdr.append("g").attr("id", "annotations");
+let chartAreaMdr = svgMdr.append("g").attr("id", "points")
+    .attr("transform", `translate(${marginMdr.left},${marginMdr.top})`);
+
 // BAR CHART
 const svgBar = d3.select("svg#barchart");
 const widthBar = svgBar.attr("width");
@@ -38,7 +50,7 @@ const requestData = async function () {
 
     // LINE PLOT
     const sst = await d3.csv("sst.csv");
-    console.log(sst)
+    // console.log(sst)
 
     // Y axis
     const tempExtent = d3.extent(sst, d => d['Temperature']);
@@ -203,9 +215,145 @@ const requestData = async function () {
         .style("font-family", "Arial")
         .text("2024");
 
+    // MDR PLOT
+    const mdr = await d3.csv("mdr-sst.csv");
+
+    const parseDate = d3.timeParse("%m%d");
+    mdr.forEach(d => {
+        d.MMDD = parseDate(String(d.MMDD).padStart(4, '0'));
+        for (let year = 2013; year <= 2024; year++) {
+            d[year] = +d[year];
+        }
+    });
+
+    console.log(mdr)
+
+    // Y Axis
+    const thermalScale = d3.scaleLinear().domain([0, 80]).range([chartHeightMdr, 0]);
+    let leftAxisMdr = d3.axisLeft(thermalScale)
+    let leftGridlinesMdr = d3.axisLeft(thermalScale)
+        .tickSize(-chartWidthMdr - 10)
+        .tickFormat("")
+    annotationsMdr.append("g")
+        .attr("class", "y axis")
+        .attr("transform", `translate(${marginMdr.left - 10},${marginMdr.top})`)
+        .call(leftAxisMdr)
+    annotationsMdr.append("g")
+        .attr("class", "y gridlines")
+        .attr("transform", `translate(${marginMdr.left - 10},${marginMdr.top})`)
+        .call(leftGridlinesMdr)
+        .attr("stroke-dasharray", "5,5");
+
+    // X Axis
+    const monthScaleMdr = d3.scaleTime()
+        .domain(d3.extent(mdr, d => d.MMDD))
+        .range([0, chartWidthMdr]);
+    let bottomAxisMdr = d3.axisBottom(monthScaleMdr).tickFormat(d3.timeFormat("%b"));
+    let bottomGridlinesMdr = d3.axisBottom(monthScaleMdr)
+        .tickSize(-chartHeightMdr - 10)
+        .tickFormat("");
+    annotationsMdr.append("g")
+        .attr("class", "x axis")
+        .attr("transform", `translate(${marginMdr.left},${chartHeightMdr + marginMdr.top + 10})`)
+        .call(bottomAxisMdr);
+    annotationsMdr.append("g")
+        .attr("class", "x gridlines")
+        .attr("transform", `translate(${marginMdr.left},${chartHeightMdr + marginMdr.top + 10})`)
+        .call(bottomGridlinesMdr)
+        .attr("stroke-dasharray", "5,5");
+
+    // Title
+    svgMdr.append("text")
+        .attr("x", widthMdr / 2)
+        .attr("y", marginMdr.top - 20)
+        .attr("text-anchor", "middle")
+        .style("font-size", "20px")
+        .style("font-family", "Arial")
+        .text("Ocean Heat Content in Main Development Region (10-20N 85-25W)");
+
+    // Y Axis Label
+    svgMdr.append("text")
+        .attr("transform", "rotate(-90)")
+        .attr("y", 0)
+        .attr("x", -(heightMdr / 2))
+        .attr("dy", "1em")
+        .style("text-anchor", "middle")
+        .style("font-size", "16px")
+        .style("font-family", "Arial")
+        .text("kJ/cm2");
+
+    const lineGenMdr = d3.line()
+        .defined(d => !isNaN(d.value))
+        .x(d => monthScaleMdr(d.MMDD))
+        .y(d => thermalScale(d.value))
+        .curve(d3.curveMonotoneX);
+
+    const dataByYearMdr = Object.keys(mdr[0]).filter(d => d !== 'MMDD' && d !== 'CLIMO').map(year => {
+        return {
+            year: year,
+            values: mdr.map(d => {
+                return {
+                    MMDD: d.MMDD,
+                    value: d[year]
+                };
+            }).filter(d => !isNaN(d.value)) // Filter out NaN values
+        };
+    });
+
+
+    chartAreaMdr.selectAll(".line")
+        .data(dataByYearMdr)
+        .enter().append("path")
+        .attr("class", "line")
+        .attr("d", d => lineGenMdr(d.values))
+        .attr("fill", "none")
+        .attr("stroke", d => d.year === "2024" ? "orange" : d.year === "2023" ? "black" : "lightgray")
+        .attr("stroke-width", 2);
+
+    // Label 2024
+    const lastElement2024 = mdr.filter(d => !isNaN(d[2024])).slice(-1)[0];
+
+    chartAreaMdr.append("circle")
+        .attr("cx", monthScaleMdr(lastElement2024.MMDD))
+        .attr("cy", thermalScale(lastElement2024[2024]))
+        .attr("r", 5)
+        .attr("fill", "orange");
+
+    chartAreaMdr.append("text")
+        .attr("x", monthScaleMdr(lastElement2024.MMDD) - 15)
+        .attr("y", thermalScale(lastElement2024[2024]) - 15)
+        .attr("text-anchor", "start")
+        .style("font-family", "Arial")
+        .attr("fill", "orange")
+        .text("2024");
+
+    // Label 2023
+    const midpointIndex2023 = Math.floor(mdr.filter(d => !isNaN(d[2023])).length / 2);
+    const midpointElement2023 = mdr.filter(d => !isNaN(d[2023]))[midpointIndex2023];
+
+    chartAreaMdr.append("text")
+        .attr("x", monthScaleMdr(midpointElement2023.MMDD))
+        .attr("y", thermalScale(midpointElement2023[2023]) - 30)
+        .attr("text-anchor", "start")
+        .style("font-family", "Arial")
+        .attr("fill", "black")
+        .text("2023");
+
+    // Label 2013-22
+    const midpointIndex2018 = Math.floor(mdr.filter(d => !isNaN(d[2018])).length / 2);
+    const midpointElement2018 = mdr.filter(d => !isNaN(d[2018]))[midpointIndex2018];
+
+    chartAreaMdr.append("text")
+        .attr("x", monthScaleMdr(midpointElement2018.MMDD) + 10)
+        .attr("y", thermalScale(midpointElement2018[2018]))
+        .attr("text-anchor", "start")
+        .style("font-family", "Arial")
+        .attr("fill", "gray")
+        .text("2013-22");
+
     // BAR CHART
     const oni = await d3.csv("oni_data.csv");
-    console.log(oni)
+    // console.log(oni)
 
     // Y Axis
     const celsiusScale = d3.scaleLinear().domain([-3, 3]).range([chartHeightBar, 0]);
@@ -430,7 +578,7 @@ const requestData = async function () {
         return d;
     });
 
-    console.log(events)
+    // console.log(events)
 
     // Y Axis
     const years = d3.range(1980, 2025);
