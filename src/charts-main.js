@@ -49,7 +49,7 @@ async function drawCharts(dimensions) {
     const svgMdr = d3.select("svg#mdrplot");
     const widthMdr = svgMdr.attr("width");
     const heightMdr = svgMdr.attr("height");
-    const marginMdr = {top: 40, right: 10, bottom: 50, left: 60};
+    const marginMdr = { top: 40, right: 10, bottom: 50, left: 60 };
     const chartWidthMdr = widthMdr - marginMdr.left - marginMdr.right;
     const chartHeightMdr = heightMdr - marginMdr.top - marginMdr.bottom;
 
@@ -332,7 +332,7 @@ const requestDataCharts = async function () {
                 .style("left", (event.x + 15) + "px")
                 // .style("left", (event.pageX + 15) + "px")
                 .style("top", (event.y - 28) + "px");
-                // .style("top", (event.pageY - 28) + "px");
+            // .style("top", (event.pageY - 28) + "px");
         })
         .on("mouseout", function (d) {
             const element = d3.select(this);
