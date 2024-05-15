@@ -21,7 +21,8 @@
 
 
 
-body, html {
+body,
+html {
     margin: 0;
     padding: 0;
     overflow-x: hidden;
@@ -42,7 +43,9 @@ body, html {
     width: 100%;
 }
 
-#map-container, #info-container, #interactives-container {
+#map-container,
+#info-container,
+#interactives-container {
     position: absolute;
     top: 0;
     left: 0;
@@ -170,13 +173,13 @@ body, html {
             position: relative;
             height: 100%;
             width: 100%
-
-            /*top: 0;*/
-            /*left: 50%;*/
-            /*transform: translate(-50%, 37.5%);*/
+                /*top: 0;*/
+                /*left: 50%;*/
+                /*transform: translate(-50%, 37.5%);*/
         }
 
-        .current-text, .new-text {
+        .current-text,
+        .new-text {
             position: absolute;
             /*top: 0;*/
             /*left: 50%;*/
@@ -197,6 +200,7 @@ body, html {
         /*border-right: none;*/
         /*border-inline-end: 1px solid black;*/
     }
+
     .map-header-info-parent:first-child {
         margin-left: 5px;
         /*border-inline-end: 1px solid black;*/
@@ -224,6 +228,7 @@ body, html {
             width: fit-content;
             height: fit-content;
         }
+
         /*background-color: pink;*/
     }
 
@@ -350,9 +355,11 @@ body, html {
         font-family: "Roboto Black";
         font-size: 1.6em;
     }
+
     .category {
         font-family: "Roboto Medium";
     }
+
     .bold-font {
         font-family: "Roboto Medium";
     }
@@ -381,6 +388,7 @@ body, html {
 .info-parent:first-child {
     /*margin-top: 100vh;*/
 }
+
 .info-parent:last-child {
     margin-bottom: 100vh;
 }
@@ -427,7 +435,7 @@ body, html {
         margin: 0px;
         margin-left: 25px;
         color: white;
-    /*var(--secondary-color-dark);*/
+        /*var(--secondary-color-dark);*/
         font-family: Roboto;
     }
 }
@@ -437,6 +445,7 @@ body, html {
     /*background-color: antiquewhite;*/
     z-index: 250;
 }
+
 #title-page-map {
     /*pointer-events: none;*/
     z-index: 250;
@@ -450,6 +459,7 @@ body, html {
 .info-parent.leftright {
     justify-content: space-between;
     width: 100%;
+
     .info-child {
         max-width: 100%;
         width: 100%;
@@ -545,9 +555,7 @@ body, html {
 
 }
 
-.info-content.right {
-
-}
+.info-content.right {}
 
 
 a {
@@ -571,13 +579,15 @@ a:hover {
 /*}*/
 
 .quotation {
+
     /*font-size: 10px;*/
     .container {
         padding-left: 20px;
     }
 }
 
-.quotation::before, .quotation::after {
+.quotation::before,
+.quotation::after {
     color: var(--orange);
     position: relative;
     height: .39em;
@@ -586,6 +596,7 @@ a:hover {
     margin: 0px;
     font-size: 5em;
 }
+
 .quotation::before {
     content: "“";
 }
@@ -611,8 +622,13 @@ a:hover {
 
 .warming-text {
     background: linear-gradient(to bottom, #7e0000, #c21616, #ff6666);
-/*, #c21616, #7e0000);*/
+    /*, #c21616, #7e0000);*/
     background-clip: text;
     -webkit-background-clip: text;
     color: transparent;
+}
+
+.stat-number {
+    font-size: 1.5em;
+    font-weight: bold;
 }
