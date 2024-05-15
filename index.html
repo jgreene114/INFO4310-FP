@@ -179,36 +179,35 @@
                                 text-decoration-style: dotted;
                             }
 
-                            #vertical-wind-shear:hover {
-                                opacity: 1;
-                                text-decoration-style: dashed;
-                            }
-                        </style>
-                        </p>
-                    </div>
-                    <div class="info-content">
-                        <br><br><br><br><br><br><br><br>
-                        <p>
-                            "Tropical cyclones are classified by their maximum wind speed.
+                        #vertical-wind-shear:hover {
+                            opacity: 1;
+                            text-decoration-style: dashed;
+                        }
+                    </style>
+                    </p>
+                </div>
+                <div class="info-content">
+                    <br><br><br><br><br><br><br><br>
+                    <p>
+                        "Tropical cyclones are classified by their maximum wind speed.
                         <ul>
                             <li>Winds less than 39 mph: Tropical depressions</li>
-                            <li><span style="font-family: Roboto; background-color: rgba(113,248,255,0.35)">Winds 39-73
-                                    mph: Tropical storms</span></li>
+                            <li><span style="font-family: Roboto; background-color: rgba(113,248,255,0.35)">Winds 39-73 mph: Tropical storms</span></li>
                             <li>Winds 74 mph or greater: Hurricanes</li>
                             <li>Major hurricanes have winds of at least 111 mph and can reach speeds of over 180 mph,
                                 with gusts of 200 mph."</li>
                         </ul>
                         <a href="https://www.noaa.gov/education/resource-collections/weather-atmosphere/hurricanes"
-                            target="_blank">(CITE)</a>
-                        </p>
-                    </div>
+                           target="_blank">(CITE)</a>
+                    </p>
                 </div>
             </div>
-            <!--        TODO: need to write this slide about katrina hitting miami as a cat 1 hurricane -->
-            <div class="info-parent hurricane-track left">
-                <div class="info-child hurricane-track">
-                    <div class="info-content">
-                        <h1>Hurricane Katrina First Hitting Land</h1>
+        </div>
+<!--        TODO: need to write this slide about katrina hitting miami as a cat 1 hurricane -->
+        <div class="info-parent hurricane-track left">
+            <div class="info-child hurricane-track">
+                <div class="info-content">
+                    <h1>Hurricane Katrina First Hitting Land</h1>
                         <p>
                             Hurricane Katrina first made landfall on August 25, 2005, near Miami, Florida, as a Category
                             1 hurricane. This initial landfall brought heavy rain and strong winds to the region,
@@ -494,6 +493,21 @@
                     </div>
                 </div>
             </div>
+            <!--        MDR SST line chart -->
+            <div class="info-parent full-page overlay-map">
+                <div class="info-child">
+                    <div class="info-content chart">
+                        <h1>Monthly Sea Surface Temperatures (SST) 1982 - 2023</h1>
+                        <div style="position: relative; display: flex; justify-content: center; width: 100%">
+<!--                            <svg id="lineplot" style="margin-top:50px"></svg>-->
+<!--                            <div id="tooltipLine"-->
+<!--                                style="position: absolute; opacity: 0; pointer-events: none; background-color: white; border: 1px solid black; padding: 10px;">-->
+<!--                            </div>-->
+                            <svg id="mdrplot" height="550" width="800" style="margin-top:50px"></svg>
+                        </div>
+                    </div>
+                </div>
+            </div>
             <!--        TODO: Katrina reaches classification 5 -->
             <div class="info-parent hurricane-track left">
                 <div class="info-child hurricane-track">
@@ -594,12 +608,12 @@
                 </div>
             </div>
             <!--        damage bubble chart -->
-            <div class="info-parent full-page overlay-map">
+            <div class="info-parent full-page overlay-map long-section">
                 <div class="info-child chart">
                     <div class="info-content">
                         <h1>Bubble chart</h1>
                         <div style="position: relative; display: flex; justify-content: center">
-                            <svg id="bubblechart" height="1000" width="800" style="margin-top:50px"></svg>
+                            <svg id="bubblechart" height="2000" width="800" style="margin-top:50px"></svg>
                             <div id="tooltip"
                                 style="position: absolute; display: none; pointer-events: none; background: white; border: 1px solid black; padding: 10px; border-radius: 5px; font-size: 12px;">
                             </div>
@@ -688,10 +702,10 @@
                     </div>
                     <div class="map-header-info-unit">MPH</div>
                 </div>
-                <div class="line"></div>
-                <div class="map-header-info-parent hoverable center-align" id="information">
-                    <span class="material-symbols-outlined">info</span>
-                </div>
+<!--                <div class="line"></div>-->
+<!--                <div class="map-header-info-parent hoverable center-align" id="information">-->
+<!--                    <span class="material-symbols-outlined">info</span>-->
+<!--                </div>-->
             </div>
             <div id="definition-popup"></div>
             <div id="map-header-tooltip">
