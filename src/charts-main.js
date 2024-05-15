@@ -13,7 +13,6 @@ function getViewportDimensions() {
     };
 }
 
-
 async function drawCharts(dimensions) {
     // console.log(dimensions)
 
@@ -59,7 +58,6 @@ async function drawCharts(dimensions) {
 
     // BUBBLE CHART
     const svgBubble = d3.select("svg#bubblechart")
-        // .attr("height", dimensions.viewportHeight / 3 * 2.3)
         .attr("width", dimensions.viewportWidth / 5 * 3.4);
     const widthBubble = svgBubble.attr("width");
     const heightBubble = svgBubble.attr("height");
@@ -182,7 +180,7 @@ const requestDataCharts = async function () {
                     MMDD: d.MMDD,
                     value: d[year]
                 };
-            }).filter(d => !isNaN(d.value)) // Filter out NaN values
+            }).filter(d => !isNaN(d.value))
         };
     });
 
@@ -218,7 +216,7 @@ const requestDataCharts = async function () {
     const midpointElement2023 = mdr.filter(d => !isNaN(d[2023]))[midpointIndex2023];
 
     chartAreaMdr.append("text")
-        .attr("x", monthScaleMdr(midpointElement2023.MMDD))
+        .attr("x", monthScaleMdr(midpointElement2023.MMDD) - 10)
         .attr("y", thermalScale(midpointElement2023[2023]) - 30)
         .attr("text-anchor", "start")
         .style("font-family", "Arial")
@@ -329,10 +327,8 @@ const requestDataCharts = async function () {
                 .duration(200)
                 .style("opacity", 0.9);
             tooltipLine.html(`Year: ${d[0]}<br/>Average Temperature: ${avgTemperature.toFixed(2)}°F`)
-                .style("left", (event.x + 15) + "px")
-                // .style("left", (event.pageX + 15) + "px")
-                .style("top", (event.y - 28) + "px");
-            // .style("top", (event.pageY - 28) + "px");
+                .style("left", (event.x - 200) + "px")
+                .style("top", (event.y - 110) + "px");
         })
         .on("mouseout", function (d) {
             const element = d3.select(this);
@@ -378,7 +374,7 @@ const requestDataCharts = async function () {
 
     // Average Label
     const legendGroup = svgLine.append("g")
-        .attr("transform", `translate(${widthLine - marginLine.right - 575},${marginLine.top + 375})`);
+        .attr("transform", `translate(${widthLine - marginLine.right - 675},${marginLine.top + 400})`);
 
     legendGroup.append("rect")
         .attr("width", 24)
@@ -549,7 +545,8 @@ const requestDataCharts = async function () {
         .attr('opacity', 0)
         .attr('text-anchor', 'middle')
         .attr('alignment-baseline', 'middle')
-        .attr('fill', 'white');
+        .attr('fill', 'white')
+        .style('font-size', '16px');
 
     // Interactivity
     chartAreaBar.append('rect')
@@ -625,37 +622,6 @@ const requestDataCharts = async function () {
         .style("font-family", "Arial")
         .text("3-Month Running Mean of Niño 3.4 SST Anomalies");
 
-    // // Brush
-    // const brush = d3.brushX()
-    //     .extent([[marginBar.left + 50, marginBar.top + 50], [marginBar.left + chartWidthBar, chartHeightBar + marginBar.top]])
-    //     .on("end", brushed);
-
-    // function brushed(event) {
-    //     const selection = event.selection;
-    //     if (selection) {
-    //         const [x0, x1] = selection.map(d => d - marginBar.left);
-    //         const newDomain = timeScale.domain().filter(d => {
-    //             const pos = timeScale(d) + timeScale.bandwidth() / 2;
-    //             return pos >= x0 && pos <= x1;
-    //         });
-    //         timeScale.domain(newDomain);
-    //         chartAreaBar.selectAll("rect")
-    //             .attr("x", d => timeScale(d.combined))
-    //             .attr("width", timeScale.bandwidth());
-    //         annotationsBar.select(".x.axis").call(bottomAxisBar);
-    //     } else {
-    //         timeScale.domain(oni.map(d => d.combined));
-    //         chartAreaBar.selectAll("rect")
-    //             .attr("x", d => timeScale(d.combined))
-    //             .attr("width", timeScale.bandwidth());
-    //         annotationsBar.select(".x.axis").call(bottomAxisBar);
-    //     }
-    // }
-
-    // chartAreaBar.append("g")
-    //     .attr("class", "brush")
-    //     .call(brush);
-
     // BUBBLE CHART
     const events = await d3.csv("./data/events-us.csv", function (d) {
         const parsedDate = new Date(d.Date);
@@ -725,12 +691,11 @@ const requestDataCharts = async function () {
         .filter(d => d['Total CPI-Adjusted Cost (Billions of Dollars)'] > 2)
         .sort((a, b) => disasterOrder[a.Disaster] - disasterOrder[b.Disaster]);
 
-    // Ensure tooltip div is in the HTML, or create it if not existing
     if (!document.getElementById("tooltip")) {
         d3.select("body").append("div")
             .attr("id", "tooltip")
             .style("position", "absolute")
-            .style("display", "none")  // Initially hidden
+            .style("display", "none")
             .style("padding", "5px 10px")
             .style("background", "white")
             .style("opacity", 0.85)
@@ -765,8 +730,8 @@ const requestDataCharts = async function () {
         })
         .on("mousemove", function (event) {
             const tooltipWidth = tooltip.node().offsetWidth;
-            const tooltipX = event.pageX - tooltipWidth / 2 - 35;
-            const tooltipY = event.pageY - 75;
+            const tooltipX = event.pageX - tooltipWidth / 2 - 100;
+            const tooltipY = event.pageY - 110;
             tooltip.style("left", `${tooltipX}px`)
                 .style("top", `${tooltipY}px`);
         })
