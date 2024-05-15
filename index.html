@@ -31,619 +31,684 @@
 <body>
 
 
-<div id="page-container">
-    <div id="map-container">
-        <div id="map"></div>
-        <div id="hiddenMapContainer" style="width: 0; height: 0; visibility: hidden;"></div>
-    </div>
-    <div id="info-container">
-        <div class="info-parent full-page title-page overlay-map">
-            <div id="title-page-map"></div>
-            <div class="title-content title-text">
-<!--                Title page -->
-                <h1>The 2024 Atlantic Hurricane Season</h1>
-                <h2>How bad could it be?</h2>
-            </div>
+    <div id="page-container">
+        <div id="map-container">
+            <div id="map"></div>
+            <div id="hiddenMapContainer" style="width: 0; height: 0; visibility: hidden;"></div>
         </div>
-<!--                    Article explanation / motivation -->
-        <div class="info-parent full-page overlay-map">
-            <div class="info-child wide" style="padding: 50px">
-                <div class="info-content">
-                    <h1>Scientists predict an intense 2024 Atlantic Hurricane Season</h1>
-                    <p>Researchers at Colorado State University
-                        <a href="https://tropical.colostate.edu/Forecast/2024-04.pdf" target="_blank">predict</a>
-                        with "above-normal confidence... that the 2024 Atlantic basin
-                        hurricane season will be extremely active."<!--TODO CITE-->
-                        <a href="https://tropical.colostate.edu/Forecast/2024-04.pdf" target="_blank">(CITE)</a>
-                        They state that with <strong>the current El Niño trend</strong> and <strong>record warm Atlantic
-                            sea surface temperatures (SST)</strong> there is "a well above-average probability for major
-                        hurricanes making landfall along the continental United States coastline and in the Caribbean."
-                        <a href="https://tropical.colostate.edu/Forecast/2024-04.pdf" target="_blank">(CITE)</a>
-                    </p>
-                    <p>
-                        To better understand why scientists predict this season will be so intense, explore our
-                        Hurricane Katrina (2005) walkthrough, which provides both a look at how Katrina grew to be such
-                        a devastating storm, and at the data meteorologists are using to make such strong predictions.
-                    </p>
+        <div id="info-container">
+            <div class="info-parent full-page title-page overlay-map">
+                <div id="title-page-map"></div>
+                <div class="title-content title-text">
+                    <!--                Title page -->
+                    <h1>The 2024 Atlantic Hurricane Season</h1>
+                    <h2>How bad could it be?</h2>
                 </div>
             </div>
-        </div>
-<!--                    Visualization interaction general instructions / outline -->
-        <div class="info-parent full-page overlay-map">
-            <div class="info-child">
-                <div class="info-content">
-                    <h1>How to interact with this article</h1>
-                    <p>
-                        Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor
-                        incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud
-                        exercitation
-                        ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in
-                        reprehenderit
-                        in
-                        voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat
-                        cupidatat
-                        non
-                        proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
-                    </p>
-                </div>
-            </div>
-        </div>
-<!--                    Hurricanes explanation -->
-        <div class="info-parent full-page overlay-map">
-            <div class="info-child">
-                <div class="info-content">
-                    <h1>What is a hurricane?</h1>
-                    <div style="float: right; margin-left: 10px; width: 500px">
-                        <img src="assets/images/cyclone_map.jpg" alt="Tropical cyclone formation basins" width="100%">
-                        <div class="image-caption">Tropical cyclone terminology and trends
-                            <a href="https://spaceplace.nasa.gov/hurricanes/en/"
-                                target="_blank">(CITE)</a></div>
+            <!--                    Article explanation / motivation -->
+            <div class="info-parent full-page overlay-map">
+                <div class="info-child wide" style="padding: 50px">
+                    <div class="info-content">
+                        <h1>Scientists predict an intense 2024 Atlantic Hurricane Season</h1>
+                        <p>Researchers at Colorado State University
+                            <a href="https://tropical.colostate.edu/Forecast/2024-04.pdf" target="_blank">predict</a>
+                            with "above-normal confidence... that the 2024 Atlantic basin
+                            hurricane season will be extremely active."<!--TODO CITE-->
+                            <a href="https://tropical.colostate.edu/Forecast/2024-04.pdf" target="_blank">(CITE)</a>
+                            They state that with <strong>the current El Niño trend</strong> and <strong>record warm
+                                Atlantic
+                                sea surface temperatures (SST)</strong> there is "a well above-average probability for
+                            major
+                            hurricanes making landfall along the continental United States coastline and in the
+                            Caribbean."
+                            <a href="https://tropical.colostate.edu/Forecast/2024-04.pdf" target="_blank">(CITE)</a>
+                        </p>
+                        <p>
+                            To better understand why scientists predict this season will be so intense, explore our
+                            Hurricane Katrina (2005) walkthrough, which provides both a look at how Katrina grew to be
+                            such
+                            a devastating storm, and at the data meteorologists are using to make such strong
+                            predictions.
+                        </p>
                     </div>
-                    <p>Hurricanes are the most violent storms on Earth and are a type of tropical cyclone that forms
-                        over the Atlantic Ocean or eastern Pacific Ocean. Depending on their location, tropical cyclones
-                        may be called hurricanes, typhoons or cyclones. All these storms are scientifically categorized
-                        under the term "tropical cyclone." The defining features of a hurricane include intense swirling
-                        winds, a calm center known as the "eye," and heavy rainfall.
-                        <a href="https://spaceplace.nasa.gov/hurricanes/en/">(CITE)</a></p>
-<!--                    <br><br><br><br><br>-->
-<!--                    <br><br><br><br><br>-->
-<!--                    <br><br><br><br><br><br><br><br><br><br><br>-->
                 </div>
             </div>
-        </div>
-        <div class="info-parent hurricane-track leftright first-info">
-            <div class="info-child hurricane-track">
-                <div class="info-content">
-                    <h1>How do hurricanes form?</h1>
-                    <p>Hurricanes form from the energy and moisture provided by warm ocean waters near the equator. The
-                        process begins when warm, moist air over the ocean rises, creating an area of lower air pressure
-                        beneath it. As this air rises, cooler air from surrounding areas flows into the low-pressure
-                        area, warms up, becomes moist, and rises as well. This cycle causes the air to swirl due to the
-                        Earth's rotation—counterclockwise in the Northern Hemisphere and clockwise in the Southern
-                        Hemisphere. <a href="https://spaceplace.nasa.gov/hurricanes/en/"
-                                       target="_blank">(CITE)</a></p>
-                </div>
-                <div class="info-content">
-                    <br><br><br><br><br><br><br><br><br><br><br><br>
-                    <p>As the warm air cools, it releases its moisture, forming storm clouds. These clouds
-                        and winds continue to rotate and organize into bands around the eye of the storm. The storm
-                        strengthens as it draws more heat and moisture from the ocean. When wind speeds within this
-                        rotating system reach 74 mph, it is classified as a hurricane. The storm system features a calm,
-                        clear eye at its center, surrounded by a wall of intense winds and heavy clouds, known as the
-                        eyewall. <a href="https://spaceplace.nasa.gov/hurricanes/en/"
-                                    target="_blank">(CITE)</a></p>
-                </div>
-            </div>
-        </div>
-        <div class="info-parent hurricane-track leftright">
-            <div class="info-child hurricane-track">
-                <div class="info-content">
-                    <h1>How do hurricanes form?</h1>
-                    <p>"There are several favorable environmental conditions that must be in place before a tropical
-                        cyclone can form. They are:
-                    <ul>
-                        <li>Warm ocean waters (at least 80°F / 27°C) throughout a depth of about 150 ft. (46 m).</li>
-                        <li>An atmosphere which cools fast enough with height such that it is potentially unstable to
-                            moist convection.
-                        </li>
-                        <li>Relatively moist air near the mid-level of the troposphere (16,000 ft. / 4,900 m).</li>
-                        <li>Generally, a minimum distance of at least 300 miles (480 km) from the equator.</li>
-                        <li>A pre-existing near-surface disturbance.</li>
-                        <li>Low values (less than about 23 mph / 37 km/h) of <span id="vertical-wind-shear">vertical wind shear</span>
-                            between the surface and the upper troposphere."
-                        </li>
-                    </ul>
-                    <a href="https://www.noaa.gov/jetstream/tropical/tropical-cyclone-introduction"
-                       target="_blank">(CITE)</a>
-                    <style>
-                        #vertical-wind-shear {
-                            opacity: .7;
-                            text-decoration: underline;
-                            text-decoration-style: dotted;
-                        }
-
-                        #vertical-wind-shear:hover {
-                            opacity: 1;
-                            text-decoration-style: dashed;
-                        }
-                    </style>
-                    </p>
-                </div>
-                <div class="info-content">
-                    <br><br><br><br><br><br><br><br>
-                    <p>
-                        "Tropical cyclones are classified by their maximum wind speed.
-                    <ul>
-                        <li>Winds less than 39 mph: Tropical depressions</li>
-                        <li><span style="font-family: Roboto; background-color: rgba(113,248,255,0.35)">Winds 39-73 mph: Tropical storms</span></li>
-                        <li>Winds 74 mph or greater: Hurricanes</li>
-                        <li>Major hurricanes have winds of at least 111 mph and can reach speeds of over 180 mph,
-                            with gusts of 200 mph."</li>
-                    </ul>
-                    <a href="https://www.noaa.gov/education/resource-collections/weather-atmosphere/hurricanes"
-                       target="_blank">(CITE)</a>
-                    </p>
-                </div>
-            </div>
-        </div>
-<!--        TODO: need to write this slide about katrina hitting miami as a cat 1 hurricane -->
-        <div class="info-parent hurricane-track left">
-            <div class="info-child hurricane-track">
-                <div class="info-content">
-                    <h1>Talk about hurricane Katrina first hitting land</h1>
-                    <p>
-                        Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor
-                        incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud
-                        exercitation
-                        ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in
-                        reprehenderit
-                        in
-                        voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat
-                        cupidatat
-                        non
-                        proident, sunt in culpa qui officia deserunt mollit anim id est laborum. h1
-                    </p>
-                </div>
-            </div>
-        </div>
-<!--        Where hurricanes form -->
-        <div class="info-parent full-page overlay-map long-section">
-            <div class="info-child" style="max-width: 100%; width: 100%;">
-                <div class="info-content">
-                    <h1>Where do hurricanes form?</h1>
-                    <div style="float: right; margin-left: 10px; width: 550px">
-                        <img src="assets/images/tc_basins.jpg" alt="Tropical cyclone formation basins" width="100%">
-                        <div class="image-caption">Tropical cyclone formation basins <a
-                                href="https://www.noaa.gov/jetstream/tropical/tropical-cyclone-introduction"
-                                target="_blank">(CITE)</a></div>
+            <!--                    Visualization interaction general instructions / outline -->
+            <div class="info-parent full-page overlay-map">
+                <div class="info-child">
+                    <div class="info-content">
+                        <h1>How to interact with this article</h1>
+                        <p>
+                            Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor
+                            incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud
+                            exercitation
+                            ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in
+                            reprehenderit
+                            in
+                            voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat
+                            cupidatat
+                            non
+                            proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+                        </p>
                     </div>
-                    <p>"Given that sea surface temperatures need to be at least 80°F (27°C) for tropical cyclones to
-                        form, it is unsurprising that they form near the equator. However, with only the rarest
-                        exceptions, these storms do not form within 5° latitude of the equator.
-
-                        This is due to the lack of sufficient Coriolis force, the force that causes the cyclone to spin.
-                        With the above criteria, there are seven regions around the world where tropical cyclones are
-                        likely to form.
-                    </p>
-                    <br><br>
-                    <div>
-                        <div class="tc-basins-container" style="border: 1px dotted black">
-                                        <span class="tc-basins-title"
-                                              style="font-family: 'Roboto'; background-color: rgb(182, 215, 175); padding-bottom: 5px">North Atlantic Ocean, the Gulf of Mexico, and the Caribbean Sea</span>
-                            <br>
-                            <span style="font-family: 'Roboto Light';">The hurricane season is officially from
-                                            <span style="font-family: 'Roboto'">June 1 to November 30</span>.
-                                            Peak activity is in
-                                            <span style="font-family: 'Roboto'">early to mid September</span>.
-                                            Occasionally, there may be a tropical cyclone that occurs in May or December.</span>
+                </div>
+            </div>
+            <!--                    Hurricanes explanation -->
+            <div class="info-parent full-page overlay-map">
+                <div class="info-child">
+                    <div class="info-content">
+                        <h1>What is a hurricane?</h1>
+                        <div style="float: right; margin-left: 10px; width: 500px">
+                            <img src="assets/images/cyclone_map.jpg" alt="Tropical cyclone formation basins"
+                                width="100%">
+                            <div class="image-caption">Tropical cyclone terminology and trends
+                                <a href="https://spaceplace.nasa.gov/hurricanes/en/" target="_blank">(CITE)</a>
+                            </div>
                         </div>
-                        <br><br>
-                        <div class="tc-basins-container">
-                            <span class="tc-basins-title" style="background-color: rgb(244, 243, 183);">Northeast Pacific basin</span>
-                            <span class="tc-basins-subtitle"
-                                  style="background-color: rgb(244, 243, 183);">Mexico to about the dateline</span>
-                            <br>
-                            A broad peak with activity beginning in late May or early June and going until late October or
-                            early November, with a peak in storminess in late August/early September.
-                        </div>
-                        <br><br>
-                        <div class="tc-basins-container">
-                            <span class="tc-basins-title"
-                                  style="background-color: rgb(145,191,119);">Australian/Southwest Pacific basin</span>
-                            <span class="tc-basins-subtitle"
-                                  style="background-color: rgb(145,191,119);">142°E to about 120°W</span>
-                            <br>
-                            Begins in late October/early November, reaches a single peak in late February/early March, and
-                            then fades out in early May.
-                        </div>
-                        <br><br>
-                        <div class="tc-basins-container">
-                            <span class="tc-basins-title" style="background-color: rgb(227, 188, 135);">Northwest Pacific basin</span>
-                            <span class="tc-basins-subtitle" style="background-color: rgb(227, 188, 135);">From the dateline to Asia, including the South China Sea</span>
-                            <br>
-                            Occur regularly all year, although there is a distinct minimum in February and the first half of
-                            March. The main season goes from July to November with a peak in late August/early September.
-                        </div>
-                        <br><br>
-                        <div class="tc-basins-container">
-                                        <span class="tc-basins-title"
-                                              style="background-color: rgb(238,188,204);">North Indian basin</span>
-                            <span class="tc-basins-subtitle" style="background-color: rgb(238,188,204);">Including the Bay of Bengal and the Arabian Sea</span>
-                            <br>
-                            Tropical cyclones occur from April to December, with a double peak of activity in May and
-                            November. The severe cyclonic storms (>74 mph / 119 km/h winds) occur almost exclusively from
-                            April to June and again in late September to early December.
-                        </div>
-                        <br><br>
-                        <div class="tc-basins-container">
-                                        <span class="tc-basins-title"
-                                              style="background-color: rgb(175,130,182);">Southwest Indian basin</span>
-                            <span class="tc-basins-subtitle"
-                                  style="background-color: rgb(175,130,182);">From Africa to about 100°E</span>
-                            <br>
-                            Late October/early November to May, with a double peak in activity in mid-January and
-                            mid-February/early March.
-                        </div>
-                        <br><br>
-                        <div class="tc-basins-container">
-                            <span class="tc-basins-title"
-                                  style="background-color: rgb(127,127,185);">Southeast Indian/Australian basin</span>
-                            <span class="tc-basins-subtitle"
-                                  style="background-color: rgb(127,127,185);">100°E to 142°E</span>
-                            <br>
-                            Late October/early November to May, with a double peak in activity in mid-January and
-                            mid-February/early March. A lull in activity in February is a bit more pronounced than the
-                            Southwest Indian basin's lull."
-                        </div>
+                        <p>Hurricanes are the most violent storms on Earth and are a type of tropical cyclone that forms
+                            over the Atlantic Ocean or eastern Pacific Ocean. Depending on their location, tropical
+                            cyclones
+                            may be called hurricanes, typhoons or cyclones. All these storms are scientifically
+                            categorized
+                            under the term "tropical cyclone." The defining features of a hurricane include intense
+                            swirling
+                            winds, a calm center known as the "eye," and heavy rainfall.
+                            <a href="https://spaceplace.nasa.gov/hurricanes/en/">(CITE)</a>
+                        </p>
+                        <!--                    <br><br><br><br><br>-->
+                        <!--                    <br><br><br><br><br>-->
+                        <!--                    <br><br><br><br><br><br><br><br><br><br><br>-->
+                    </div>
+                </div>
+            </div>
+            <div class="info-parent hurricane-track leftright first-info">
+                <div class="info-child hurricane-track">
+                    <div class="info-content">
+                        <h1>How do hurricanes form?</h1>
+                        <p>Hurricanes form from the energy and moisture provided by warm ocean waters near the equator.
+                            The
+                            process begins when warm, moist air over the ocean rises, creating an area of lower air
+                            pressure
+                            beneath it. As this air rises, cooler air from surrounding areas flows into the low-pressure
+                            area, warms up, becomes moist, and rises as well. This cycle causes the air to swirl due to
+                            the
+                            Earth's rotation—counterclockwise in the Northern Hemisphere and clockwise in the Southern
+                            Hemisphere. <a href="https://spaceplace.nasa.gov/hurricanes/en/" target="_blank">(CITE)</a>
+                        </p>
+                    </div>
+                    <div class="info-content">
+                        <br><br><br><br><br><br><br><br><br><br><br><br>
+                        <p>As the warm air cools, it releases its moisture, forming storm clouds. These clouds
+                            and winds continue to rotate and organize into bands around the eye of the storm. The storm
+                            strengthens as it draws more heat and moisture from the ocean. When wind speeds within this
+                            rotating system reach 74 mph, it is classified as a hurricane. The storm system features a
+                            calm,
+                            clear eye at its center, surrounded by a wall of intense winds and heavy clouds, known as
+                            the
+                            eyewall. <a href="https://spaceplace.nasa.gov/hurricanes/en/" target="_blank">(CITE)</a></p>
+                    </div>
+                </div>
+            </div>
+            <div class="info-parent hurricane-track leftright">
+                <div class="info-child hurricane-track">
+                    <div class="info-content">
+                        <h1>How do hurricanes form?</h1>
+                        <p>"There are several favorable environmental conditions that must be in place before a tropical
+                            cyclone can form. They are:
+                        <ul>
+                            <li>Warm ocean waters (at least 80°F / 27°C) throughout a depth of about 150 ft. (46 m).
+                            </li>
+                            <li>An atmosphere which cools fast enough with height such that it is potentially unstable
+                                to
+                                moist convection.
+                            </li>
+                            <li>Relatively moist air near the mid-level of the troposphere (16,000 ft. / 4,900 m).</li>
+                            <li>Generally, a minimum distance of at least 300 miles (480 km) from the equator.</li>
+                            <li>A pre-existing near-surface disturbance.</li>
+                            <li>Low values (less than about 23 mph / 37 km/h) of <span id="vertical-wind-shear">vertical
+                                    wind shear</span>
+                                between the surface and the upper troposphere."
+                            </li>
+                        </ul>
                         <a href="https://www.noaa.gov/jetstream/tropical/tropical-cyclone-introduction"
-                           target="_blank">(CITE)</a>
-                        <br><br><br><br><br><br><br>
-                        <script>
-                            function getContrastYIQ(color, darkColor, lightColor) {
-                                let [r, g, b] = color.match(/\d+/g).map(Number);
-                                var rgb = ((r * 299) + (g * 587) + (b * 114)) / 1000;
-                                return (rgb >= 150) ? darkColor : lightColor;
+                            target="_blank">(CITE)</a>
+                        <style>
+                            #vertical-wind-shear {
+                                opacity: .7;
+                                text-decoration: underline;
+                                text-decoration-style: dotted;
                             }
 
-                            const accessibleContrast = function (str_, darkColor = "black", lightColor = "white") {
-                                d3.selectAll(str_).each(function () {
-                                    let elem = d3.select(this)
-                                    let bgColor = elem.style("background-color")
-                                    // console.log(bgColor)
-                                    elem.style("color", getContrastYIQ(bgColor, darkColor, lightColor))
-                                })
+                            #vertical-wind-shear:hover {
+                                opacity: 1;
+                                text-decoration-style: dashed;
                             }
-
-                            accessibleContrast(".tc-basins-title")
-                            accessibleContrast(".tc-basins-subtitle", darkColor = "#414141", lightColor = "#dadada")
-
-                        </script>
+                        </style>
+                        </p>
+                    </div>
+                    <div class="info-content">
+                        <br><br><br><br><br><br><br><br>
+                        <p>
+                            "Tropical cyclones are classified by their maximum wind speed.
+                        <ul>
+                            <li>Winds less than 39 mph: Tropical depressions</li>
+                            <li><span style="font-family: Roboto; background-color: rgba(113,248,255,0.35)">Winds 39-73
+                                    mph: Tropical storms</span></li>
+                            <li>Winds 74 mph or greater: Hurricanes</li>
+                            <li>Major hurricanes have winds of at least 111 mph and can reach speeds of over 180 mph,
+                                with gusts of 200 mph."</li>
+                        </ul>
+                        <a href="https://www.noaa.gov/education/resource-collections/weather-atmosphere/hurricanes"
+                            target="_blank">(CITE)</a>
+                        </p>
                     </div>
                 </div>
             </div>
-        </div>
-        <!--        MDR -->
-        <div class="info-parent hurricane-track left">
-            <div class="info-child hurricane-track" id="formation-2">
-                <div class="info-content">
-                    <h1>Main Development Region (MDR)</h1>
-                    <p>
-                        While Katrina did not start in the MDR...
-                        <a target="_blank"
-                           href="https://coast.noaa.gov/hurricanes/#map=4.1/31.99/-82.35&search=eyJzZWFyY2hTdHJpbmciOiJLQVRSSU5BIDIwMDUiLCJzZWFyY2hUeXBlIjoibmFtZSIsIm1hdGNoIjoiZXhhY3QiLCJjYXRlZ29yaWVzIjpbIkg1IiwiSDQiLCJIMyIsIkgyIiwiSDEiLCJUUyIsIlREIiwiRVQiXSwieWVhcnMiOltdLCJtb250aHMiOltdLCJlbnNvIjpbXSwicHJlc3N1cmUiOnsicmFuZ2UiOlswLDEwMzBdLCJpbmNsdWRlVW5rbm93blByZXNzdXJlIjp0cnVlfSwic2VsZWN0ZWRTdG9ybUlEIjoiMjAwNTIzNk4yMzI4NSIsImJ1ZmZlclVuaXQiOlsiTWlsZXMiXSwic29ydFNlbGVjdGlvbiI6eyJ2YWx1ZSI6InllYXJzX25ld2VzdCIsImxhYmVsIjoiWWVhciAoTmV3ZXN0KSJ9LCJhcHBseVRvQU9JIjpmYWxzZSwiaXNTdG9ybUxhYmVsc1Zpc2libGUiOnRydWV9"
-                           title=" Go to NOAA Katrina Track">The MDR is ....</a>
-                    </p>
-                </div>
-            </div>
-        </div>
-        <!--        Nino regions -->
-        <div class="info-parent hurricane-track left">
-            <div class="info-child hurricane-track" id="formation-3">
-                <div class="info-content">
-                    <h1>Niño Regions</h1>
-                    <p>
-                        https://www.climate.gov/media/13556
-                        cite / include this foto^
-                        While Katrina did not start in the MDR...
-                        <a target="_blank"
-                           href="https://coast.noaa.gov/hurricanes/#map=4.1/31.99/-82.35&search=eyJzZWFyY2hTdHJpbmciOiJLQVRSSU5BIDIwMDUiLCJzZWFyY2hUeXBlIjoibmFtZSIsIm1hdGNoIjoiZXhhY3QiLCJjYXRlZ29yaWVzIjpbIkg1IiwiSDQiLCJIMyIsIkgyIiwiSDEiLCJUUyIsIlREIiwiRVQiXSwieWVhcnMiOltdLCJtb250aHMiOltdLCJlbnNvIjpbXSwicHJlc3N1cmUiOnsicmFuZ2UiOlswLDEwMzBdLCJpbmNsdWRlVW5rbm93blByZXNzdXJlIjp0cnVlfSwic2VsZWN0ZWRTdG9ybUlEIjoiMjAwNTIzNk4yMzI4NSIsImJ1ZmZlclVuaXQiOlsiTWlsZXMiXSwic29ydFNlbGVjdGlvbiI6eyJ2YWx1ZSI6InllYXJzX25ld2VzdCIsImxhYmVsIjoiWWVhciAoTmV3ZXN0KSJ9LCJhcHBseVRvQU9JIjpmYWxzZSwiaXNTdG9ybUxhYmVsc1Zpc2libGUiOnRydWV9"
-                           title=" Go to NOAA Katrina Track">The MDR is ....</a>
-                    </p>
-                </div>
-            </div>
-        </div>
-<!--        ONI line chart -->
-        <div class="info-parent full-page overlay-map">
-            <div class="info-child chart">
-                <div class="info-content">
-                    <h1>ONI Data Bar Chart</h1>
-                    <div style="display: flex; justify-content: center; width: 100%">
-                        <svg id="barchart" height="450" width="1100px" style="margin-top:50px"></svg>
+            <!--        TODO: need to write this slide about katrina hitting miami as a cat 1 hurricane -->
+            <div class="info-parent hurricane-track left">
+                <div class="info-child hurricane-track">
+                    <div class="info-content">
+                        <h1>Hurricane Katrina First Hitting Land</h1>
+                        <p>
+                            Hurricane Katrina first made landfall on August 25, 2005, near Miami, Florida, as a Category
+                            1 hurricane. This initial landfall brought heavy rain and strong winds to the region,
+                            causing flooding and power outages across South Florida. After moving across the state,
+                            Katrina entered the warm waters of the Gulf of Mexico, where it rapidly intensified into a
+                            much stronger storm.
+                            <br><br>
+                            Katrina's first encounter with land was a critical moment in its development. The storm's
+                            passage over Florida did not significantly weaken it due to the relatively short duration
+                            over land and the warm Gulf waters waiting on the other side. This set the stage for its
+                            rapid intensification and eventual catastrophic impact when it made its second and more
+                            devastating landfall near Buras, Louisiana, a few days later.
+                            <a href="https://www.nhc.noaa.gov/data/tcr/AL122005_Katrina.pdf" target="_blank">(CITE)</a>
+                        </p>
                     </div>
                 </div>
             </div>
-        </div>
-        <div class="info-parent hurricane-track left">
-            <div class="info-child hurricane-track">
-                <div class="info-content">
-                    <h1 style="font-size: 1.8em">Impact of <span class="warming-text">Rising</span> Sea Surface
-                        <span class="warming-text">Temperatures</span> 1</h1>
-                    <p>Rising ocean surface temperatures are a critical factor in the increasing intensity of hurricanes.
-                        As the planet warms, primarily due to human-induced climate change, ocean temperatures rise, which
-                        directly influences hurricane behavior.
-                        <a href="https://www.edf.org/climate/how-climate-change-makes-hurricanes-more-destructive#:~:text=Warmer%20oceans%20fuel%20storms&text=Evaporation%20intensifies%20as%20temperatures%20rise,when%20the%20storms%20hit%20land."
-                           target="_blank">(CITE)</a>
-                    </p>
-                </div>
-            </div>
-        </div>
-        <div class="info-parent hurricane-track leftright">
-            <div class="info-child hurricane-track">
-                <div class="info-content">
-                    <h1 style="font-size: 1.8em">Impact of <span class="warming-text">Rising</span> Sea Surface
-                        <span class="warming-text">Temperatures</span> 2</h1>
-                    <p>Warmer ocean waters fuel hurricanes by increasing the rate of evaporation. This enhanced
-                        evaporation
-                        leads to higher humidity and more water vapor available in the atmosphere. Water vapor acts as a
-                        potent source of energy for hurricanes, intensifying their strength and enabling them to sustain
-                        stronger winds and produce heavier rainfall.
-                        <a href="https://www.edf.org/climate/how-climate-change-makes-hurricanes-more-destructive#:~:text=Warmer%20oceans%20fuel%20storms&text=Evaporation%20intensifies%20as%20temperatures%20rise,when%20the%20storms%20hit%20land."
-                           target="_blank">(CITE)</a>
-                    </p>
-                </div>
-                <div class="info-content">
-                    <div style="float: right; margin-left: 10px; width: 100%">
-                        <img src="assets/images/warmwaterpower.jpg" alt="Tropical cyclone formation basins"
-                             width="100%">
-                        <div class="image-caption">How warm water fuels hurricanes
+            <!--        Where hurricanes form -->
+            <div class="info-parent full-page overlay-map long-section">
+                <div class="info-child" style="max-width: 100%; width: 100%;">
+                    <div class="info-content">
+                        <h1>Where do hurricanes form?</h1>
+                        <div style="float: right; margin-left: 10px; width: 550px">
+                            <img src="assets/images/tc_basins.jpg" alt="Tropical cyclone formation basins" width="100%">
+                            <div class="image-caption">Tropical cyclone formation basins <a
+                                    href="https://www.noaa.gov/jetstream/tropical/tropical-cyclone-introduction"
+                                    target="_blank">(CITE)</a></div>
+                        </div>
+                        <p>"Given that sea surface temperatures need to be at least 80°F (27°C) for tropical cyclones to
+                            form, it is unsurprising that they form near the equator. However, with only the rarest
+                            exceptions, these storms do not form within 5° latitude of the equator.
+
+                            This is due to the lack of sufficient Coriolis force, the force that causes the cyclone to
+                            spin.
+                            With the above criteria, there are seven regions around the world where tropical cyclones
+                            are
+                            likely to form.
+                        </p>
+                        <br><br>
+                        <div>
+                            <div class="tc-basins-container" style="border: 1px dotted black">
+                                <span class="tc-basins-title"
+                                    style="font-family: 'Roboto'; background-color: rgb(182, 215, 175); padding-bottom: 5px">North
+                                    Atlantic Ocean, the Gulf of Mexico, and the Caribbean Sea</span>
+                                <br>
+                                <span style="font-family: 'Roboto Light';">The hurricane season is officially from
+                                    <span style="font-family: 'Roboto'">June 1 to November 30</span>.
+                                    Peak activity is in
+                                    <span style="font-family: 'Roboto'">early to mid September</span>.
+                                    Occasionally, there may be a tropical cyclone that occurs in May or December.</span>
+                            </div>
+                            <br><br>
+                            <div class="tc-basins-container">
+                                <span class="tc-basins-title" style="background-color: rgb(244, 243, 183);">Northeast
+                                    Pacific basin</span>
+                                <span class="tc-basins-subtitle" style="background-color: rgb(244, 243, 183);">Mexico to
+                                    about the dateline</span>
+                                <br>
+                                A broad peak with activity beginning in late May or early June and going until late
+                                October or
+                                early November, with a peak in storminess in late August/early September.
+                            </div>
+                            <br><br>
+                            <div class="tc-basins-container">
+                                <span class="tc-basins-title"
+                                    style="background-color: rgb(145,191,119);">Australian/Southwest Pacific
+                                    basin</span>
+                                <span class="tc-basins-subtitle" style="background-color: rgb(145,191,119);">142°E to
+                                    about 120°W</span>
+                                <br>
+                                Begins in late October/early November, reaches a single peak in late February/early
+                                March, and
+                                then fades out in early May.
+                            </div>
+                            <br><br>
+                            <div class="tc-basins-container">
+                                <span class="tc-basins-title" style="background-color: rgb(227, 188, 135);">Northwest
+                                    Pacific basin</span>
+                                <span class="tc-basins-subtitle" style="background-color: rgb(227, 188, 135);">From the
+                                    dateline to Asia, including the South China Sea</span>
+                                <br>
+                                Occur regularly all year, although there is a distinct minimum in February and the first
+                                half of
+                                March. The main season goes from July to November with a peak in late August/early
+                                September.
+                            </div>
+                            <br><br>
+                            <div class="tc-basins-container">
+                                <span class="tc-basins-title" style="background-color: rgb(238,188,204);">North Indian
+                                    basin</span>
+                                <span class="tc-basins-subtitle" style="background-color: rgb(238,188,204);">Including
+                                    the Bay of Bengal and the Arabian Sea</span>
+                                <br>
+                                Tropical cyclones occur from April to December, with a double peak of activity in May
+                                and
+                                November. The severe cyclonic storms (>74 mph / 119 km/h winds) occur almost exclusively
+                                from
+                                April to June and again in late September to early December.
+                            </div>
+                            <br><br>
+                            <div class="tc-basins-container">
+                                <span class="tc-basins-title" style="background-color: rgb(175,130,182);">Southwest
+                                    Indian basin</span>
+                                <span class="tc-basins-subtitle" style="background-color: rgb(175,130,182);">From Africa
+                                    to about 100°E</span>
+                                <br>
+                                Late October/early November to May, with a double peak in activity in mid-January and
+                                mid-February/early March.
+                            </div>
+                            <br><br>
+                            <div class="tc-basins-container">
+                                <span class="tc-basins-title" style="background-color: rgb(127,127,185);">Southeast
+                                    Indian/Australian basin</span>
+                                <span class="tc-basins-subtitle" style="background-color: rgb(127,127,185);">100°E to
+                                    142°E</span>
+                                <br>
+                                Late October/early November to May, with a double peak in activity in mid-January and
+                                mid-February/early March. A lull in activity in February is a bit more pronounced than
+                                the
+                                Southwest Indian basin's lull."
+                            </div>
                             <a href="https://www.noaa.gov/jetstream/tropical/tropical-cyclone-introduction"
-                               target="_blank">(CITE)</a></div>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="info-parent hurricane-track right">
-            <div class="info-child hurricane-track">
-                <div class="info-content">
+                                target="_blank">(CITE)</a>
+                            <br><br><br><br><br><br><br>
+                            <script>
+                                function getContrastYIQ(color, darkColor, lightColor) {
+                                    let [r, g, b] = color.match(/\d+/g).map(Number);
+                                    var rgb = ((r * 299) + (g * 587) + (b * 114)) / 1000;
+                                    return (rgb >= 150) ? darkColor : lightColor;
+                                }
 
-                    <h1 style="font-size: 1.8em">Impact of <span class="warming-text">Rising</span> Sea Surface
-                        <span class="warming-text">Temperatures</span> 3</h1>
-                    <p>Consequently, as sea surface temperatures continue to climb, the power and potential
-                        destructiveness of hurricanes are expected to increase. This trend is vividly demonstrated by
-                        the rising sea surface temperature data from 1982 to 2024, with 2024 showing a notably higher
-                        temperature trend compared to the average of previous years. This ongoing increase in sea
-                        surface temperatures is a clear signal of how climate dynamics are shifting, potentially leading
-                        to more frequent and severe weather events.
-                        <a href="https://www.edf.org/climate/how-climate-change-makes-hurricanes-more-destructive#:~:text=Warmer%20oceans%20fuel%20storms&text=Evaporation%20intensifies%20as%20temperatures%20rise,when%20the%20storms%20hit%20land."
-                           target="_blank">(CITE)</a>
-                    </p>
-                </div>
-            </div>
-        </div>
-        <!--        SST line chart -->
-        <div class="info-parent full-page overlay-map">
-            <div class="info-child">
-                <div class="info-content chart">
-                    <h1>Monthly Sea Surface Temperatures (SST) 1982 - 2023</h1>
-                    <div style="position: relative; display: flex; justify-content: center; width: 100%">
-                        <svg id="lineplot" style="margin-top:50px"></svg>
-                        <div id="tooltipLine"
-                             style="position: absolute; opacity: 0; pointer-events: none; background-color: white; border: 1px solid black; padding: 10px;">
+                                const accessibleContrast = function (str_, darkColor = "black", lightColor = "white") {
+                                    d3.selectAll(str_).each(function () {
+                                        let elem = d3.select(this)
+                                        let bgColor = elem.style("background-color")
+                                        // console.log(bgColor)
+                                        elem.style("color", getContrastYIQ(bgColor, darkColor, lightColor))
+                                    })
+                                }
+
+                                accessibleContrast(".tc-basins-title")
+                                accessibleContrast(".tc-basins-subtitle", darkColor = "#414141", lightColor = "#dadada")
+
+                            </script>
                         </div>
                     </div>
                 </div>
             </div>
-        </div>
-<!--        TODO: Katrina reaches classification 5 -->
-        <div class="info-parent hurricane-track left">
-            <div class="info-child hurricane-track">
-                <div class="info-content">
-                    <h1>Katrina reaches class 5 strength</h1>
-                    <p>
-                        Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor
-                        incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud
-                        exercitation
-                        ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in
-                        reprehenderit
-                        in
-                        voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat
-                        cupidatat
-                        non
-                        proident, sunt in culpa qui officia deserunt mollit anim id est laborum.qewrwerwe
-                    </p>
+            <!--        MDR -->
+            <div class="info-parent hurricane-track left">
+                <div class="info-child hurricane-track" id="formation-2">
+                    <div class="info-content">
+                        <h1>Main Development Region (MDR)</h1>
+                        <p>
+                            While Katrina did not start in the MDR, understanding this region is crucial for grasping
+                            how many hurricanes intensify. The Main Development Region (MDR) of the North Atlantic Ocean
+                            runs from Africa to the Caribbean Islands and is a prime area for tropical cyclone
+                            formation. This region is annually home to some of the warmest waters, allowing tropical
+                            cyclones to develop quickly during the heart of the hurricane season.
+                            <br> <br>
+                            Large-scale climate patterns such as the El Niño Southern Oscillation (ENSO), the Atlantic
+                            Meridional Mode (AMM), and the Atlantic Multidecadal Oscillation (AMO) can impact how active
+                            the MDR is during a season. A La Niña cycle of the ENSO, a positive status of the AMM, and a
+                            warm phase of the AMO enhance tropical cyclone development in this region.
+                            <br> <br>
+                            Typically, the first hurricane of the season forms in the MDR in August, with the first
+                            major cyclone appearing in September. Interestingly, four of the top five costliest U.S.
+                            hurricanes did not become significant cyclones in the MDR, indicating that while the region
+                            is a hotspot for hurricane development, it is not a necessity for a cyclone to become a
+                            powerful disaster.
+                            <a href="https://www.foxweather.com/learn/definition-atlantic-basin-tropical-cyclone-hurricane-zone"
+                                target="_blank">(CITE)</a>
+                        </p>
+                    </div>
                 </div>
             </div>
-        </div>
-        <div class="info-parent hurricane-track right">
-            <div class="info-child hurricane-track">
-                <div class="info-content">
-                    <h1>Title</h1>
-                    <p>
-                        Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor
-                        incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud
-                        exercitation
-                        ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in
-                        reprehenderit
-                        in
-                        voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat
-                        cupidatat
-                        non
-                        proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
-                    </p>
+            <!--        Nino regions -->
+            <div class="info-parent hurricane-track left">
+                <div class="info-child hurricane-track" id="formation-3">
+                    <div class="info-content">
+                        <h1>Niño Regions</h1>
+                        <p>
+                            https://www.climate.gov/media/13556
+                            cite / include this foto^
+                            While Katrina did not start in the MDR...
+                            <a target="_blank"
+                                href="https://coast.noaa.gov/hurricanes/#map=4.1/31.99/-82.35&search=eyJzZWFyY2hTdHJpbmciOiJLQVRSSU5BIDIwMDUiLCJzZWFyY2hUeXBlIjoibmFtZSIsIm1hdGNoIjoiZXhhY3QiLCJjYXRlZ29yaWVzIjpbIkg1IiwiSDQiLCJIMyIsIkgyIiwiSDEiLCJUUyIsIlREIiwiRVQiXSwieWVhcnMiOltdLCJtb250aHMiOltdLCJlbnNvIjpbXSwicHJlc3N1cmUiOnsicmFuZ2UiOlswLDEwMzBdLCJpbmNsdWRlVW5rbm93blByZXNzdXJlIjp0cnVlfSwic2VsZWN0ZWRTdG9ybUlEIjoiMjAwNTIzNk4yMzI4NSIsImJ1ZmZlclVuaXQiOlsiTWlsZXMiXSwic29ydFNlbGVjdGlvbiI6eyJ2YWx1ZSI6InllYXJzX25ld2VzdCIsImxhYmVsIjoiWWVhciAoTmV3ZXN0KSJ9LCJhcHBseVRvQU9JIjpmYWxzZSwiaXNTdG9ybUxhYmVsc1Zpc2libGUiOnRydWV9"
+                                title=" Go to NOAA Katrina Track">The MDR is ....</a>
+                        </p>
+                    </div>
                 </div>
             </div>
-        </div>
-        <div class="info-parent hurricane-track left">
-            <div class="info-child hurricane-track">
-                <div class="info-content">
-                    <h1>Title</h1>
-                    <p>
-                        Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor
-                        incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud
-                        exercitation
-                        ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in
-                        reprehenderit
-                        in
-                        voluptate velit esse cillum doloradfadsfe eu fugiat nulla pariatur. Excepteur sint occaecat
-                        cupidatat
-                        non
-                        proident, sunt in culpa qui officia deserunt mollit anim id est laborum. fdsafsdfadfasdfd
-                    </p>
-                </div>
-            </div>
-        </div>
-        <div class="info-parent hurricane-track right">
-            <div class="info-child hurricane-track">
-                <div class="info-content">
-                    <h1>Title</h1>
-                    <p>
-                        Lorem ipsum dolsfsgdfgsdfgr sit amet, consectetur adipiscing elit, sed do eiusmod tempor
-                        incididunsgfdsfgdfgt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud
-                        exercitation
-                        ullamco laboris nisi ut aliqusfgfdgsdfgdf ip ex ea commodo consequat. Duis aute irure dolor
-                        in reprehenderit
-                        in
-                        voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat
-                        cupidatat
-                        non
-                        proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
-                    </p>
-                </div>
-            </div>
-        </div>
-        <div class="info-parent hurricane-track left">
-            <div class="info-child hurricane-track">
-                <div class="info-content">
-                    <h1>Title</h1>
-                    <p>
-                        Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor
-                        incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud
-                        exercitation
-                        ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in
-                        reprehenderit in
-                        voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat
-                        cupidatat non
-                        proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
-                    </p>
-                </div>
-            </div>
-        </div>
-<!--        damage bubble chart -->
-        <div class="info-parent full-page overlay-map">
-            <div class="info-child chart">
-                <div class="info-content">
-                    <h1>Bubble chart</h1>
-                    <div style="position: relative; display: flex; justify-content: center">
-                        <svg id="bubblechart" height="1000" width="800" style="margin-top:50px"></svg>
-                        <div id="tooltip"
-                             style="position: absolute; display: none; pointer-events: none; background: white; border: 1px solid black; padding: 10px; border-radius: 5px; font-size: 12px;">
+            <!--        ONI line chart -->
+            <div class="info-parent full-page overlay-map">
+                <div class="info-child chart">
+                    <div class="info-content">
+                        <h1>ONI Data Bar Chart</h1>
+                        <div style="display: flex; justify-content: center; width: 100%">
+                            <svg id="barchart" height="450" width="1100px" style="margin-top:50px"></svg>
                         </div>
                     </div>
                 </div>
             </div>
-        </div>
-        <div class="info-parent hurricane-track right">
-            <div class="info-child hurricane-track">
-                <div class="info-content">
-                    <h1>Title</h1>
-                    <p>
-                        Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor
-                        incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud
-                        exercitation
-                        ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in
-                        reprehenderit
-                        in
-                        voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat
-                        cupidatat
-                        non
-                        proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
-                    </p>
+            <div class="info-parent hurricane-track left">
+                <div class="info-child hurricane-track">
+                    <div class="info-content">
+                        <h1 style="font-size: 1.8em">Impact of <span class="warming-text">Rising</span> Sea Surface
+                            <span class="warming-text">Temperatures</span> 1
+                        </h1>
+                        <p>Rising ocean surface temperatures are a critical factor in the increasing intensity of
+                            hurricanes.
+                            As the planet warms, primarily due to human-induced climate change, ocean temperatures rise,
+                            which
+                            directly influences hurricane behavior.
+                            <a href="https://www.edf.org/climate/how-climate-change-makes-hurricanes-more-destructive#:~:text=Warmer%20oceans%20fuel%20storms&text=Evaporation%20intensifies%20as%20temperatures%20rise,when%20the%20storms%20hit%20land."
+                                target="_blank">(CITE)</a>
+                        </p>
+                    </div>
                 </div>
             </div>
-        </div>
-        <div class="info-parent hurricane-track right">
-            <div class="info-child hurricane-track">
-                <div class="info-content">
-                    <h1>Title</h1>
-                    <p>
-                        Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor
-                        incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud
-                        exercitation
-                        ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in
-                        reprehenderit
-                        in
-                        voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat
-                        cupidatat
-                        non
-                        proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
-                    </p>
+            <div class="info-parent hurricane-track leftright">
+                <div class="info-child hurricane-track">
+                    <div class="info-content">
+                        <h1 style="font-size: 1.8em">Impact of <span class="warming-text">Rising</span> Sea Surface
+                            <span class="warming-text">Temperatures</span> 2
+                        </h1>
+                        <p>Warmer ocean waters fuel hurricanes by increasing the rate of evaporation. This enhanced
+                            evaporation
+                            leads to higher humidity and more water vapor available in the atmosphere. Water vapor acts
+                            as a
+                            potent source of energy for hurricanes, intensifying their strength and enabling them to
+                            sustain
+                            stronger winds and produce heavier rainfall.
+                            <a href="https://www.edf.org/climate/how-climate-change-makes-hurricanes-more-destructive#:~:text=Warmer%20oceans%20fuel%20storms&text=Evaporation%20intensifies%20as%20temperatures%20rise,when%20the%20storms%20hit%20land."
+                                target="_blank">(CITE)</a>
+                        </p>
+                    </div>
+                    <div class="info-content">
+                        <div style="float: right; margin-left: 10px; width: 100%">
+                            <img src="assets/images/warmwaterpower.jpg" alt="Tropical cyclone formation basins"
+                                width="100%">
+                            <div class="image-caption">How warm water fuels hurricanes
+                                <a href="https://www.noaa.gov/jetstream/tropical/tropical-cyclone-introduction"
+                                    target="_blank">(CITE)</a>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
-        </div>
-        <div class="info-parent hurricane-track right">
-            <div class="info-child hurricane-track">
-                <div class="info-content">
-                    <h1>Title</h1>
-                    <p>
-                        Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor
-                        incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud
-                        exercitation
-                        ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in
-                        reprehenderit
-                        in
-                        voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat
-                        cupidatat
-                        non
-                        proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
-                    </p>
-                </div>
-            </div>
-        </div>
-    </div>
-    <div id="interactives-container">
-        <div id="map-info-header">
-            <div class="map-header-info-parent" id="date">
-                <span id="datedate" class="map-header-info-value"></span>
-                &nbsp;
-                <span id="datetime" class="map-header-info-value"></span>
-                &nbsp;
-                <span id="dateAMPM" class="map-header-info-value"></span>
-            </div>
-            <div class="line"></div>
-            <div class="map-header-info-parent hoverable center-align" id="storm-clf">
-                <div class="map-header-info-value flip-text">
-                    <div class="current-text"></div>
-                </div> <!-- todo: add hover for full word -->
-                <div class="map-header-info-unit">CLASS</div>
-            </div>
-            <div class="line"></div>
-            <div class="map-header-info-parent center-align" id="wind-speed">
-                <div class="map-header-info-value flip-text">
-                    <div class="current-text"></div>
-                </div>
-                <div class="map-header-info-unit">MPH</div>
-            </div>
-            <div class="line"></div>
-            <div class="map-header-info-parent hoverable center-align" id="information">
-                <span class="material-symbols-outlined">info</span>
-            </div>
-        </div>
-        <div id="definition-popup"></div>
-        <div id="map-header-tooltip">
-            <div class="menu-bar">
-                <button id="tooltip-info-icon" class="material-symbols-outlined">info_i</button>
-                <button id="tooltip-close-button" class="material-symbols-outlined">close</button>
-            </div>
-            <span id="tooltip-current-text"></span>
-            <span id="tooltip-text"></span>
-        </div>
-        <!--        <div id="coords"-->
-        <!--             style="position: absolute; bottom: 10px; left: 10px; z-index: 1000; background: rgba(255, 255, 255, 0.8); padding: 5px; border-radius: 5px;">-->
-        <!--            Latitude: 0, Longitude: 0-->
-        <!--        </div>-->
+            <div class="info-parent hurricane-track right">
+                <div class="info-child hurricane-track">
+                    <div class="info-content">
 
+                        <h1 style="font-size: 1.8em">Impact of <span class="warming-text">Rising</span> Sea Surface
+                            <span class="warming-text">Temperatures</span> 3
+                        </h1>
+                        <p>Consequently, as sea surface temperatures continue to climb, the power and potential
+                            destructiveness of hurricanes are expected to increase. This trend is vividly demonstrated
+                            by
+                            the rising sea surface temperature data from 1982 to 2024, with 2024 showing a notably
+                            higher
+                            temperature trend compared to the average of previous years. This ongoing increase in sea
+                            surface temperatures is a clear signal of how climate dynamics are shifting, potentially
+                            leading
+                            to more frequent and severe weather events.
+                            <a href="https://www.edf.org/climate/how-climate-change-makes-hurricanes-more-destructive#:~:text=Warmer%20oceans%20fuel%20storms&text=Evaporation%20intensifies%20as%20temperatures%20rise,when%20the%20storms%20hit%20land."
+                                target="_blank">(CITE)</a>
+                        </p>
+                    </div>
+                </div>
+            </div>
+            <!--        SST line chart -->
+            <div class="info-parent full-page overlay-map">
+                <div class="info-child">
+                    <div class="info-content chart">
+                        <h1>Monthly Sea Surface Temperatures (SST) 1982 - 2023</h1>
+                        <div style="position: relative; display: flex; justify-content: center; width: 100%">
+                            <svg id="lineplot" style="margin-top:50px"></svg>
+                            <div id="tooltipLine"
+                                style="position: absolute; opacity: 0; pointer-events: none; background-color: white; border: 1px solid black; padding: 10px;">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!--        TODO: Katrina reaches classification 5 -->
+            <div class="info-parent hurricane-track left">
+                <div class="info-child hurricane-track">
+                    <div class="info-content">
+                        <h1>Katrina Reaches Category 5 Strength</h1>
+                        <p>On August 28, 2005, Hurricane Katrina reached its peak intensity as a Category 5 hurricane
+                            with sustained winds of 175 mph (280 km/h). This intensification was fueled by the extremely
+                            warm waters of the Gulf of Mexico, with SSTs reaching 30°C (86°F), and low vertical wind
+                            shear that allowed the storm to organize and strengthen efficiently.</p>
+
+                        <h3>Key Information:</h3>
+                        <ul>
+                            <li><strong>Wind Speed:</strong> 175 mph (280 km/h)</li><br>
+                            <li><strong>Central Pressure:</strong> 902 millibars (hPa)</li><br>
+                            <li><strong>Size:</strong> Katrina's wind field was massive, with hurricane-force winds
+                                extending 90 miles (150 km) from the center and tropical-storm-force winds reaching up
+                                to 200 miles (320 km) outward.</li><br>
+                            <li><strong>Impact:</strong> As a Category 5 hurricane, Katrina posed a catastrophic threat
+                                to the Gulf Coast. Its surge and winds were capable of overwhelming levee systems,
+                                causing widespread flooding and damage.</li><br>
+                        </ul>
+                        <a href="https://www.weather.gov/mob/katrina" target="_blank">(CITE)</a>
+                    </div>
+                </div>
+            </div>
+            <div class="info-parent hurricane-track right">
+                <div class="info-child hurricane-track">
+                    <div class="info-content">
+                        <h1>Title</h1>
+                        <p>
+                            Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor
+                            incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud
+                            exercitation
+                            ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in
+                            reprehenderit
+                            in
+                            voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat
+                            cupidatat
+                            non
+                            proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+                        </p>
+                    </div>
+                </div>
+            </div>
+            <div class="info-parent hurricane-track left">
+                <div class="info-child hurricane-track">
+                    <div class="info-content">
+                        <h1>Title</h1>
+                        <p>
+                            Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor
+                            incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud
+                            exercitation
+                            ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in
+                            reprehenderit
+                            in
+                            voluptate velit esse cillum doloradfadsfe eu fugiat nulla pariatur. Excepteur sint occaecat
+                            cupidatat
+                            non
+                            proident, sunt in culpa qui officia deserunt mollit anim id est laborum. fdsafsdfadfasdfd
+                        </p>
+                    </div>
+                </div>
+            </div>
+            <div class="info-parent hurricane-track right">
+                <div class="info-child hurricane-track">
+                    <div class="info-content">
+                        <h1>Title</h1>
+                        <p>
+                            Lorem ipsum dolsfsgdfgsdfgr sit amet, consectetur adipiscing elit, sed do eiusmod tempor
+                            incididunsgfdsfgdfgt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud
+                            exercitation
+                            ullamco laboris nisi ut aliqusfgfdgsdfgdf ip ex ea commodo consequat. Duis aute irure dolor
+                            in reprehenderit
+                            in
+                            voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat
+                            cupidatat
+                            non
+                            proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+                        </p>
+                    </div>
+                </div>
+            </div>
+            <div class="info-parent hurricane-track left">
+                <div class="info-child hurricane-track">
+                    <div class="info-content">
+                        <h1>Title</h1>
+                        <p>
+                            Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor
+                            incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud
+                            exercitation
+                            ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in
+                            reprehenderit in
+                            voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat
+                            cupidatat non
+                            proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+                        </p>
+                    </div>
+                </div>
+            </div>
+            <!--        damage bubble chart -->
+            <div class="info-parent full-page overlay-map">
+                <div class="info-child chart">
+                    <div class="info-content">
+                        <h1>Bubble chart</h1>
+                        <div style="position: relative; display: flex; justify-content: center">
+                            <svg id="bubblechart" height="1000" width="800" style="margin-top:50px"></svg>
+                            <div id="tooltip"
+                                style="position: absolute; display: none; pointer-events: none; background: white; border: 1px solid black; padding: 10px; border-radius: 5px; font-size: 12px;">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="info-parent hurricane-track right">
+                <div class="info-child hurricane-track">
+                    <div class="info-content">
+                        <h1>Title</h1>
+                        <p>
+                            Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor
+                            incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud
+                            exercitation
+                            ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in
+                            reprehenderit
+                            in
+                            voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat
+                            cupidatat
+                            non
+                            proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+                        </p>
+                    </div>
+                </div>
+            </div>
+            <div class="info-parent hurricane-track right">
+                <div class="info-child hurricane-track">
+                    <div class="info-content">
+                        <h1>Title</h1>
+                        <p>
+                            Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor
+                            incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud
+                            exercitation
+                            ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in
+                            reprehenderit
+                            in
+                            voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat
+                            cupidatat
+                            non
+                            proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+                        </p>
+                    </div>
+                </div>
+            </div>
+            <div class="info-parent hurricane-track right">
+                <div class="info-child hurricane-track">
+                    <div class="info-content">
+                        <h1>Title</h1>
+                        <p>
+                            Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor
+                            incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud
+                            exercitation
+                            ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in
+                            reprehenderit
+                            in
+                            voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat
+                            cupidatat
+                            non
+                            proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div id="interactives-container">
+            <div id="map-info-header">
+                <div class="map-header-info-parent" id="date">
+                    <span id="datedate" class="map-header-info-value"></span>
+                    &nbsp;
+                    <span id="datetime" class="map-header-info-value"></span>
+                    &nbsp;
+                    <span id="dateAMPM" class="map-header-info-value"></span>
+                </div>
+                <div class="line"></div>
+                <div class="map-header-info-parent hoverable center-align" id="storm-clf">
+                    <div class="map-header-info-value flip-text">
+                        <div class="current-text"></div>
+                    </div> <!-- todo: add hover for full word -->
+                    <div class="map-header-info-unit">CLASS</div>
+                </div>
+                <div class="line"></div>
+                <div class="map-header-info-parent center-align" id="wind-speed">
+                    <div class="map-header-info-value flip-text">
+                        <div class="current-text"></div>
+                    </div>
+                    <div class="map-header-info-unit">MPH</div>
+                </div>
+                <div class="line"></div>
+                <div class="map-header-info-parent hoverable center-align" id="information">
+                    <span class="material-symbols-outlined">info</span>
+                </div>
+            </div>
+            <div id="definition-popup"></div>
+            <div id="map-header-tooltip">
+                <div class="menu-bar">
+                    <button id="tooltip-info-icon" class="material-symbols-outlined">info_i</button>
+                    <button id="tooltip-close-button" class="material-symbols-outlined">close</button>
+                </div>
+                <span id="tooltip-current-text"></span>
+                <span id="tooltip-text"></span>
+            </div>
+            <!--        <div id="coords"-->
+            <!--             style="position: absolute; bottom: 10px; left: 10px; z-index: 1000; background: rgba(255, 255, 255, 0.8); padding: 5px; border-radius: 5px;">-->
+            <!--            Latitude: 0, Longitude: 0-->
+            <!--        </div>-->
+
+        </div>
     </div>
-</div>
 </body>
 
 <script src="./assets/packages/gsap-public/minified/gsap.min.js"></script>
