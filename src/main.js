@@ -441,7 +441,6 @@ const pageLoad = async function () {
                         toolTipInfoIcon.text("info_i")
                         hideTooltip()
 
-                        console.log(i)
 
                     },
                     onEnterBack: () => {
