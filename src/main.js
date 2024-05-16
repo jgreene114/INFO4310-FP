@@ -209,8 +209,6 @@ function formatISOStr(isoStr) {
 
 
     let date = parseTime(isoStr);
-    console.log(isoStr)
-    console.log(date)
     let formattedDate = [formatDate(date), formatTime(date), formatAMPM(date)];
 
     // console.log("Formatted Date:", formattedDate);
@@ -258,7 +256,8 @@ const pageLoad = async function () {
     idxs.splice(2, 0, 17)
     if (!idxs.includes(walkthrough.data.length - 1)) { idxs.push(walkthrough.data.length - 1) }
 
-    // console.log(idxs)
+    idxs.splice(idxs.length - 2, 2)
+    idxs.splice(8, 2)
 
     // const latlngs = walkthrough.data.map(function (feature) {
     //     return [
@@ -352,6 +351,7 @@ const pageLoad = async function () {
                         .style("visibility", 'hidden');
                     mapHeaderTooltip
                         .style("display", "none")
+
                 },
                 onEnterBack: () => {
                     mapHeader
@@ -440,6 +440,9 @@ const pageLoad = async function () {
                         toolTipTextExplanation.html("")
                         toolTipInfoIcon.text("info_i")
                         hideTooltip()
+
+                        console.log(i)
+
                     },
                     onEnterBack: () => {
                         changeHeader(i)

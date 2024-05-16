@@ -110,7 +110,7 @@ const requestDataCharts = async function () {
         }
     });
 
-    console.log(mdr)
+    // console.log(mdr)
 
     // Y Axis
     const thermalScale = d3.scaleLinear().domain([0, 80]).range([chartHeightMdr, 0]);
