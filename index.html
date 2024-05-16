@@ -1,6 +1,5 @@
 <!DOCTYPE html>
 <html lang="en">
-<!--xmlns="http://www.w3.org/1999/html" xmlns="http://www.w3.org/1999/html">-->
 
 <head>
     <meta charset="UTF-8">
@@ -9,23 +8,12 @@
     <link rel="stylesheet" href="./assets/charts.css" />
     <link rel="stylesheet" href="./assets/packages/leaflet/leaflet.css" />
     <link rel="stylesheet" href="./assets/packages/cssanimation/cssanimation.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0" />
+
     <script src="./assets/packages/turf/turf.min.js"></script>
     <script src="./assets/packages/leaflet/leaflet-src.js"></script>
     <script src="./assets/packages/flubber-master/build/flubber.js"></script>
     <script src="https://d3js.org/d3.v7.min.js"></script>
-
-    <!--    <script src="./assets/packages/Leaflet.TrackPlayer-master/dist/leaflet-trackplayer.js"></script>-->
-
-    <!--    <script type="application/octet-stream" src="./assets/packages/Leaflet.TrackPlayer-master/dist/leaflet-trackplayer.umd.cjs"></script>-->
-
-    <!--    <script src="./assets/packages/Leaflet.TrackPlayer-master/dist/leaflet-trackplayer.umd.cjs"></script>-->
-    <!--    <script src="./assets/packages/Leaflet.Polyline.SnakeAnim-master/L.Polyline.SnakeAnim.js"></script>-->
-
-
-    <!--    todo: remove/download and use local version-->
-    <link rel="stylesheet"
-        href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0" />
-
 </head>
 
 <body>
@@ -71,22 +59,61 @@
                 </div>
             </div>
             <!--                    Visualization interaction general instructions / outline -->
-            <div class="info-parent full-page overlay-map">
+            <div class="info-parent full-page overlay-map long-section">
                 <div class="info-child">
                     <div class="info-content">
                         <h1>How to interact with this article</h1>
                         <p>
-                            Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor
-                            incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud
-                            exercitation
-                            ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in
-                            reprehenderit
-                            in
-                            voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat
-                            cupidatat
-                            non
-                            proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+                            We hope this article serves as a fun, educational tool for learning more about hurricanes
+                            and the increasing level of intensity of hurricane seasons. There are many interactive
+                            included to enhance the learning experience. See below for some instructions for engaging
+                            with our content!
                         </p>
+<!--                        map -->
+                        <div style="float: right; margin-left: 10px; width: 400px">
+                            <img src="assets/images/instructions/map-instruction-1.png" alt="Hovering over SSHS value shows more details."
+                                 width="100%">
+                            <img src="assets/images/instructions/map-instruction-2.png" alt="Hovering over SSHS value shows more details."
+                                 width="100%">
+                        </div>
+                        <div style="float: right; margin-left: 10px; width: 210px">
+                            <img src="assets/images/instructions/map-instruction-3.png" alt="Hovering over SSHS value shows more details."
+                                 width="100%">
+                        </div>
+                        <p><br>
+                            While following Hurricane Katrina's (2005) path, you can use the map header to learn more
+                            about the intensity of the storm at a given point by hovering over the Safir-Simpson
+                            Hurricane Scale (SSHS) value (see right).
+                        </p><br><br><br><br><br><br>
+<!--                        oni bar chart -->
+                        <div style="float: right; margin-left: 10px; width: 400px">
+                            <img src="assets/images/instructions/oni-bar-chart-instruction.png"
+                                 width="100%">
+                        </div>
+                        <p><br>
+                            Hover over the Oceanic Niño Index (ONI) bar chart to see more details about any three-month
+                            period. The tooltip includes the first letter for each month the data point covers (e.g.,
+                            ASO -> August, September, October), along with both Fahrenheit and Celsius temperature
+                            changes.
+                        </p><br><br><br><br><br><br>
+<!--                        sst line chart -->
+                        <div style="float: right; margin-left: 10px; width: 400px">
+                            <img src="assets/images/instructions/sst-line-chart-instruction.png"
+                                 width="100%">
+                        </div>
+                        <p><br>
+                            Hovering over the lines in our Niño regions SST line chart brings up a tooltip with the year
+                            and average sea surface temperature.
+                        </p><br><br><br><br><br><br>
+<!--                        damage bubble chart -->
+                        <div style="float: right; margin-left: 10px; width: 400px">
+                            <img src="assets/images/instructions/damage-bubble-chart-instruction.png"
+                                 width="100%">
+                        </div>
+                        <p><br>
+                            Hovering over the bubbles in our damage chart shows the name of the storm and the total
+                            monetary damage.
+                        </p><br><br><br><br><br><br><br><br><br><br><br><br>
                     </div>
                 </div>
             </div>
@@ -200,7 +227,6 @@
                     </div>
                 </div>
             </div>
-            <!--        TODO: need to write this slide about katrina hitting miami as a cat 1 hurricane -->
             <div class="info-parent hurricane-track leftright">
                 <div class="info-child hurricane-track">
                     <div class="info-content">
@@ -549,7 +575,6 @@
                     </div>
                 </div>
             </div>
-            <!--        TODO: Katrina reaches classification 5 -->
             <div class="info-parent hurricane-track leftright">
                 <div class="info-child hurricane-track">
                     <div class="info-content">
@@ -817,7 +842,7 @@
                 <div class="map-header-info-parent hoverable center-align" id="storm-clf">
                     <div class="map-header-info-value flip-text">
                         <div class="current-text"></div>
-                    </div> <!-- todo: add hover for full word -->
+                    </div>
                     <div class="map-header-info-unit">CLASS</div>
                 </div>
                 <div class="line"></div>
